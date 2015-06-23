@@ -4,7 +4,8 @@
   "description": "An image cropper that moves the cropper rather than the image",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "compile": "babel index.src.js --out-file index.js",
+    "prepublish": "npm run compile"
   },
   "keywords": [
     "react",
@@ -12,5 +13,8 @@
     "crop"
   ],
   "author": "Matthew Sessions <shichongrui@gmail.com> (http://www.matthewsessions.com/)",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "babel": "^5.6.4"
+  }
 }
