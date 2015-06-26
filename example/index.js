@@ -6,7 +6,8 @@ let Wrapper = React.createClass({
 
   getInitialState () {
     return {
-      image: null
+      image: null,
+      previewUrl: null
     }
   },
 
@@ -16,17 +17,31 @@ let Wrapper = React.createClass({
     })
   },
 
+  async crop () {
+    let image = await this.refs.crop.cropImage()
+    this.setState({
+      previewUrl: window.URL.createObjectURL(image)
+    })
+  },
+
   render () {
-    console.log(this.state.image)
     return (
       <div className='Wrapper'>
         <input type='file' onChange={this.onChange}/>
 
         {this.state.image &&
-          <Cropper
-            image={this.state.image}
-            width={262}
-            height={147}/>}
+          <div style={{width: '50%'}}>
+            <Cropper
+              ref='crop'
+              image={this.state.image}
+              width={262}
+              height={147}
+              center={true}/>
+            <button onClick={this.crop}>Crop</button>
+          </div>}
+
+        {this.state.previewUrl &&
+          <img src={this.state.previewUrl} />}
       </div>
     )
   }
