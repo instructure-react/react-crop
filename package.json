@@ -4,7 +4,7 @@
   "description": "An image cropper that moves the cropper rather than the image",
   "main": "index.js",
   "scripts": {
-    "compile": "babel lib/index.src.js --out-file index.js && webpack",
+    "compile": "babel --plugins object-assign lib/index.src.js --out-file index.js && webpack",
     "prepublish": "npm run compile",
     "example": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js"
   },

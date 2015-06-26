@@ -21,6 +21,11 @@
   cursor: move;
 }
 
+.Cropper-canvas {
+  visibility: hidden;
+  position: absolute;
+}
+
 .resize-handle {
   position: absolute;
   width: 20px;
