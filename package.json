@@ -23,7 +23,7 @@
     "babel-plugin-object-assign": "^1.2.0",
     "webpack": "^1.9.11",
     "webpack-dev-server": "^1.9.0",
-    "node-libs-browser": "^0.5.2",
+    "node-libs-browser": "^0.5.2"
   },
   "dependencies": {
     "data-uri-to-blob": "0.0.4"
