@@ -1,6 +1,6 @@
 {
   "name": "react-crop",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "An image cropper that moves the cropper rather than the image",
   "main": "index.js",
   "scripts": {
@@ -29,6 +29,6 @@
     "data-uri-to-blob": "0.0.4"
   },
   "peerDependencies": {
-    "react": "^0.13.3"
+    "react": "^0.13.0"
   }
 }
