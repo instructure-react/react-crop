@@ -1,5 +1,5 @@
 import React from 'react'
-import Cropper from '../lib/index.src.js'
+import Cropper from '../index.js'
 
 let Wrapper = React.createClass({
   displayName: 'Wrapper',

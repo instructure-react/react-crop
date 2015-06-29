@@ -4,8 +4,9 @@
   "description": "An image cropper that moves the cropper rather than the image",
   "main": "index.js",
   "scripts": {
-    "compile": "babel --plugins object-assign lib/index.src.js --out-file index.js && webpack",
-    "prepublish": "npm run compile",
+    "compile-index": "babel --plugins object-assign lib/index.src.js --out-file index.js",
+    "compile-box": "babel --plugins object-assign lib/draggable-resizable-box.js --out-file draggable-resizable-box.js",
+    "compile": "npm run compile-index && npm run compile-box && webpack",
     "example": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js"
   },
   "keywords": [
