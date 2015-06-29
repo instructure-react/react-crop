@@ -50,6 +50,13 @@ exports['default'] = _react2['default'].createClass({
   componentDidMount: function componentDidMount() {
     document.addEventListener('mousemove', this.mouseMove);
     document.addEventListener('mouseup', this.mouseUp);
+    this.props.onChange({
+      top: this.state.top,
+      left: this.state.left
+    }, {
+      width: this.state.width,
+      height: this.state.height
+    });
   },
 
   mouseMove: function mouseMove(evt) {

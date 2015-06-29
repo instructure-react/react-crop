@@ -60,9 +60,9 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _indexJs = __webpack_require__(158);
+	var _libIndexSrcJs = __webpack_require__(158);
 
-	var _indexJs2 = _interopRequireDefault(_indexJs);
+	var _libIndexSrcJs2 = _interopRequireDefault(_libIndexSrcJs);
 
 	var Wrapper = _react2['default'].createClass({
 	  displayName: 'Wrapper',
@@ -110,7 +110,7 @@
 	      this.state.image && _react2['default'].createElement(
 	        'div',
 	        { style: { width: '50%' } },
-	        _react2['default'].createElement(_indexJs2['default'], {
+	        _react2['default'].createElement(_libIndexSrcJs2['default'], {
 	          ref: 'crop',
 	          image: this.state.image,
 	          width: 262,
@@ -20514,9 +20514,7 @@
 	  value: true
 	});
 
-	function _interopRequireDefault(obj) {
-	  return obj && obj.__esModule ? obj : { 'default': obj };
-	}
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 	var _react = __webpack_require__(2);
 
@@ -20592,16 +20590,30 @@
 
 	  render: function render() {
 	    var url = window.URL.createObjectURL(this.props.image);
-	    return _react2['default'].createElement('div', { className: 'Cropper' }, _react2['default'].createElement('canvas', {
-	      className: 'Cropper-canvas',
-	      ref: 'canvas',
-	      width: this.props.width,
-	      height: this.props.height }), _react2['default'].createElement('img', { ref: 'image', src: url, className: 'Cropper-image', onLoad: this.onLoad }), this.state.imageLoaded && _react2['default'].createElement('div', { className: 'box' }, _react2['default'].createElement(_draggableResizableBox2['default'], {
-	      aspectRatio: this.props.width / this.props.height,
-	      width: this.state.width,
-	      height: this.state.height,
-	      minConstraints: [this.props.width, this.props.height],
-	      onChange: this.onChange }, _react2['default'].createElement('div', { className: 'Cropper-box' }))));
+	    return _react2['default'].createElement(
+	      'div',
+	      { className: 'Cropper' },
+	      _react2['default'].createElement('canvas', {
+	        className: 'Cropper-canvas',
+	        ref: 'canvas',
+	        width: this.props.width,
+	        height: this.props.height }),
+	      _react2['default'].createElement('img', { ref: 'image', src: url, className: 'Cropper-image', onLoad: this.onLoad }),
+	      this.state.imageLoaded && _react2['default'].createElement(
+	        'div',
+	        { className: 'box' },
+	        _react2['default'].createElement(
+	          _draggableResizableBox2['default'],
+	          {
+	            aspectRatio: this.props.width / this.props.height,
+	            width: this.state.width,
+	            height: this.state.height,
+	            minConstraints: [this.props.width, this.props.height],
+	            onChange: this.onChange },
+	          _react2['default'].createElement('div', { className: 'Cropper-box' })
+	        )
+	      )
+	    );
 	  }
 	});
 	module.exports = exports['default'];
@@ -20616,41 +20628,9 @@
 	  value: true
 	});
 
-	var _extends = Object.assign || function (target) {
-	  for (var i = 1; i < arguments.length; i++) {
-	    var source = arguments[i];for (var key in source) {
-	      if (Object.prototype.hasOwnProperty.call(source, key)) {
-	        target[key] = source[key];
-	      }
-	    }
-	  }return target;
-	};
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	function _interopRequireDefault(obj) {
-	  return obj && obj.__esModule ? obj : { 'default': obj };
-	}
-
-	function _slicedToArray(arr, i) {
-	  if (Array.isArray(arr)) {
-	    return arr;
-	  } else if (Symbol.iterator in Object(arr)) {
-	    var _arr = [];var _n = true;var _d = false;var _e = undefined;try {
-	      for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
-	        _arr.push(_s.value);if (i && _arr.length === i) break;
-	      }
-	    } catch (err) {
-	      _d = true;_e = err;
-	    } finally {
-	      try {
-	        if (!_n && _i['return']) _i['return']();
-	      } finally {
-	        if (_d) throw _e;
-	      }
-	    }return _arr;
-	  } else {
-	    throw new TypeError('Invalid attempt to destructure non-iterable instance');
-	  }
-	}
+	function _slicedToArray(arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i['return']) _i['return'](); } finally { if (_d) throw _e; } } return _arr; } else { throw new TypeError('Invalid attempt to destructure non-iterable instance'); } }
 
 	var _react = __webpack_require__(2);
 
@@ -20692,6 +20672,13 @@
 	  componentDidMount: function componentDidMount() {
 	    document.addEventListener('mousemove', this.mouseMove);
 	    document.addEventListener('mouseup', this.mouseUp);
+	    this.props.onChange({
+	      top: this.state.top,
+	      left: this.state.left
+	    }, {
+	      width: this.state.width,
+	      height: this.state.height
+	    });
 	  },
 
 	  mouseMove: function mouseMove(evt) {
@@ -20724,7 +20711,7 @@
 
 	  // resize strategies
 	  nw: function nw(mousePos, boxPos) {
-	    var pos = _extends({}, this.state, {
+	    var pos = Object.assign({}, this.state, {
 	      top: this.constrainBoundary(mousePos.clientY - boxPos.top),
 	      left: this.constrainBoundary(mousePos.clientX - boxPos.left)
 	    });
@@ -20742,7 +20729,7 @@
 	    return pos;
 	  },
 	  ne: function ne(mousePos, boxPos) {
-	    var pos = _extends({}, this.state, {
+	    var pos = Object.assign({}, this.state, {
 	      top: this.constrainBoundary(mousePos.clientY - boxPos.top),
 	      right: this.constrainBoundary(boxPos.right - mousePos.clientX)
 	    });
@@ -20760,7 +20747,7 @@
 	    return pos;
 	  },
 	  se: function se(mousePos, boxPos) {
-	    var pos = _extends({}, this.state, {
+	    var pos = Object.assign({}, this.state, {
 	      bottom: this.constrainBoundary(boxPos.bottom - mousePos.clientY),
 	      right: this.constrainBoundary(boxPos.right - mousePos.clientX)
 	    });
@@ -20778,7 +20765,7 @@
 	    return pos;
 	  },
 	  sw: function sw(mousePos, boxPos) {
-	    var pos = _extends({}, this.state, {
+	    var pos = Object.assign({}, this.state, {
 	      bottom: this.constrainBoundary(boxPos.bottom - mousePos.clientY),
 	      left: this.constrainBoundary(mousePos.clientX - boxPos.left)
 	    });
@@ -20808,7 +20795,7 @@
 	        heightChanged = dimensions.height !== this.state.height;
 	    if (!widthChanged && !heightChanged) return;
 
-	    this.setState(_extends({}, {
+	    this.setState(Object.assign({}, {
 	      clientX: event.clientX,
 	      clientY: event.clientY
 	    }, position, dimensions), function () {
@@ -20860,7 +20847,7 @@
 	      position.left = this.props.width - this.state.width;
 	    }
 
-	    this.setState(_extends({}, {
+	    this.setState(Object.assign({}, {
 	      clientX: evt.clientX,
 	      clientY: evt.clientY
 	    }, position), function () {
@@ -20929,11 +20916,27 @@
 	      bottom: this.state.bottom
 	    };
 
-	    return _react2['default'].createElement('div', { className: 'DraggableResizable' }, _react2['default'].createElement('div', { className: 'DraggableResizable-top', style: topStyle }), _react2['default'].createElement('div', { className: 'DraggableResizable-left', style: leftStyle }), _react2['default'].createElement('div', { style: style, onMouseDown: this.startMove }, this.props.children, _react2['default'].createElement('div', { className: 'resize-handle resize-handle-se',
-	      onMouseDown: this.startResize.bind(null, 'se') }), _react2['default'].createElement('div', { className: 'resize-handle resize-handle-ne',
-	      onMouseDown: this.startResize.bind(null, 'ne') }), _react2['default'].createElement('div', { className: 'resize-handle resize-handle-sw',
-	      onMouseDown: this.startResize.bind(null, 'sw') }), _react2['default'].createElement('div', { className: 'resize-handle resize-handle-nw',
-	      onMouseDown: this.startResize.bind(null, 'nw') })), _react2['default'].createElement('div', { className: 'DraggableResizable-right', style: rightStyle }), _react2['default'].createElement('div', { className: 'DraggableResizable-bottom', style: bottomStyle }));
+	    return _react2['default'].createElement(
+	      'div',
+	      { className: 'DraggableResizable' },
+	      _react2['default'].createElement('div', { className: 'DraggableResizable-top', style: topStyle }),
+	      _react2['default'].createElement('div', { className: 'DraggableResizable-left', style: leftStyle }),
+	      _react2['default'].createElement(
+	        'div',
+	        { style: style, onMouseDown: this.startMove },
+	        this.props.children,
+	        _react2['default'].createElement('div', { className: 'resize-handle resize-handle-se',
+	          onMouseDown: this.startResize.bind(null, 'se') }),
+	        _react2['default'].createElement('div', { className: 'resize-handle resize-handle-ne',
+	          onMouseDown: this.startResize.bind(null, 'ne') }),
+	        _react2['default'].createElement('div', { className: 'resize-handle resize-handle-sw',
+	          onMouseDown: this.startResize.bind(null, 'sw') }),
+	        _react2['default'].createElement('div', { className: 'resize-handle resize-handle-nw',
+	          onMouseDown: this.startResize.bind(null, 'nw') })
+	      ),
+	      _react2['default'].createElement('div', { className: 'DraggableResizable-right', style: rightStyle }),
+	      _react2['default'].createElement('div', { className: 'DraggableResizable-bottom', style: bottomStyle })
+	    );
 	  }
 	});
 	module.exports = exports['default'];
