@@ -71,6 +71,11 @@
   height: 100%;
 }
 
+.DraggableResizable-controls {
+  position: relative;
+  top: 1000px;
+}
+
 .DraggableResizable-top,
 .DraggableResizable-left,
 .DraggableResizable-bottom,
