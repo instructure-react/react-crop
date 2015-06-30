@@ -24,6 +24,13 @@ let Wrapper = React.createClass({
     })
   },
 
+  clear () {
+    this.setState({
+      previewUrl: null,
+      image: null
+    })
+  },
+
   render () {
     return (
       <div className='Wrapper'>
@@ -38,6 +45,7 @@ let Wrapper = React.createClass({
               height={147}
               center={true}/>
             <button onClick={this.crop}>Crop</button>
+            <button onClick={this.clear}>Clear</button>
           </div>}
 
         {this.state.previewUrl &&
