@@ -20550,7 +20550,8 @@
 	    widthLabel: _react2['default'].PropTypes.string,
 	    heightLabel: _react2['default'].PropTypes.string,
 	    offsetXLabel: _react2['default'].PropTypes.string,
-	    offsetYLabel: _react2['default'].PropTypes.string
+	    offsetYLabel: _react2['default'].PropTypes.string,
+	    onImageLoaded: _react2['default'].PropTypes.func
 	  },
 
 	  getDefaultProps: function getDefaultProps() {
@@ -20577,13 +20578,14 @@
 	    return nextProps.image.size !== image.size || nextProps.image.name !== image.name || nextProps.image.type !== image.type || nextState.imageLoaded !== this.state.imageLoaded;
 	  },
 
-	  onLoad: function onLoad() {
+	  onLoad: function onLoad(evt) {
 	    var box = _react2['default'].findDOMNode(this).getBoundingClientRect();
 	    this.setState({
 	      imageLoaded: true,
 	      width: box.width,
 	      height: box.height
 	    });
+	    this.props.onImageLoaded && this.props.onImageLoaded(evt.target);
 	  },
 
 	  cropImage: function cropImage() {
