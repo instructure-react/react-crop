@@ -37,13 +37,12 @@ let Wrapper = React.createClass({
         <input type='file' onChange={this.onChange}/>
 
         {this.state.image &&
-          <div style={{width: '50%'}}>
+          <div>
             <Cropper
               ref='crop'
               image={this.state.image}
               width={262}
-              height={147}
-              center={true}/>
+              height={147}/>
             <button onClick={this.crop}>Crop</button>
             <button onClick={this.clear}>Clear</button>
           </div>}
