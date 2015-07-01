@@ -25,12 +25,20 @@ exports['default'] = _react2['default'].createClass({
     width: _react2['default'].PropTypes.number.isRequired,
     height: _react2['default'].PropTypes.number.isRequired,
     center: _react2['default'].PropTypes.bool,
-    image: _react2['default'].PropTypes.any
+    image: _react2['default'].PropTypes.any,
+    widthLabel: _react2['default'].PropTypes.string,
+    heightLabel: _react2['default'].PropTypes.string,
+    offsetXLabel: _react2['default'].PropTypes.string,
+    offsetYLabel: _react2['default'].PropTypes.string
   },
 
   getDefaultProps: function getDefaultProps() {
     return {
-      center: false
+      center: false,
+      width: 'Width',
+      height: 'Height',
+      offsetXLabel: 'Offset X',
+      offsetYLabel: 'Offset Y'
     };
   },
 
@@ -64,13 +72,18 @@ exports['default'] = _react2['default'].createClass({
     var xScale = img.naturalWidth / this.state.width;
     var yScale = img.naturalHeight / this.state.height;
 
-    var offsetX = this.state.offset.left * xScale;
-    var offsetY = this.state.offset.top * yScale;
-    var width = this.state.dimensions.width * xScale;
-    var height = this.state.dimensions.height * yScale;
+    var imageOffsetX = xScale < 1 ? 0 : this.state.offset.left * xScale;
+    var imageOffsetY = yScale < 1 ? 0 : this.state.offset.top * yScale;
+    var imageWidth = xScale < 1 ? img.naturalWidth : this.state.dimensions.width * xScale;
+    var imageHeight = yScale < 1 ? img.naturalHeight : this.state.dimensions.height * yScale;
+
+    var canvasOffsetX = xScale < 1 ? Math.floor((this.state.dimensions.width - img.naturalWidth) / 2) : 0;
+    var canvasOffsetY = yScale < 1 ? Math.floor((this.state.dimensions.height - img.naturalHeight) / 2) : 0;
+    var canvasWidth = xScale < 1 ? img.naturalWidth : this.props.width;
+    var canvasHeight = yScale < 1 ? img.naturalHeight : this.props.height;
 
     ctx.clearRect(0, 0, this.props.width, this.props.height);
-    ctx.drawImage(img, offsetX, offsetY, width, height, 0, 0, this.props.width, this.props.height);
+    ctx.drawImage(img, imageOffsetX, imageOffsetY, imageWidth, imageHeight, canvasOffsetX, canvasOffsetY, canvasWidth, canvasHeight);
     return (0, _dataUriToBlob2['default'])(canvas.toDataURL());
   },
 
@@ -82,13 +95,23 @@ exports['default'] = _react2['default'].createClass({
     var url = window.URL.createObjectURL(this.props.image);
     return _react2['default'].createElement(
       'div',
-      { className: 'Cropper' },
+      {
+        className: 'Cropper',
+        style: {
+          minWidth: this.props.width,
+          minHeight: this.props.height
+        } },
       _react2['default'].createElement('canvas', {
         className: 'Cropper-canvas',
         ref: 'canvas',
         width: this.props.width,
         height: this.props.height }),
-      _react2['default'].createElement('img', { ref: 'image', src: url, className: 'Cropper-image', onLoad: this.onLoad }),
+      _react2['default'].createElement('img', {
+        ref: 'image',
+        src: url,
+        className: 'Cropper-image',
+        onLoad: this.onLoad,
+        style: { top: this.state.height / 2 } }),
       this.state.imageLoaded && _react2['default'].createElement(
         'div',
         { className: 'box' },
@@ -99,7 +122,11 @@ exports['default'] = _react2['default'].createClass({
             width: this.state.width,
             height: this.state.height,
             minConstraints: [this.props.width, this.props.height],
-            onChange: this.onChange },
+            onChange: this.onChange,
+            widthLabel: this.props.widthLabel,
+            heightLabel: this.props.heightLabel,
+            offsetXLabel: this.props.offsetXLabel,
+            offsetYLabel: this.props.offsetYLabel },
           _react2['default'].createElement('div', { className: 'Cropper-box' })
         )
       )
