@@ -109,6 +109,10 @@
 	    });
 	  },
 
+	  imageLoaded: function imageLoaded(img) {
+	    var image = this.refs.crop.cropImage();
+	  },
+
 	  render: function render() {
 	    return _react2['default'].createElement(
 	      'div',
@@ -121,7 +125,8 @@
 	          ref: 'crop',
 	          image: this.state.image,
 	          width: 262,
-	          height: 147 }),
+	          height: 147,
+	          onImageLoaded: this.imageLoaded }),
 	        _react2['default'].createElement(
 	          'button',
 	          { onClick: this.crop },
@@ -20579,13 +20584,16 @@
 	  },
 
 	  onLoad: function onLoad(evt) {
+	    var _this = this;
+
 	    var box = _react2['default'].findDOMNode(this).getBoundingClientRect();
 	    this.setState({
 	      imageLoaded: true,
 	      width: box.width,
 	      height: box.height
+	    }, function () {
+	      _this.props.onImageLoaded && _this.props.onImageLoaded(evt.target);
 	    });
-	    this.props.onImageLoaded && this.props.onImageLoaded(evt.target);
 	  },
 
 	  cropImage: function cropImage() {

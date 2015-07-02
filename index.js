@@ -58,13 +58,16 @@ exports['default'] = _react2['default'].createClass({
   },
 
   onLoad: function onLoad(evt) {
+    var _this = this;
+
     var box = _react2['default'].findDOMNode(this).getBoundingClientRect();
     this.setState({
       imageLoaded: true,
       width: box.width,
       height: box.height
+    }, function () {
+      _this.props.onImageLoaded && _this.props.onImageLoaded(evt.target);
     });
-    this.props.onImageLoaded && this.props.onImageLoaded(evt.target);
   },
 
   cropImage: function cropImage() {
