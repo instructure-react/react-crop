@@ -31,6 +31,10 @@ let Wrapper = React.createClass({
     })
   },
 
+  imageLoaded (img) {
+    let image = this.refs.crop.cropImage()
+  },
+
   render () {
     return (
       <div className='Wrapper'>
@@ -42,7 +46,8 @@ let Wrapper = React.createClass({
               ref='crop'
               image={this.state.image}
               width={262}
-              height={147} />
+              height={147}
+              onImageLoaded={this.imageLoaded} />
             <button onClick={this.crop}>Crop</button>
             <button onClick={this.clear}>Clear</button>
           </div>}

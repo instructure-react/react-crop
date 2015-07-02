@@ -1,13 +1,14 @@
 {
   "name": "react-crop",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "An image cropper that moves the cropper rather than the image",
   "main": "index.js",
   "scripts": {
     "compile-index": "babel --plugins object-assign lib/index.src.js --out-file index.js",
     "compile-box": "babel --plugins object-assign lib/draggable-resizable-box.js --out-file draggable-resizable-box.js",
     "compile": "npm run compile-index && npm run compile-box && webpack",
-    "example": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js"
+    "example": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
+    "prepublish": "npm run compile"
   },
   "keywords": [
     "react",
