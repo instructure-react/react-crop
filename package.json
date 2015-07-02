@@ -1,6 +1,6 @@
 {
   "name": "react-crop",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "An image cropper that moves the cropper rather than the image",
   "main": "index.js",
   "scripts": {

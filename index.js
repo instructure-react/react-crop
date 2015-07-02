@@ -72,25 +72,33 @@ exports['default'] = _react2['default'].createClass({
   },
 
   cropImage: function cropImage() {
-    var canvas = _react2['default'].findDOMNode(this.refs.canvas);
-    var img = _react2['default'].findDOMNode(this.refs.image);
-    var ctx = canvas.getContext('2d');
-    var xScale = img.naturalWidth / this.state.width;
-    var yScale = img.naturalHeight / this.state.height;
+    var _this2 = this;
 
-    var imageOffsetX = xScale < 1 ? 0 : this.state.offset.left * xScale;
-    var imageOffsetY = yScale < 1 ? 0 : this.state.offset.top * yScale;
-    var imageWidth = xScale < 1 ? img.naturalWidth : this.state.dimensions.width * xScale;
-    var imageHeight = yScale < 1 ? img.naturalHeight : this.state.dimensions.height * yScale;
+    return new Promise(function (resolve, reject) {
+      var img = new Image();
+      img.onload = function () {
+        var canvas = _react2['default'].findDOMNode(_this2.refs.canvas);
+        var img = _react2['default'].findDOMNode(_this2.refs.image);
+        var ctx = canvas.getContext('2d');
+        var xScale = img.naturalWidth / _this2.state.width;
+        var yScale = img.naturalHeight / _this2.state.height;
 
-    var canvasOffsetX = xScale < 1 ? Math.floor((this.state.dimensions.width - img.naturalWidth) / 2) : 0;
-    var canvasOffsetY = yScale < 1 ? Math.floor((this.state.dimensions.height - img.naturalHeight) / 2) : 0;
-    var canvasWidth = xScale < 1 ? img.naturalWidth : this.props.width;
-    var canvasHeight = yScale < 1 ? img.naturalHeight : this.props.height;
+        var imageOffsetX = xScale < 1 ? 0 : _this2.state.offset.left * xScale;
+        var imageOffsetY = yScale < 1 ? 0 : _this2.state.offset.top * yScale;
+        var imageWidth = xScale < 1 ? img.naturalWidth : _this2.state.dimensions.width * xScale;
+        var imageHeight = yScale < 1 ? img.naturalHeight : _this2.state.dimensions.height * yScale;
 
-    ctx.clearRect(0, 0, this.props.width, this.props.height);
-    ctx.drawImage(img, imageOffsetX, imageOffsetY, imageWidth, imageHeight, canvasOffsetX, canvasOffsetY, canvasWidth, canvasHeight);
-    return (0, _dataUriToBlob2['default'])(canvas.toDataURL());
+        var canvasOffsetX = xScale < 1 ? Math.floor((_this2.state.dimensions.width - img.naturalWidth) / 2) : 0;
+        var canvasOffsetY = yScale < 1 ? Math.floor((_this2.state.dimensions.height - img.naturalHeight) / 2) : 0;
+        var canvasWidth = xScale < 1 ? img.naturalWidth : _this2.props.width;
+        var canvasHeight = yScale < 1 ? img.naturalHeight : _this2.props.height;
+
+        ctx.clearRect(0, 0, _this2.props.width, _this2.props.height);
+        ctx.drawImage(img, imageOffsetX, imageOffsetY, imageWidth, imageHeight, canvasOffsetX, canvasOffsetY, canvasWidth, canvasHeight);
+        resolve((0, _dataUriToBlob2['default'])(canvas.toDataURL()));
+      };
+      img.src = window.URL.createObjectURL(_this2.props.image);
+    });
   },
 
   onChange: function onChange(offset, dimensions) {

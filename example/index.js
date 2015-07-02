@@ -32,7 +32,9 @@ let Wrapper = React.createClass({
   },
 
   imageLoaded (img) {
-    let image = this.refs.crop.cropImage()
+    if (img.naturalWidth < 262 && img.naturalHeight < 147) {
+      this.crop()
+    }
   },
 
   render () {
