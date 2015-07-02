@@ -20592,7 +20592,8 @@
 	      width: box.width,
 	      height: box.height
 	    }, function () {
-	      _this.props.onImageLoaded && _this.props.onImageLoaded(evt.target);
+	      var img = _react2['default'].findDOMNode(_this.refs.image);
+	      _this.props.onImageLoaded && _this.props.onImageLoaded(img);
 	    });
 	  },
 
