@@ -6,7 +6,8 @@
   "scripts": {
     "compile-index": "babel --plugins object-assign lib/index.src.js --out-file index.js",
     "compile-box": "babel --plugins object-assign lib/draggable-resizable-box.js --out-file draggable-resizable-box.js",
-    "compile": "npm run compile-index && npm run compile-box && webpack",
+    "compile-css": "./node_modules/postcss-cli/bin/postcss --use autoprefixer ./lib/cropper.css -d ./",
+    "compile": "npm run compile-index && npm run compile-box && npm run compile-css && webpack",
     "example": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
     "prepublish": "npm run compile"
   },
@@ -27,7 +28,9 @@
     "node-libs-browser": "0.5.2"
   },
   "dependencies": {
-    "data-uri-to-blob": "0.0.4"
+    "autoprefixer": "5.2.0",
+    "data-uri-to-blob": "0.0.4",
+    "postcss-cli": "1.3.1"
   },
   "peerDependencies": {
     "react": "^0.13.0"
