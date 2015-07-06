@@ -110,7 +110,7 @@
 	  },
 
 	  imageLoaded: function imageLoaded(img) {
-	    if (img.naturalWidth < 262 && img.naturalHeight < 147) {
+	    if (img.naturalWidth && img.naturalWidth < 262 && img.naturalHeight && img.naturalHeight < 147) {
 	      this.crop();
 	    }
 	  },
