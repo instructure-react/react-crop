@@ -1,6 +1,6 @@
 {
   "name": "react-crop",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "An image cropper that moves the cropper rather than the image",
   "repository": "https://github.com/shichongrui/react-crop",
   "main": "index.js",
@@ -15,7 +15,8 @@
   "keywords": [
     "react",
     "image",
-    "crop"
+    "crop",
+    "react-component"
   ],
   "author": "Matthew Sessions <shichongrui@gmail.com> (http://www.matthewsessions.com/)",
   "license": "MIT",
