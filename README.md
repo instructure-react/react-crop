@@ -25,3 +25,9 @@ The label to use next to the offset X input used for keyboard users. This is esp
 
 ####`offsetYLabel`####
 The label to use next to the offset Y input used for keyboard users. This is especially useful if you need to localize the text. The default is "Offset Y".
+
+###Running the Example###
+ - Clone the repo
+ - `npm i`
+ - `npm run example`
+ - Visit `localhost:8080`
