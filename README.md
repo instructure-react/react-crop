@@ -9,7 +9,7 @@ For example usage check out the example folder. For a demo checkout: https://cdn
 This is the desired width that you would like the image to be cropped to. The width of the cropper will be scaled to fit this size. This prop also helps determine the minimum width that the cropper can be.
 
 ####`height`####
-This is the desired height that you would like the image to be cropped to. The height of the cropper will be scaled tof it this size. This prop also helps determine the minimum height that the cropper can be. The width and height aspect ratio will be preserved while resizing the cropper.
+This is the desired height that you would like the image to be cropped to. The height of the cropper will be scaled to fit this size. This prop also helps determine the minimum height that the cropper can be. The width and height aspect ratio will be preserved while resizing the cropper.
 
 ####`image`####
 A `blob` of the original image that you wish to crop.
