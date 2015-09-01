@@ -1,8 +1,8 @@
 {
   "name": "react-crop",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "An image cropper that moves the cropper rather than the image",
-  "repository": "https://github.com/shichongrui/react-crop",
+  "repository": "https://github.com/instructure-react/react-crop",
   "main": "index.js",
   "scripts": {
     "compile-index": "babel --plugins object-assign lib/index.src.js --out-file index.js",
