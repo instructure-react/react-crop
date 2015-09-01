@@ -47,8 +47,17 @@ exports['default'] = _react2['default'].createClass({
     return {
       imageLoaded: false,
       width: this.props.width,
-      height: this.props.height
+      height: this.props.height,
+      url: window.URL.createObjectURL(this.props.image)
     };
+  },
+
+  componentDidWillReceiveProps: function componentDidWillReceiveProps(nextProps) {
+    if (this.props.image !== nextProps.image) {
+      this.setState({
+        url: window.URL.createObjectURL(nextProps.image)
+      });
+    }
   },
 
   shouldComponentUpdate: function shouldComponentUpdate(nextProps, nextState) {
@@ -106,7 +115,6 @@ exports['default'] = _react2['default'].createClass({
   },
 
   render: function render() {
-    var url = window.URL.createObjectURL(this.props.image);
     return _react2['default'].createElement(
       'div',
       {
@@ -122,7 +130,7 @@ exports['default'] = _react2['default'].createClass({
         height: this.props.height }),
       _react2['default'].createElement('img', {
         ref: 'image',
-        src: url,
+        src: this.state.url,
         className: 'Cropper-image',
         onLoad: this.onLoad,
         style: { top: this.state.height / 2 } }),
