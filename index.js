@@ -52,10 +52,11 @@ exports['default'] = _react2['default'].createClass({
     };
   },
 
-  componentDidWillReceiveProps: function componentDidWillReceiveProps(nextProps) {
+  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
     if (this.props.image !== nextProps.image) {
       this.setState({
-        url: window.URL.createObjectURL(nextProps.image)
+        url: window.URL.createObjectURL(nextProps.image),
+        imageLoaded: false
       });
     }
   },

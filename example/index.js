@@ -25,6 +25,7 @@ let Wrapper = React.createClass({
   },
 
   clear () {
+    this.refs.file.getDOMNode().value = null
     this.setState({
       previewUrl: null,
       image: null
@@ -41,7 +42,7 @@ let Wrapper = React.createClass({
   render () {
     return (
       <div className='Wrapper'>
-        <input type='file' onChange={this.onChange}/>
+        <input ref='file' type='file' onChange={this.onChange}/>
 
         {this.state.image &&
           <div>
