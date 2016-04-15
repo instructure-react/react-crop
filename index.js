@@ -70,13 +70,13 @@ exports['default'] = _react2['default'].createClass({
   onLoad: function onLoad(evt) {
     var _this = this;
 
-    var box = _react2['default'].findDOMNode(this).getBoundingClientRect();
+    var box = this.refs.box.getBoundingClientRect();
     this.setState({
       imageLoaded: true,
       width: box.width,
       height: box.height
     }, function () {
-      var img = _react2['default'].findDOMNode(_this.refs.image);
+      var img = _this.refs.image;
       _this.props.onImageLoaded && _this.props.onImageLoaded(img);
     });
   },
@@ -87,8 +87,8 @@ exports['default'] = _react2['default'].createClass({
     return new Promise(function (resolve, reject) {
       var img = new Image();
       img.onload = function () {
-        var canvas = _react2['default'].findDOMNode(_this2.refs.canvas);
-        var img = _react2['default'].findDOMNode(_this2.refs.image);
+        var canvas = _this2.refs.canvas;
+        var img = _this2.refs.image;
         var ctx = canvas.getContext('2d');
         var xScale = img.naturalWidth / _this2.state.width;
         var yScale = img.naturalHeight / _this2.state.height;
@@ -119,6 +119,7 @@ exports['default'] = _react2['default'].createClass({
     return _react2['default'].createElement(
       'div',
       {
+        ref: 'box',
         className: 'Cropper',
         style: {
           minWidth: this.props.width,

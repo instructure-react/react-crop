@@ -224,14 +224,14 @@ exports['default'] = _react2['default'].createClass({
   },
 
   onResize: function onResize(event) {
-    var box = _react2['default'].findDOMNode(this).parentElement.parentElement.getBoundingClientRect();
+    var box = this.refs.box.parentElement.parentElement.getBoundingClientRect();
     var coordinates = this.getClientCoordinates(event);
     var position = this[this.state.corner](coordinates, box);
     this.resize(position, coordinates);
   },
 
   controlsResize: function controlsResize(event) {
-    var box = _react2['default'].findDOMNode(this).parentElement.parentElement.getBoundingClientRect();
+    var box = this.refs.box.parentElement.parentElement.getBoundingClientRect();
     var width = event.target.name === 'width' ? +event.target.value : +event.target.value * this.props.aspectRatio;
     var height = event.target.name === 'height' ? +event.target.value : +event.target.value / this.props.aspectRatio;
     var dimensions = this.preserveAspectRatio(width, height);
@@ -377,7 +377,7 @@ exports['default'] = _react2['default'].createClass({
 
     return _react2['default'].createElement(
       'div',
-      { className: 'DraggableResizable' },
+      { ref: 'box', className: 'DraggableResizable' },
       _react2['default'].createElement(
         'div',
         { className: 'DraggableResizable-controls' },
