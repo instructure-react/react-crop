@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 import Cropper from '../lib/index.src.js'
 
 let Wrapper = React.createClass({
@@ -25,7 +26,7 @@ let Wrapper = React.createClass({
   },
 
   clear () {
-    this.refs.file.getDOMNode().value = null
+    this.refs.file.value = null
     this.setState({
       previewUrl: null,
       image: null
@@ -63,4 +64,4 @@ let Wrapper = React.createClass({
   }
 })
 
-React.render(<Wrapper />, document.querySelector('#view'))
+ReactDOM.render(<Wrapper />, document.querySelector('#view'))
