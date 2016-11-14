@@ -65,6 +65,7 @@ exports['default'] = _react2['default'].createClass({
     document.addEventListener('mouseup', this.eventEnd);
     document.addEventListener('touchmove', this.eventMove);
     document.addEventListener('touchend', this.eventEnd);
+    document.addEventListener('keydown', this.handleKey);
     this.props.onChange({
       top: this.state.top,
       left: this.state.left
@@ -79,6 +80,7 @@ exports['default'] = _react2['default'].createClass({
     document.removeEventListener('mouseup', this.eventEnd);
     document.removeEventListener('touchmove', this.eventMove);
     document.removeEventListener('touchend', this.eventEnd);
+    document.removeEventListener('keyup', this.handleKey);
   },
 
   calculateDimensions: function calculateDimensions(_ref) {
@@ -342,6 +344,47 @@ exports['default'] = _react2['default'].createClass({
         left: position.left
       }, _this2.calculateDimensions(position));
     });
+  },
+
+  keyboardResize: function keyboardResize(widthChange, heightChange) {
+    this.setState({
+      bottom: this.state.bottom + heightChange,
+      right: this.state.right + widthChange,
+      width: this.state.width + widthChange,
+      height: this.state.height + heightChange
+    });
+  },
+
+  handleKey: function handleKey(event) {
+    if (event.shiftKey) {
+      if (event.key === 'ArrowUp') {
+        this.keyboardResize(0, 10);
+        event.preventDefault();
+      } else if (event.key === 'ArrowDown') {
+        this.keyboardResize(0, -10);
+        event.preventDefault();
+      } else if (event.key === 'ArrowLeft') {
+        this.keyboardResize(10, 0);
+        event.preventDefault();
+      } else if (event.key === 'ArrowRight') {
+        this.keyboardResize(-10, 0);
+        event.preventDefault();
+      }
+    } else {
+      if (event.key === 'ArrowUp') {
+        this.moveBox(this.state.clientX, this.state.clientY, 0, -10);
+        event.preventDefault();
+      } else if (event.key === 'ArrowDown') {
+        this.moveBox(this.state.clientX, this.state.clientY, 0, 10);
+        event.preventDefault();
+      } else if (event.key === 'ArrowLeft') {
+        this.moveBox(this.state.clientX, this.state.clientY, -10, 0);
+        event.preventDefault();
+      } else if (event.key === 'ArrowRight') {
+        this.moveBox(this.state.clientX, this.state.clientY, 10, 0);
+        event.preventDefault();
+      }
+    }
   },
 
   render: function render() {
