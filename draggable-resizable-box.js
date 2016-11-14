@@ -346,28 +346,45 @@ exports['default'] = _react2['default'].createClass({
     });
   },
 
-  keyboardResize: function keyboardResize(widthChange, heightChange) {
+  keyboardResize: function keyboardResize(change) {
+    if (this.state.right - change < 0) {
+      return;
+    }
+    if (this.state.bottom - change < 0) {
+      return;
+    }
+
+    var _preserveAspectRatio7 = this.preserveAspectRatio(this.state.width + change, this.state.height + change);
+
+    var _preserveAspectRatio72 = _slicedToArray(_preserveAspectRatio7, 2);
+
+    var width = _preserveAspectRatio72[0];
+    var height = _preserveAspectRatio72[1];
+
+    var widthChange = width - this.state.width;
+    var heightChange = height - this.state.height;
+
     this.setState({
-      bottom: this.state.bottom + heightChange,
-      right: this.state.right + widthChange,
-      width: this.state.width + widthChange,
-      height: this.state.height + heightChange
+      bottom: this.state.bottom - heightChange,
+      right: this.state.right - widthChange,
+      width: width,
+      height: height
     });
   },
 
   handleKey: function handleKey(event) {
     if (event.shiftKey) {
       if (event.key === 'ArrowUp') {
-        this.keyboardResize(0, 10);
+        this.keyboardResize(-10);
         event.preventDefault();
       } else if (event.key === 'ArrowDown') {
-        this.keyboardResize(0, -10);
+        this.keyboardResize(10);
         event.preventDefault();
       } else if (event.key === 'ArrowLeft') {
-        this.keyboardResize(10, 0);
+        this.keyboardResize(-10);
         event.preventDefault();
       } else if (event.key === 'ArrowRight') {
-        this.keyboardResize(-10, 0);
+        this.keyboardResize(10);
         event.preventDefault();
       }
     } else {
