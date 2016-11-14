@@ -1,7 +1,7 @@
 #react-crop#
 An accessible image cropper where the image is stationary and a resizable, draggable box represents the cropped image
 
-For example usage check out the example folder. For a demo checkout: https://cdn.rawgit.com/shichongrui/react-crop/master/example/
+For example usage check out the example folder. For a demo checkout: https://cdn.rawgit.com/instructure-react/react-crop/master/example/
 
 ###Basic usage###
 
@@ -52,14 +52,14 @@ export default class MyComponent extends Component {
             this.crop()
         }
     }
- 
+
     render() {
         return (
             <div>
                 <input ref='file' type='file' onChange={this.onChange} />
-                
+
                 {
-              
+
                     this.state.image &&
 
                     <div>
@@ -68,21 +68,21 @@ export default class MyComponent extends Component {
                             image={this.state.image}
                             width={100}
                             height={80}
-                            onImageLoaded={this.imageLoaded} 
+                            onImageLoaded={this.imageLoaded}
                         />
-                    
+
                         <button onClick={this.crop}>Crop</button>
                         <button onClick={this.clear}>Clear</button>
                     </div>
-              
+
                 }
-                    
+
                 {
                     this.state.previewUrl &&
 
                     <img src={this.state.previewUrl} />
                 }
-                
+
             </div>
         );
     }
