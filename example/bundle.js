@@ -22137,7 +22137,7 @@
 	            name: 'x',
 	            value: Math.round(this.state.left),
 	            onChange: this.controlsMoveBox,
-	            tabIndex: -1,
+	            tabIndex: '-1',
 	            type: 'number' })
 	        ),
 	        _react2['default'].createElement(
@@ -22148,7 +22148,7 @@
 	            name: 'y',
 	            value: Math.round(this.state.top),
 	            onChange: this.controlsMoveBox,
-	            tabIndex: -1,
+	            tabIndex: '-1',
 	            type: 'number' })
 	        ),
 	        _react2['default'].createElement(
@@ -22159,7 +22159,7 @@
 	            name: 'width',
 	            value: Math.round(width),
 	            type: 'number',
-	            tabIndex: -1,
+	            tabIndex: '-1',
 	            onChange: this.controlsResize })
 	        ),
 	        _react2['default'].createElement(
@@ -22170,7 +22170,7 @@
 	            value: Math.round(height),
 	            type: 'number',
 	            name: 'height',
-	            tabIndex: -1,
+	            tabIndex: '-1',
 	            onChange: this.controlsResize })
 	        )
 	      ),
