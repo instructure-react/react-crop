@@ -1,7 +1,7 @@
 #react-crop#
 An accessible image cropper where the image is stationary and a resizable, draggable box represents the cropped image
 
-For example usage check out the example folder. For a demo checkout: https://cdn.rawgit.com/instructure-react/react-crop/master/example/
+For example usage check out the docs folder. For a demo checkout: https://cdn.rawgit.com/instructure-react/react-crop/master/docs/
 
 ###Basic usage###
 
@@ -115,5 +115,5 @@ The label to use next to the offset Y input used for keyboard users. This is esp
 ###Running the Example###
  - Clone the repo
  - `npm i`
- - `npm run example`
+ - `npm run docs`
  - Visit `localhost:8080`

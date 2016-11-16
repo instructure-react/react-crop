@@ -7,9 +7,9 @@
   "scripts": {
     "compile-index": "babel --plugins object-assign lib/index.src.js --out-file index.js",
     "compile-box": "babel --plugins object-assign lib/draggable-resizable-box.js --out-file draggable-resizable-box.js",
-    "compile-css": "./node_modules/postcss-cli/bin/postcss --use autoprefixer ./lib/cropper.css -d ./ && cp ./cropper.css ./example/cropper.css",
+    "compile-css": "./node_modules/postcss-cli/bin/postcss --use autoprefixer ./lib/cropper.css -d ./ && cp ./cropper.css ./docs/cropper.css",
     "compile": "npm run compile-index && npm run compile-box && npm run compile-css && webpack",
-    "example": "webpack-dev-server --content-base example/",
+    "docs": "webpack-dev-server --content-base docs/",
     "prepublish": "npm run compile"
   },
   "keywords": [
