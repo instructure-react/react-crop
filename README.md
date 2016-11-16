@@ -1,7 +1,7 @@
 #react-crop#
 An accessible image cropper where the image is stationary and a resizable, draggable box represents the cropped image
 
-For example usage check out the docs folder. For a demo checkout: https://cdn.rawgit.com/instructure-react/react-crop/master/docs/
+For example usage check out the docs folder. Demo: http://instructure-react.github.io/react-crop/
 
 ###Basic usage###
 
