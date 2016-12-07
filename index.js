@@ -30,7 +30,8 @@ exports['default'] = _react2['default'].createClass({
     heightLabel: _react2['default'].PropTypes.string,
     offsetXLabel: _react2['default'].PropTypes.string,
     offsetYLabel: _react2['default'].PropTypes.string,
-    onImageLoaded: _react2['default'].PropTypes.func
+    onImageLoaded: _react2['default'].PropTypes.func,
+    minConstraints: _react2['default'].PropTypes.arrayOf(_react2['default'].PropTypes.number)
   },
 
   getDefaultProps: function getDefaultProps() {
@@ -145,7 +146,7 @@ exports['default'] = _react2['default'].createClass({
             aspectRatio: this.props.width / this.props.height,
             width: this.state.width,
             height: this.state.height,
-            minConstraints: [this.props.width, this.props.height],
+            minConstraints: this.props.minConstraints,
             onChange: this.onChange,
             widthLabel: this.props.widthLabel,
             heightLabel: this.props.heightLabel,

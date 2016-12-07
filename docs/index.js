@@ -2,6 +2,9 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import Cropper from '../lib/index.src.js'
 
+const WIDTH = 262;
+const HEIGHT = 147;
+
 let Wrapper = React.createClass({
   displayName: 'Wrapper',
 
@@ -18,10 +21,11 @@ let Wrapper = React.createClass({
     })
   },
 
-  async crop () {
-    let image = await this.refs.crop.cropImage()
-    this.setState({
-      previewUrl: window.URL.createObjectURL(image)
+  crop () {
+    this.refs.crop.cropImage().then((image) => {
+      this.setState({
+        previewUrl: window.URL.createObjectURL(image)
+      })
     })
   },
 
@@ -34,31 +38,33 @@ let Wrapper = React.createClass({
   },
 
   imageLoaded (img) {
-    if (img.naturalWidth && img.naturalWidth < 262 &&
-        img.naturalHeight && img.naturalHeight < 147) {
+    if (img.naturalWidth && img.naturalWidth < WIDTH &&
+        img.naturalHeight && img.naturalHeight < HEIGHT) {
       this.crop()
     }
   },
 
   render () {
     return (
-      <div className='Wrapper'>
+      <div>
         <input ref='file' type='file' onChange={this.onChange}/>
-
-        {this.state.image &&
-          <div>
-            <Cropper
-              ref='crop'
-              image={this.state.image}
-              width={262}
-              height={147}
-              onImageLoaded={this.imageLoaded} />
-            <button onClick={this.crop}>Crop</button>
-            <button onClick={this.clear}>Clear</button>
-          </div>}
-
-        {this.state.previewUrl &&
-          <img src={this.state.previewUrl} />}
+        <div className='Wrapper'>
+          {this.state.image &&
+            <div>
+              <Cropper
+                ref='crop'
+                image={this.state.image}
+                width={WIDTH}
+                height={HEIGHT}
+                onImageLoaded={this.imageLoaded} />
+            </div>}
+        </div>
+        <div>
+          <button onClick={this.crop}>Crop</button>
+          <button onClick={this.clear}>Clear</button>
+        </div>
+          {this.state.previewUrl &&
+            <img src={this.state.previewUrl} />}
       </div>
     )
   }

@@ -94,8 +94,10 @@ exports['default'] = _react2['default'].createClass({
 
   // If you do this, be careful of constraints
   preserveAspectRatio: function preserveAspectRatio(width, height) {
-    width = Math.max(width, this.props.minConstraints[0]);
-    height = Math.max(height, this.props.minConstraints[1]);
+    if (this.props.minConstraints) {
+      width = Math.max(width, this.props.minConstraints[0]);
+      height = Math.max(height, this.props.minConstraints[1]);
+    }
     var currentAspectRatio = width / height;
 
     if (currentAspectRatio < this.props.aspectRatio) {
