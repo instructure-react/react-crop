@@ -31,6 +31,7 @@
   max-width: 100%;
   position: relative;
   -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
   left: 50%;
 }
@@ -49,6 +50,7 @@
   right: 0;
   cursor: nwse-resize;
   -webkit-transform: translate(50%, 50%);
+      -ms-transform: translate(50%, 50%);
           transform: translate(50%, 50%);
 }
 .resize-handle-ne {
@@ -56,6 +58,7 @@
   top: 0;
   cursor: nesw-resize;
   -webkit-transform: translate(50%, -50%);
+      -ms-transform: translate(50%, -50%);
           transform: translate(50%, -50%);
 }
 .resize-handle-sw {
@@ -63,6 +66,7 @@
   left: 0;
   cursor: nesw-resize;
   -webkit-transform: translate(-50%, 50%);
+      -ms-transform: translate(-50%, 50%);
           transform: translate(-50%, 50%);
 }
 .resize-handle-nw {
@@ -70,6 +74,7 @@
   bottom: 0;
   cursor: nwse-resize;
   -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
 }
 
