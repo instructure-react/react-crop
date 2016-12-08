@@ -18,6 +18,8 @@ var _dataUriToBlob = require('data-uri-to-blob');
 
 var _dataUriToBlob2 = _interopRequireDefault(_dataUriToBlob);
 
+require('./cropper.css');
+
 exports['default'] = _react2['default'].createClass({
   displayName: 'Cropper',
 
