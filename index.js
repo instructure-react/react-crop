@@ -1,10 +1,8 @@
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
+Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 var _react = require('react');
 
@@ -18,20 +16,24 @@ var _dataUriToBlob = require('data-uri-to-blob');
 
 var _dataUriToBlob2 = _interopRequireDefault(_dataUriToBlob);
 
-exports['default'] = _react2['default'].createClass({
+require('./cropper.css');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = _react2.default.createClass({
   displayName: 'Cropper',
 
   propTypes: {
-    width: _react2['default'].PropTypes.number.isRequired,
-    height: _react2['default'].PropTypes.number.isRequired,
-    center: _react2['default'].PropTypes.bool,
-    image: _react2['default'].PropTypes.any,
-    widthLabel: _react2['default'].PropTypes.string,
-    heightLabel: _react2['default'].PropTypes.string,
-    offsetXLabel: _react2['default'].PropTypes.string,
-    offsetYLabel: _react2['default'].PropTypes.string,
-    onImageLoaded: _react2['default'].PropTypes.func,
-    minConstraints: _react2['default'].PropTypes.arrayOf(_react2['default'].PropTypes.number)
+    width: _react2.default.PropTypes.number.isRequired,
+    height: _react2.default.PropTypes.number.isRequired,
+    center: _react2.default.PropTypes.bool,
+    image: _react2.default.PropTypes.any,
+    widthLabel: _react2.default.PropTypes.string,
+    heightLabel: _react2.default.PropTypes.string,
+    offsetXLabel: _react2.default.PropTypes.string,
+    offsetYLabel: _react2.default.PropTypes.string,
+    onImageLoaded: _react2.default.PropTypes.func,
+    minConstraints: _react2.default.PropTypes.arrayOf(_react2.default.PropTypes.number)
   },
 
   getDefaultProps: function getDefaultProps() {
@@ -43,7 +45,6 @@ exports['default'] = _react2['default'].createClass({
       offsetYLabel: 'Offset Y'
     };
   },
-
   getInitialState: function getInitialState() {
     return {
       imageLoaded: false,
@@ -52,7 +53,6 @@ exports['default'] = _react2['default'].createClass({
       url: window.URL.createObjectURL(this.props.image)
     };
   },
-
   componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
     if (this.props.image !== nextProps.image) {
       this.setState({
@@ -61,13 +61,11 @@ exports['default'] = _react2['default'].createClass({
       });
     }
   },
-
   shouldComponentUpdate: function shouldComponentUpdate(nextProps, nextState) {
     var image = this.props.image;
 
     return nextProps.image.size !== image.size || nextProps.image.name !== image.name || nextProps.image.type !== image.type || nextState.imageLoaded !== this.state.imageLoaded;
   },
-
   onLoad: function onLoad(evt) {
     var _this = this;
 
@@ -81,7 +79,6 @@ exports['default'] = _react2['default'].createClass({
       _this.props.onImageLoaded && _this.props.onImageLoaded(img);
     });
   },
-
   cropImage: function cropImage() {
     var _this2 = this;
 
@@ -91,8 +88,9 @@ exports['default'] = _react2['default'].createClass({
         var canvas = _this2.refs.canvas;
         var img = _this2.refs.image;
         var ctx = canvas.getContext('2d');
-        var xScale = img.naturalWidth / _this2.state.width;
-        var yScale = img.naturalHeight / _this2.state.height;
+        var xScale = img.naturalWidth / _this2.state.width,
+            yScale = img.naturalHeight / _this2.state.height;
+
 
         var imageOffsetX = xScale < 1 ? 0 : _this2.state.offset.left * xScale;
         var imageOffsetY = yScale < 1 ? 0 : _this2.state.offset.top * yScale;
@@ -106,18 +104,16 @@ exports['default'] = _react2['default'].createClass({
 
         ctx.clearRect(0, 0, _this2.props.width, _this2.props.height);
         ctx.drawImage(img, imageOffsetX, imageOffsetY, imageWidth, imageHeight, canvasOffsetX, canvasOffsetY, canvasWidth, canvasHeight);
-        resolve((0, _dataUriToBlob2['default'])(canvas.toDataURL()));
+        resolve((0, _dataUriToBlob2.default)(canvas.toDataURL()));
       };
       img.src = window.URL.createObjectURL(_this2.props.image);
     });
   },
-
   onChange: function onChange(offset, dimensions) {
     this.setState({ offset: offset, dimensions: dimensions });
   },
-
   render: function render() {
-    return _react2['default'].createElement(
+    return _react2.default.createElement(
       'div',
       {
         ref: 'box',
@@ -126,22 +122,22 @@ exports['default'] = _react2['default'].createClass({
           minWidth: this.props.width,
           minHeight: this.props.height
         } },
-      _react2['default'].createElement('canvas', {
+      _react2.default.createElement('canvas', {
         className: 'Cropper-canvas',
         ref: 'canvas',
         width: this.props.width,
         height: this.props.height }),
-      _react2['default'].createElement('img', {
+      _react2.default.createElement('img', {
         ref: 'image',
         src: this.state.url,
         className: 'Cropper-image',
         onLoad: this.onLoad,
         style: { top: this.state.height / 2 } }),
-      this.state.imageLoaded && _react2['default'].createElement(
+      this.state.imageLoaded && _react2.default.createElement(
         'div',
         { className: 'box' },
-        _react2['default'].createElement(
-          _draggableResizableBox2['default'],
+        _react2.default.createElement(
+          _draggableResizableBox2.default,
           {
             aspectRatio: this.props.width / this.props.height,
             width: this.state.width,
@@ -152,10 +148,9 @@ exports['default'] = _react2['default'].createClass({
             heightLabel: this.props.heightLabel,
             offsetXLabel: this.props.offsetXLabel,
             offsetYLabel: this.props.offsetYLabel },
-          _react2['default'].createElement('div', { className: 'Cropper-box' })
+          _react2.default.createElement('div', { className: 'Cropper-box' })
         )
       )
     );
   }
 });
-module.exports = exports['default'];

@@ -56,11 +56,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 	
-	Object.defineProperty(exports, '__esModule', {
+	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
 	var _react = __webpack_require__(1);
 	
@@ -74,20 +72,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _dataUriToBlob2 = _interopRequireDefault(_dataUriToBlob);
 	
-	exports['default'] = _react2['default'].createClass({
+	__webpack_require__(4);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = _react2.default.createClass({
 	  displayName: 'Cropper',
 	
 	  propTypes: {
-	    width: _react2['default'].PropTypes.number.isRequired,
-	    height: _react2['default'].PropTypes.number.isRequired,
-	    center: _react2['default'].PropTypes.bool,
-	    image: _react2['default'].PropTypes.any,
-	    widthLabel: _react2['default'].PropTypes.string,
-	    heightLabel: _react2['default'].PropTypes.string,
-	    offsetXLabel: _react2['default'].PropTypes.string,
-	    offsetYLabel: _react2['default'].PropTypes.string,
-	    onImageLoaded: _react2['default'].PropTypes.func,
-	    minConstraints: _react2['default'].PropTypes.arrayOf(_react2['default'].PropTypes.number)
+	    width: _react2.default.PropTypes.number.isRequired,
+	    height: _react2.default.PropTypes.number.isRequired,
+	    center: _react2.default.PropTypes.bool,
+	    image: _react2.default.PropTypes.any,
+	    widthLabel: _react2.default.PropTypes.string,
+	    heightLabel: _react2.default.PropTypes.string,
+	    offsetXLabel: _react2.default.PropTypes.string,
+	    offsetYLabel: _react2.default.PropTypes.string,
+	    onImageLoaded: _react2.default.PropTypes.func,
+	    minConstraints: _react2.default.PropTypes.arrayOf(_react2.default.PropTypes.number)
 	  },
 	
 	  getDefaultProps: function getDefaultProps() {
@@ -99,7 +101,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      offsetYLabel: 'Offset Y'
 	    };
 	  },
-	
 	  getInitialState: function getInitialState() {
 	    return {
 	      imageLoaded: false,
@@ -108,7 +109,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      url: window.URL.createObjectURL(this.props.image)
 	    };
 	  },
-	
 	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
 	    if (this.props.image !== nextProps.image) {
 	      this.setState({
@@ -117,13 +117,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	      });
 	    }
 	  },
-	
 	  shouldComponentUpdate: function shouldComponentUpdate(nextProps, nextState) {
 	    var image = this.props.image;
 	
 	    return nextProps.image.size !== image.size || nextProps.image.name !== image.name || nextProps.image.type !== image.type || nextState.imageLoaded !== this.state.imageLoaded;
 	  },
-	
 	  onLoad: function onLoad(evt) {
 	    var _this = this;
 	
@@ -137,7 +135,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      _this.props.onImageLoaded && _this.props.onImageLoaded(img);
 	    });
 	  },
-	
 	  cropImage: function cropImage() {
 	    var _this2 = this;
 	
@@ -147,8 +144,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var canvas = _this2.refs.canvas;
 	        var img = _this2.refs.image;
 	        var ctx = canvas.getContext('2d');
-	        var xScale = img.naturalWidth / _this2.state.width;
-	        var yScale = img.naturalHeight / _this2.state.height;
+	        var xScale = img.naturalWidth / _this2.state.width,
+	            yScale = img.naturalHeight / _this2.state.height;
+	
 	
 	        var imageOffsetX = xScale < 1 ? 0 : _this2.state.offset.left * xScale;
 	        var imageOffsetY = yScale < 1 ? 0 : _this2.state.offset.top * yScale;
@@ -162,18 +160,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	        ctx.clearRect(0, 0, _this2.props.width, _this2.props.height);
 	        ctx.drawImage(img, imageOffsetX, imageOffsetY, imageWidth, imageHeight, canvasOffsetX, canvasOffsetY, canvasWidth, canvasHeight);
-	        resolve((0, _dataUriToBlob2['default'])(canvas.toDataURL()));
+	        resolve((0, _dataUriToBlob2.default)(canvas.toDataURL()));
 	      };
 	      img.src = window.URL.createObjectURL(_this2.props.image);
 	    });
 	  },
-	
 	  onChange: function onChange(offset, dimensions) {
 	    this.setState({ offset: offset, dimensions: dimensions });
 	  },
-	
 	  render: function render() {
-	    return _react2['default'].createElement(
+	    return _react2.default.createElement(
 	      'div',
 	      {
 	        ref: 'box',
@@ -182,22 +178,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	          minWidth: this.props.width,
 	          minHeight: this.props.height
 	        } },
-	      _react2['default'].createElement('canvas', {
+	      _react2.default.createElement('canvas', {
 	        className: 'Cropper-canvas',
 	        ref: 'canvas',
 	        width: this.props.width,
 	        height: this.props.height }),
-	      _react2['default'].createElement('img', {
+	      _react2.default.createElement('img', {
 	        ref: 'image',
 	        src: this.state.url,
 	        className: 'Cropper-image',
 	        onLoad: this.onLoad,
 	        style: { top: this.state.height / 2 } }),
-	      this.state.imageLoaded && _react2['default'].createElement(
+	      this.state.imageLoaded && _react2.default.createElement(
 	        'div',
 	        { className: 'box' },
-	        _react2['default'].createElement(
-	          _draggableResizableBox2['default'],
+	        _react2.default.createElement(
+	          _draggableResizableBox2.default,
 	          {
 	            aspectRatio: this.props.width / this.props.height,
 	            width: this.state.width,
@@ -208,13 +204,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	            heightLabel: this.props.heightLabel,
 	            offsetXLabel: this.props.offsetXLabel,
 	            offsetYLabel: this.props.offsetYLabel },
-	          _react2['default'].createElement('div', { className: 'Cropper-box' })
+	          _react2.default.createElement('div', { className: 'Cropper-box' })
 	        )
 	      )
 	    );
 	  }
 	});
-	module.exports = exports['default'];
 
 /***/ },
 /* 1 */
@@ -228,33 +223,35 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 	
-	Object.defineProperty(exports, '__esModule', {
+	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 	
-	var _slicedToArray = (function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i['return']) _i['return'](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError('Invalid attempt to destructure non-iterable instance'); } }; })();
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 	
 	var _react = __webpack_require__(1);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	exports['default'] = _react2['default'].createClass({
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = _react2.default.createClass({
 	  displayName: 'DraggableResizableBox',
 	
 	  propTypes: {
-	    aspectRatio: _react2['default'].PropTypes.number.isRequired,
-	    width: _react2['default'].PropTypes.number.isRequired,
-	    height: _react2['default'].PropTypes.number.isRequired,
-	    onChange: _react2['default'].PropTypes.func,
-	    offset: _react2['default'].PropTypes.array,
-	    minConstraints: _react2['default'].PropTypes.array,
-	    children: _react2['default'].PropTypes.node,
-	    widthLabel: _react2['default'].PropTypes.string,
-	    heightLabel: _react2['default'].PropTypes.string,
-	    offsetXLabel: _react2['default'].PropTypes.string,
-	    offsetYLabel: _react2['default'].PropTypes.string
+	    aspectRatio: _react2.default.PropTypes.number.isRequired,
+	    width: _react2.default.PropTypes.number.isRequired,
+	    height: _react2.default.PropTypes.number.isRequired,
+	    onChange: _react2.default.PropTypes.func,
+	    offset: _react2.default.PropTypes.array,
+	    minConstraints: _react2.default.PropTypes.array,
+	    children: _react2.default.PropTypes.node,
+	    widthLabel: _react2.default.PropTypes.string,
+	    heightLabel: _react2.default.PropTypes.string,
+	    offsetXLabel: _react2.default.PropTypes.string,
+	    offsetYLabel: _react2.default.PropTypes.string
 	  },
 	
 	  getDefaultProps: function getDefaultProps() {
@@ -265,14 +262,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	      offsetYLabel: 'Offset Y'
 	    };
 	  },
-	
 	  getInitialState: function getInitialState() {
-	    var _preserveAspectRatio = this.preserveAspectRatio(this.props.width, this.props.height);
-	
-	    var _preserveAspectRatio2 = _slicedToArray(_preserveAspectRatio, 2);
-	
-	    var width = _preserveAspectRatio2[0];
-	    var height = _preserveAspectRatio2[1];
+	    var _preserveAspectRatio = this.preserveAspectRatio(this.props.width, this.props.height),
+	        _preserveAspectRatio2 = _slicedToArray(_preserveAspectRatio, 2),
+	        width = _preserveAspectRatio2[0],
+	        height = _preserveAspectRatio2[1];
 	
 	    var centerYOffset = (this.props.height - height) / 2;
 	    var centerXOffset = (this.props.width - width) / 2;
@@ -285,7 +279,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      height: height
 	    };
 	  },
-	
 	  componentDidMount: function componentDidMount() {
 	    document.addEventListener('mousemove', this.eventMove);
 	    document.addEventListener('mouseup', this.eventEnd);
@@ -300,7 +293,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      height: this.state.height
 	    });
 	  },
-	
 	  componentWillUnmount: function componentWillUnmount() {
 	    document.removeEventListener('mousemove', this.eventMove);
 	    document.removeEventListener('mouseup', this.eventEnd);
@@ -308,15 +300,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	    document.removeEventListener('touchend', this.eventEnd);
 	    document.removeEventListener('keydown', this.handleKey);
 	  },
-	
 	  calculateDimensions: function calculateDimensions(_ref) {
-	    var top = _ref.top;
-	    var left = _ref.left;
-	    var bottom = _ref.bottom;
-	    var right = _ref.right;
+	    var top = _ref.top,
+	        left = _ref.left,
+	        bottom = _ref.bottom,
+	        right = _ref.right;
 	
 	    return { width: this.props.width - left - right, height: this.props.height - top - bottom };
 	  },
+	
 	
 	  // If you do this, be careful of constraints
 	  preserveAspectRatio: function preserveAspectRatio(width, height) {
@@ -334,11 +326,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return [width, height];
 	    }
 	  },
-	
 	  constrainBoundary: function constrainBoundary(side) {
 	    return side < 0 ? 0 : side;
 	  },
-	
 	  getClientCoordinates: function getClientCoordinates(evt) {
 	    return evt.touches ? {
 	      clientX: evt.touches[0].clientX,
@@ -348,7 +338,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      clientY: evt.clientY
 	    };
 	  },
-	
 	  eventMove: function eventMove(evt) {
 	    if (this.state.resizing) {
 	      this.onResize(evt);
@@ -356,7 +345,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this.eventMoveBox(evt);
 	    }
 	  },
-	
 	  eventEnd: function eventEnd(evt) {
 	    if (this.state.resizing) {
 	      this.stopResize(evt);
@@ -364,6 +352,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this.stopMove(evt);
 	    }
 	  },
+	
 	
 	  // Resize methods
 	  startResize: function startResize(corner, event) {
@@ -374,92 +363,82 @@ return /******/ (function(modules) { // webpackBootstrap
 	      corner: corner
 	    });
 	  },
-	
 	  stopResize: function stopResize() {
 	    this.setState({ resizing: false });
 	  },
 	
+	
 	  // resize strategies
 	  nw: function nw(mousePos, boxPos) {
-	    var pos = Object.assign({}, this.state, {
+	    var pos = _extends({}, this.state, {
 	      top: this.constrainBoundary(mousePos.clientY - boxPos.top),
 	      left: this.constrainBoundary(mousePos.clientX - boxPos.left)
 	    });
 	    var dimensions = this.calculateDimensions(pos);
 	
-	    var _preserveAspectRatio3 = this.preserveAspectRatio(dimensions.width, dimensions.height);
-	
-	    var _preserveAspectRatio32 = _slicedToArray(_preserveAspectRatio3, 2);
-	
-	    var width = _preserveAspectRatio32[0];
-	    var height = _preserveAspectRatio32[1];
+	    var _preserveAspectRatio3 = this.preserveAspectRatio(dimensions.width, dimensions.height),
+	        _preserveAspectRatio4 = _slicedToArray(_preserveAspectRatio3, 2),
+	        width = _preserveAspectRatio4[0],
+	        height = _preserveAspectRatio4[1];
 	
 	    pos.top = this.props.height - pos.bottom - height;
 	    pos.left = this.props.width - pos.right - width;
 	    return pos;
 	  },
 	  ne: function ne(mousePos, boxPos) {
-	    var pos = Object.assign({}, this.state, {
+	    var pos = _extends({}, this.state, {
 	      top: this.constrainBoundary(mousePos.clientY - boxPos.top),
 	      right: this.constrainBoundary(boxPos.right - mousePos.clientX)
 	    });
 	    var dimensions = this.calculateDimensions(pos);
 	
-	    var _preserveAspectRatio4 = this.preserveAspectRatio(dimensions.width, dimensions.height);
-	
-	    var _preserveAspectRatio42 = _slicedToArray(_preserveAspectRatio4, 2);
-	
-	    var width = _preserveAspectRatio42[0];
-	    var height = _preserveAspectRatio42[1];
+	    var _preserveAspectRatio5 = this.preserveAspectRatio(dimensions.width, dimensions.height),
+	        _preserveAspectRatio6 = _slicedToArray(_preserveAspectRatio5, 2),
+	        width = _preserveAspectRatio6[0],
+	        height = _preserveAspectRatio6[1];
 	
 	    pos.top = this.props.height - pos.bottom - height;
 	    pos.right = this.props.width - pos.left - width;
 	    return pos;
 	  },
 	  se: function se(mousePos, boxPos) {
-	    var pos = Object.assign({}, this.state, {
+	    var pos = _extends({}, this.state, {
 	      bottom: this.constrainBoundary(boxPos.bottom - mousePos.clientY),
 	      right: this.constrainBoundary(boxPos.right - mousePos.clientX)
 	    });
 	    var dimensions = this.calculateDimensions(pos);
 	
-	    var _preserveAspectRatio5 = this.preserveAspectRatio(dimensions.width, dimensions.height);
-	
-	    var _preserveAspectRatio52 = _slicedToArray(_preserveAspectRatio5, 2);
-	
-	    var width = _preserveAspectRatio52[0];
-	    var height = _preserveAspectRatio52[1];
+	    var _preserveAspectRatio7 = this.preserveAspectRatio(dimensions.width, dimensions.height),
+	        _preserveAspectRatio8 = _slicedToArray(_preserveAspectRatio7, 2),
+	        width = _preserveAspectRatio8[0],
+	        height = _preserveAspectRatio8[1];
 	
 	    pos.bottom = this.props.height - pos.top - height;
 	    pos.right = this.props.width - pos.left - width;
 	    return pos;
 	  },
 	  sw: function sw(mousePos, boxPos) {
-	    var pos = Object.assign({}, this.state, {
+	    var pos = _extends({}, this.state, {
 	      bottom: this.constrainBoundary(boxPos.bottom - mousePos.clientY),
 	      left: this.constrainBoundary(mousePos.clientX - boxPos.left)
 	    });
 	    var dimensions = this.calculateDimensions(pos);
 	
-	    var _preserveAspectRatio6 = this.preserveAspectRatio(dimensions.width, dimensions.height);
-	
-	    var _preserveAspectRatio62 = _slicedToArray(_preserveAspectRatio6, 2);
-	
-	    var width = _preserveAspectRatio62[0];
-	    var height = _preserveAspectRatio62[1];
+	    var _preserveAspectRatio9 = this.preserveAspectRatio(dimensions.width, dimensions.height),
+	        _preserveAspectRatio10 = _slicedToArray(_preserveAspectRatio9, 2),
+	        width = _preserveAspectRatio10[0],
+	        height = _preserveAspectRatio10[1];
 	
 	    pos.bottom = this.props.height - pos.top - height;
 	    pos.left = this.props.width - pos.right - width;
 	    return pos;
 	  },
-	
 	  onResize: function onResize(event) {
 	    var box = this.refs.box.parentElement.parentElement.getBoundingClientRect();
 	    var coordinates = this.getClientCoordinates(event);
 	    var position = this[this.state.corner](coordinates, box);
 	    this.resize(position, coordinates);
 	  },
-	
 	  controlsResize: function controlsResize(event) {
 	    var box = this.refs.box.parentElement.parentElement.getBoundingClientRect();
 	    var width = event.target.name === 'width' ? +event.target.value : +event.target.value * this.props.aspectRatio;
@@ -472,7 +451,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    var widthDifference = this.state.width - width;
 	    var heightDifference = this.state.height - height;
-	    var pos = Object.assign({}, this.state, {
+	    var pos = _extends({}, this.state, {
 	      right: this.state.right + widthDifference,
 	      bottom: this.state.bottom + heightDifference
 	    });
@@ -483,7 +462,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    this.resize(pos, coordinates);
 	  },
-	
 	  resize: function resize(position, coordinates) {
 	    var _this = this;
 	
@@ -492,7 +470,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        heightChanged = dimensions.height !== this.state.height;
 	    if (!widthChanged && !heightChanged) return;
 	
-	    this.setState(Object.assign({}, coordinates, position, dimensions), function () {
+	    this.setState(_extends({}, coordinates, position, dimensions), function () {
 	      _this.props.onChange({
 	        top: position.top,
 	        left: position.left
@@ -500,12 +478,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    });
 	  },
 	
+	
 	  // Move methods
 	  startMove: function startMove(evt) {
-	    var _getClientCoordinates = this.getClientCoordinates(evt);
-	
-	    var clientX = _getClientCoordinates.clientX;
-	    var clientY = _getClientCoordinates.clientY;
+	    var _getClientCoordinates = this.getClientCoordinates(evt),
+	        clientX = _getClientCoordinates.clientX,
+	        clientY = _getClientCoordinates.clientY;
 	
 	    this.setState({
 	      moving: true,
@@ -513,33 +491,28 @@ return /******/ (function(modules) { // webpackBootstrap
 	      clientY: clientY
 	    });
 	  },
-	
 	  stopMove: function stopMove(evt) {
 	    this.setState({
 	      moving: false
 	    });
 	  },
-	
 	  eventMoveBox: function eventMoveBox(evt) {
 	    evt.preventDefault();
 	
-	    var _getClientCoordinates2 = this.getClientCoordinates(evt);
-	
-	    var clientX = _getClientCoordinates2.clientX;
-	    var clientY = _getClientCoordinates2.clientY;
+	    var _getClientCoordinates2 = this.getClientCoordinates(evt),
+	        clientX = _getClientCoordinates2.clientX,
+	        clientY = _getClientCoordinates2.clientY;
 	
 	    var movedX = clientX - this.state.clientX;
 	    var movedY = clientY - this.state.clientY;
 	
 	    this.moveBox(clientX, clientY, movedX, movedY);
 	  },
-	
 	  controlsMoveBox: function controlsMoveBox(evt) {
 	    var movedX = evt.target.name === 'x' ? evt.target.value - this.state.left : 0;
 	    var movedY = evt.target.name === 'y' ? evt.target.value - this.state.top : 0;
 	    this.moveBox(0, 0, movedX, movedY);
 	  },
-	
 	  moveBox: function moveBox(clientX, clientY, movedX, movedY) {
 	    var _this2 = this;
 	
@@ -563,7 +536,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      position.left = this.props.width - this.state.width;
 	    }
 	
-	    this.setState(Object.assign({}, {
+	    this.setState(_extends({}, {
 	      clientX: clientX,
 	      clientY: clientY
 	    }, position), function () {
@@ -573,7 +546,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }, _this2.calculateDimensions(position));
 	    });
 	  },
-	
 	  keyboardResize: function keyboardResize(change) {
 	    if (this.state.right - change < 0) {
 	      return;
@@ -582,12 +554,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return;
 	    }
 	
-	    var _preserveAspectRatio7 = this.preserveAspectRatio(this.state.width + change, this.state.height + change);
-	
-	    var _preserveAspectRatio72 = _slicedToArray(_preserveAspectRatio7, 2);
-	
-	    var width = _preserveAspectRatio72[0];
-	    var height = _preserveAspectRatio72[1];
+	    var _preserveAspectRatio11 = this.preserveAspectRatio(this.state.width + change, this.state.height + change),
+	        _preserveAspectRatio12 = _slicedToArray(_preserveAspectRatio11, 2),
+	        width = _preserveAspectRatio12[0],
+	        height = _preserveAspectRatio12[1];
 	
 	    var widthChange = width - this.state.width;
 	    var heightChange = height - this.state.height;
@@ -599,7 +569,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      height: height
 	    });
 	  },
-	
 	  handleKey: function handleKey(event) {
 	    if (event.shiftKey) {
 	      if (event.key === 'ArrowUp') {
@@ -631,7 +600,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	    }
 	  },
-	
 	  render: function render() {
 	    var style = {
 	      position: 'absolute',
@@ -641,10 +609,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      bottom: this.state.bottom
 	    };
 	
-	    var _calculateDimensions = this.calculateDimensions(this.state);
-	
-	    var width = _calculateDimensions.width;
-	    var height = _calculateDimensions.height;
+	    var _calculateDimensions = this.calculateDimensions(this.state),
+	        width = _calculateDimensions.width,
+	        height = _calculateDimensions.height;
 	
 	    var topStyle = {
 	      height: this.state.top
@@ -663,50 +630,50 @@ return /******/ (function(modules) { // webpackBootstrap
 	      bottom: this.state.bottom
 	    };
 	
-	    return _react2['default'].createElement(
+	    return _react2.default.createElement(
 	      'div',
 	      { ref: 'box', className: 'DraggableResizable' },
-	      _react2['default'].createElement(
+	      _react2.default.createElement(
 	        'div',
 	        { className: 'DraggableResizable-controls' },
-	        _react2['default'].createElement(
+	        _react2.default.createElement(
 	          'label',
 	          null,
 	          this.props.offsetXLabel,
-	          _react2['default'].createElement('input', {
+	          _react2.default.createElement('input', {
 	            name: 'x',
 	            value: Math.round(this.state.left),
 	            onChange: this.controlsMoveBox,
 	            tabIndex: '-1',
 	            type: 'number' })
 	        ),
-	        _react2['default'].createElement(
+	        _react2.default.createElement(
 	          'label',
 	          null,
 	          this.props.offsetYLabel,
-	          _react2['default'].createElement('input', {
+	          _react2.default.createElement('input', {
 	            name: 'y',
 	            value: Math.round(this.state.top),
 	            onChange: this.controlsMoveBox,
 	            tabIndex: '-1',
 	            type: 'number' })
 	        ),
-	        _react2['default'].createElement(
+	        _react2.default.createElement(
 	          'label',
 	          null,
 	          this.props.widthLabel,
-	          _react2['default'].createElement('input', {
+	          _react2.default.createElement('input', {
 	            name: 'width',
 	            value: Math.round(width),
 	            type: 'number',
 	            tabIndex: '-1',
 	            onChange: this.controlsResize })
 	        ),
-	        _react2['default'].createElement(
+	        _react2.default.createElement(
 	          'label',
 	          null,
 	          this.props.heightLabel,
-	          _react2['default'].createElement('input', {
+	          _react2.default.createElement('input', {
 	            value: Math.round(height),
 	            type: 'number',
 	            name: 'height',
@@ -714,31 +681,30 @@ return /******/ (function(modules) { // webpackBootstrap
 	            onChange: this.controlsResize })
 	        )
 	      ),
-	      _react2['default'].createElement('div', { className: 'DraggableResizable-top', style: topStyle }),
-	      _react2['default'].createElement('div', { className: 'DraggableResizable-left', style: leftStyle }),
-	      _react2['default'].createElement(
+	      _react2.default.createElement('div', { className: 'DraggableResizable-top', style: topStyle }),
+	      _react2.default.createElement('div', { className: 'DraggableResizable-left', style: leftStyle }),
+	      _react2.default.createElement(
 	        'div',
 	        { style: style, onMouseDown: this.startMove, onTouchStart: this.startMove },
 	        this.props.children,
-	        _react2['default'].createElement('div', { className: 'resize-handle resize-handle-se',
+	        _react2.default.createElement('div', { className: 'resize-handle resize-handle-se',
 	          onMouseDown: this.startResize.bind(null, 'se'),
 	          onTouchStart: this.startResize.bind(null, 'se') }),
-	        _react2['default'].createElement('div', { className: 'resize-handle resize-handle-ne',
+	        _react2.default.createElement('div', { className: 'resize-handle resize-handle-ne',
 	          onMouseDown: this.startResize.bind(null, 'ne'),
 	          onTouchStart: this.startResize.bind(null, 'ne') }),
-	        _react2['default'].createElement('div', { className: 'resize-handle resize-handle-sw',
+	        _react2.default.createElement('div', { className: 'resize-handle resize-handle-sw',
 	          onMouseDown: this.startResize.bind(null, 'sw'),
 	          onTouchStart: this.startResize.bind(null, 'sw') }),
-	        _react2['default'].createElement('div', { className: 'resize-handle resize-handle-nw',
+	        _react2.default.createElement('div', { className: 'resize-handle resize-handle-nw',
 	          onMouseDown: this.startResize.bind(null, 'nw'),
 	          onTouchStart: this.startResize.bind(null, 'nw') })
 	      ),
-	      _react2['default'].createElement('div', { className: 'DraggableResizable-right', style: rightStyle }),
-	      _react2['default'].createElement('div', { className: 'DraggableResizable-bottom', style: bottomStyle })
+	      _react2.default.createElement('div', { className: 'DraggableResizable-right', style: rightStyle }),
+	      _react2.default.createElement('div', { className: 'DraggableResizable-bottom', style: bottomStyle })
 	    );
 	  }
 	});
-	module.exports = exports['default'];
 
 /***/ },
 /* 3 */
@@ -786,6 +752,354 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function mime(uri) {
 	  return uri.split(';')[0].slice(5);
+	}
+
+
+/***/ },
+/* 4 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(5);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(7)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./cropper.css", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./cropper.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(6)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, ".Cropper{position:relative;display:inline-block}.box,.Cropper-box{position:absolute;top:0;left:0;bottom:0;right:0}.Cropper-box{cursor:move;border:1px solid #fff}.Cropper-canvas{visibility:hidden;position:absolute}.Cropper-image{vertical-align:middle;max-width:100%;position:relative;transform:translate(-50%,-50%);left:50%}.resize-handle{position:absolute;background-color:#eceeef;border:1px solid #8295ab;width:13px;height:13px;z-index:1}.resize-handle-se{bottom:0;right:0;cursor:nwse-resize;transform:translate(50%,50%)}.resize-handle-ne{right:0;top:0;cursor:nesw-resize;transform:translate(50%,-50%)}.resize-handle-sw{bottom:0;left:0;cursor:nesw-resize;transform:translate(-50%,50%)}.resize-handle-nw{top:0;bottom:0;cursor:nwse-resize;transform:translate(-50%,-50%)}.DraggableResizable{position:relative;width:100%;height:100%}.DraggableResizable-controls{border:0;clip:rect(0 0 0 0);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px}.DraggableResizable-bottom,.DraggableResizable-left,.DraggableResizable-right,.DraggableResizable-top{position:absolute;background-color:rgba(0,0,0,.7)}.DraggableResizable-top{top:0;left:0;right:0}.DraggableResizable-bottom{bottom:0;left:0;right:0}.DraggableResizable-left{left:0}.DraggableResizable-right{right:0}", ""]);
+	
+	// exports
+
+
+/***/ },
+/* 6 */
+/***/ function(module, exports) {
+
+	/*
+		MIT License http://www.opensource.org/licenses/mit-license.php
+		Author Tobias Koppers @sokra
+	*/
+	// css base code, injected by the css-loader
+	module.exports = function() {
+		var list = [];
+	
+		// return the list of modules as css string
+		list.toString = function toString() {
+			var result = [];
+			for(var i = 0; i < this.length; i++) {
+				var item = this[i];
+				if(item[2]) {
+					result.push("@media " + item[2] + "{" + item[1] + "}");
+				} else {
+					result.push(item[1]);
+				}
+			}
+			return result.join("");
+		};
+	
+		// import a list of modules into the list
+		list.i = function(modules, mediaQuery) {
+			if(typeof modules === "string")
+				modules = [[null, modules, ""]];
+			var alreadyImportedModules = {};
+			for(var i = 0; i < this.length; i++) {
+				var id = this[i][0];
+				if(typeof id === "number")
+					alreadyImportedModules[id] = true;
+			}
+			for(i = 0; i < modules.length; i++) {
+				var item = modules[i];
+				// skip already imported module
+				// this implementation is not 100% perfect for weird media query combinations
+				//  when a module is imported multiple times with different media queries.
+				//  I hope this will never occur (Hey this way we have smaller bundles)
+				if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+					if(mediaQuery && !item[2]) {
+						item[2] = mediaQuery;
+					} else if(mediaQuery) {
+						item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+					}
+					list.push(item);
+				}
+			}
+		};
+		return list;
+	};
+
+
+/***/ },
+/* 7 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*
+		MIT License http://www.opensource.org/licenses/mit-license.php
+		Author Tobias Koppers @sokra
+	*/
+	var stylesInDom = {},
+		memoize = function(fn) {
+			var memo;
+			return function () {
+				if (typeof memo === "undefined") memo = fn.apply(this, arguments);
+				return memo;
+			};
+		},
+		isOldIE = memoize(function() {
+			return /msie [6-9]\b/.test(window.navigator.userAgent.toLowerCase());
+		}),
+		getHeadElement = memoize(function () {
+			return document.head || document.getElementsByTagName("head")[0];
+		}),
+		singletonElement = null,
+		singletonCounter = 0,
+		styleElementsInsertedAtTop = [];
+	
+	module.exports = function(list, options) {
+		if(false) {
+			if(typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
+		}
+	
+		options = options || {};
+		// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+		// tags it will allow on a page
+		if (typeof options.singleton === "undefined") options.singleton = isOldIE();
+	
+		// By default, add <style> tags to the bottom of <head>.
+		if (typeof options.insertAt === "undefined") options.insertAt = "bottom";
+	
+		var styles = listToStyles(list);
+		addStylesToDom(styles, options);
+	
+		return function update(newList) {
+			var mayRemove = [];
+			for(var i = 0; i < styles.length; i++) {
+				var item = styles[i];
+				var domStyle = stylesInDom[item.id];
+				domStyle.refs--;
+				mayRemove.push(domStyle);
+			}
+			if(newList) {
+				var newStyles = listToStyles(newList);
+				addStylesToDom(newStyles, options);
+			}
+			for(var i = 0; i < mayRemove.length; i++) {
+				var domStyle = mayRemove[i];
+				if(domStyle.refs === 0) {
+					for(var j = 0; j < domStyle.parts.length; j++)
+						domStyle.parts[j]();
+					delete stylesInDom[domStyle.id];
+				}
+			}
+		};
+	}
+	
+	function addStylesToDom(styles, options) {
+		for(var i = 0; i < styles.length; i++) {
+			var item = styles[i];
+			var domStyle = stylesInDom[item.id];
+			if(domStyle) {
+				domStyle.refs++;
+				for(var j = 0; j < domStyle.parts.length; j++) {
+					domStyle.parts[j](item.parts[j]);
+				}
+				for(; j < item.parts.length; j++) {
+					domStyle.parts.push(addStyle(item.parts[j], options));
+				}
+			} else {
+				var parts = [];
+				for(var j = 0; j < item.parts.length; j++) {
+					parts.push(addStyle(item.parts[j], options));
+				}
+				stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};
+			}
+		}
+	}
+	
+	function listToStyles(list) {
+		var styles = [];
+		var newStyles = {};
+		for(var i = 0; i < list.length; i++) {
+			var item = list[i];
+			var id = item[0];
+			var css = item[1];
+			var media = item[2];
+			var sourceMap = item[3];
+			var part = {css: css, media: media, sourceMap: sourceMap};
+			if(!newStyles[id])
+				styles.push(newStyles[id] = {id: id, parts: [part]});
+			else
+				newStyles[id].parts.push(part);
+		}
+		return styles;
+	}
+	
+	function insertStyleElement(options, styleElement) {
+		var head = getHeadElement();
+		var lastStyleElementInsertedAtTop = styleElementsInsertedAtTop[styleElementsInsertedAtTop.length - 1];
+		if (options.insertAt === "top") {
+			if(!lastStyleElementInsertedAtTop) {
+				head.insertBefore(styleElement, head.firstChild);
+			} else if(lastStyleElementInsertedAtTop.nextSibling) {
+				head.insertBefore(styleElement, lastStyleElementInsertedAtTop.nextSibling);
+			} else {
+				head.appendChild(styleElement);
+			}
+			styleElementsInsertedAtTop.push(styleElement);
+		} else if (options.insertAt === "bottom") {
+			head.appendChild(styleElement);
+		} else {
+			throw new Error("Invalid value for parameter 'insertAt'. Must be 'top' or 'bottom'.");
+		}
+	}
+	
+	function removeStyleElement(styleElement) {
+		styleElement.parentNode.removeChild(styleElement);
+		var idx = styleElementsInsertedAtTop.indexOf(styleElement);
+		if(idx >= 0) {
+			styleElementsInsertedAtTop.splice(idx, 1);
+		}
+	}
+	
+	function createStyleElement(options) {
+		var styleElement = document.createElement("style");
+		styleElement.type = "text/css";
+		insertStyleElement(options, styleElement);
+		return styleElement;
+	}
+	
+	function createLinkElement(options) {
+		var linkElement = document.createElement("link");
+		linkElement.rel = "stylesheet";
+		insertStyleElement(options, linkElement);
+		return linkElement;
+	}
+	
+	function addStyle(obj, options) {
+		var styleElement, update, remove;
+	
+		if (options.singleton) {
+			var styleIndex = singletonCounter++;
+			styleElement = singletonElement || (singletonElement = createStyleElement(options));
+			update = applyToSingletonTag.bind(null, styleElement, styleIndex, false);
+			remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true);
+		} else if(obj.sourceMap &&
+			typeof URL === "function" &&
+			typeof URL.createObjectURL === "function" &&
+			typeof URL.revokeObjectURL === "function" &&
+			typeof Blob === "function" &&
+			typeof btoa === "function") {
+			styleElement = createLinkElement(options);
+			update = updateLink.bind(null, styleElement);
+			remove = function() {
+				removeStyleElement(styleElement);
+				if(styleElement.href)
+					URL.revokeObjectURL(styleElement.href);
+			};
+		} else {
+			styleElement = createStyleElement(options);
+			update = applyToTag.bind(null, styleElement);
+			remove = function() {
+				removeStyleElement(styleElement);
+			};
+		}
+	
+		update(obj);
+	
+		return function updateStyle(newObj) {
+			if(newObj) {
+				if(newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap)
+					return;
+				update(obj = newObj);
+			} else {
+				remove();
+			}
+		};
+	}
+	
+	var replaceText = (function () {
+		var textStore = [];
+	
+		return function (index, replacement) {
+			textStore[index] = replacement;
+			return textStore.filter(Boolean).join('\n');
+		};
+	})();
+	
+	function applyToSingletonTag(styleElement, index, remove, obj) {
+		var css = remove ? "" : obj.css;
+	
+		if (styleElement.styleSheet) {
+			styleElement.styleSheet.cssText = replaceText(index, css);
+		} else {
+			var cssNode = document.createTextNode(css);
+			var childNodes = styleElement.childNodes;
+			if (childNodes[index]) styleElement.removeChild(childNodes[index]);
+			if (childNodes.length) {
+				styleElement.insertBefore(cssNode, childNodes[index]);
+			} else {
+				styleElement.appendChild(cssNode);
+			}
+		}
+	}
+	
+	function applyToTag(styleElement, obj) {
+		var css = obj.css;
+		var media = obj.media;
+	
+		if(media) {
+			styleElement.setAttribute("media", media)
+		}
+	
+		if(styleElement.styleSheet) {
+			styleElement.styleSheet.cssText = css;
+		} else {
+			while(styleElement.firstChild) {
+				styleElement.removeChild(styleElement.firstChild);
+			}
+			styleElement.appendChild(document.createTextNode(css));
+		}
+	}
+	
+	function updateLink(linkElement, obj) {
+		var css = obj.css;
+		var sourceMap = obj.sourceMap;
+	
+		if(sourceMap) {
+			// http://stackoverflow.com/a/26603875
+			css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
+		}
+	
+		var blob = new Blob([css], { type: "text/css" });
+	
+		var oldSrc = linkElement.href;
+	
+		linkElement.href = URL.createObjectURL(blob);
+	
+		if(oldSrc)
+			URL.revokeObjectURL(oldSrc);
 	}
 
 

@@ -1,34 +1,34 @@
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
+Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _slicedToArray = (function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i['return']) _i['return'](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError('Invalid attempt to destructure non-iterable instance'); } }; })();
-
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-exports['default'] = _react2['default'].createClass({
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = _react2.default.createClass({
   displayName: 'DraggableResizableBox',
 
   propTypes: {
-    aspectRatio: _react2['default'].PropTypes.number.isRequired,
-    width: _react2['default'].PropTypes.number.isRequired,
-    height: _react2['default'].PropTypes.number.isRequired,
-    onChange: _react2['default'].PropTypes.func,
-    offset: _react2['default'].PropTypes.array,
-    minConstraints: _react2['default'].PropTypes.array,
-    children: _react2['default'].PropTypes.node,
-    widthLabel: _react2['default'].PropTypes.string,
-    heightLabel: _react2['default'].PropTypes.string,
-    offsetXLabel: _react2['default'].PropTypes.string,
-    offsetYLabel: _react2['default'].PropTypes.string
+    aspectRatio: _react2.default.PropTypes.number.isRequired,
+    width: _react2.default.PropTypes.number.isRequired,
+    height: _react2.default.PropTypes.number.isRequired,
+    onChange: _react2.default.PropTypes.func,
+    offset: _react2.default.PropTypes.array,
+    minConstraints: _react2.default.PropTypes.array,
+    children: _react2.default.PropTypes.node,
+    widthLabel: _react2.default.PropTypes.string,
+    heightLabel: _react2.default.PropTypes.string,
+    offsetXLabel: _react2.default.PropTypes.string,
+    offsetYLabel: _react2.default.PropTypes.string
   },
 
   getDefaultProps: function getDefaultProps() {
@@ -39,14 +39,11 @@ exports['default'] = _react2['default'].createClass({
       offsetYLabel: 'Offset Y'
     };
   },
-
   getInitialState: function getInitialState() {
-    var _preserveAspectRatio = this.preserveAspectRatio(this.props.width, this.props.height);
-
-    var _preserveAspectRatio2 = _slicedToArray(_preserveAspectRatio, 2);
-
-    var width = _preserveAspectRatio2[0];
-    var height = _preserveAspectRatio2[1];
+    var _preserveAspectRatio = this.preserveAspectRatio(this.props.width, this.props.height),
+        _preserveAspectRatio2 = _slicedToArray(_preserveAspectRatio, 2),
+        width = _preserveAspectRatio2[0],
+        height = _preserveAspectRatio2[1];
 
     var centerYOffset = (this.props.height - height) / 2;
     var centerXOffset = (this.props.width - width) / 2;
@@ -59,7 +56,6 @@ exports['default'] = _react2['default'].createClass({
       height: height
     };
   },
-
   componentDidMount: function componentDidMount() {
     document.addEventListener('mousemove', this.eventMove);
     document.addEventListener('mouseup', this.eventEnd);
@@ -74,7 +70,6 @@ exports['default'] = _react2['default'].createClass({
       height: this.state.height
     });
   },
-
   componentWillUnmount: function componentWillUnmount() {
     document.removeEventListener('mousemove', this.eventMove);
     document.removeEventListener('mouseup', this.eventEnd);
@@ -82,15 +77,15 @@ exports['default'] = _react2['default'].createClass({
     document.removeEventListener('touchend', this.eventEnd);
     document.removeEventListener('keydown', this.handleKey);
   },
-
   calculateDimensions: function calculateDimensions(_ref) {
-    var top = _ref.top;
-    var left = _ref.left;
-    var bottom = _ref.bottom;
-    var right = _ref.right;
+    var top = _ref.top,
+        left = _ref.left,
+        bottom = _ref.bottom,
+        right = _ref.right;
 
     return { width: this.props.width - left - right, height: this.props.height - top - bottom };
   },
+
 
   // If you do this, be careful of constraints
   preserveAspectRatio: function preserveAspectRatio(width, height) {
@@ -108,11 +103,9 @@ exports['default'] = _react2['default'].createClass({
       return [width, height];
     }
   },
-
   constrainBoundary: function constrainBoundary(side) {
     return side < 0 ? 0 : side;
   },
-
   getClientCoordinates: function getClientCoordinates(evt) {
     return evt.touches ? {
       clientX: evt.touches[0].clientX,
@@ -122,7 +115,6 @@ exports['default'] = _react2['default'].createClass({
       clientY: evt.clientY
     };
   },
-
   eventMove: function eventMove(evt) {
     if (this.state.resizing) {
       this.onResize(evt);
@@ -130,7 +122,6 @@ exports['default'] = _react2['default'].createClass({
       this.eventMoveBox(evt);
     }
   },
-
   eventEnd: function eventEnd(evt) {
     if (this.state.resizing) {
       this.stopResize(evt);
@@ -138,6 +129,7 @@ exports['default'] = _react2['default'].createClass({
       this.stopMove(evt);
     }
   },
+
 
   // Resize methods
   startResize: function startResize(corner, event) {
@@ -148,10 +140,10 @@ exports['default'] = _react2['default'].createClass({
       corner: corner
     });
   },
-
   stopResize: function stopResize() {
     this.setState({ resizing: false });
   },
+
 
   // resize strategies
   nw: function nw(mousePos, boxPos) {
@@ -161,12 +153,10 @@ exports['default'] = _react2['default'].createClass({
     });
     var dimensions = this.calculateDimensions(pos);
 
-    var _preserveAspectRatio3 = this.preserveAspectRatio(dimensions.width, dimensions.height);
-
-    var _preserveAspectRatio32 = _slicedToArray(_preserveAspectRatio3, 2);
-
-    var width = _preserveAspectRatio32[0];
-    var height = _preserveAspectRatio32[1];
+    var _preserveAspectRatio3 = this.preserveAspectRatio(dimensions.width, dimensions.height),
+        _preserveAspectRatio4 = _slicedToArray(_preserveAspectRatio3, 2),
+        width = _preserveAspectRatio4[0],
+        height = _preserveAspectRatio4[1];
 
     pos.top = this.props.height - pos.bottom - height;
     pos.left = this.props.width - pos.right - width;
@@ -179,12 +169,10 @@ exports['default'] = _react2['default'].createClass({
     });
     var dimensions = this.calculateDimensions(pos);
 
-    var _preserveAspectRatio4 = this.preserveAspectRatio(dimensions.width, dimensions.height);
-
-    var _preserveAspectRatio42 = _slicedToArray(_preserveAspectRatio4, 2);
-
-    var width = _preserveAspectRatio42[0];
-    var height = _preserveAspectRatio42[1];
+    var _preserveAspectRatio5 = this.preserveAspectRatio(dimensions.width, dimensions.height),
+        _preserveAspectRatio6 = _slicedToArray(_preserveAspectRatio5, 2),
+        width = _preserveAspectRatio6[0],
+        height = _preserveAspectRatio6[1];
 
     pos.top = this.props.height - pos.bottom - height;
     pos.right = this.props.width - pos.left - width;
@@ -197,12 +185,10 @@ exports['default'] = _react2['default'].createClass({
     });
     var dimensions = this.calculateDimensions(pos);
 
-    var _preserveAspectRatio5 = this.preserveAspectRatio(dimensions.width, dimensions.height);
-
-    var _preserveAspectRatio52 = _slicedToArray(_preserveAspectRatio5, 2);
-
-    var width = _preserveAspectRatio52[0];
-    var height = _preserveAspectRatio52[1];
+    var _preserveAspectRatio7 = this.preserveAspectRatio(dimensions.width, dimensions.height),
+        _preserveAspectRatio8 = _slicedToArray(_preserveAspectRatio7, 2),
+        width = _preserveAspectRatio8[0],
+        height = _preserveAspectRatio8[1];
 
     pos.bottom = this.props.height - pos.top - height;
     pos.right = this.props.width - pos.left - width;
@@ -215,25 +201,21 @@ exports['default'] = _react2['default'].createClass({
     });
     var dimensions = this.calculateDimensions(pos);
 
-    var _preserveAspectRatio6 = this.preserveAspectRatio(dimensions.width, dimensions.height);
-
-    var _preserveAspectRatio62 = _slicedToArray(_preserveAspectRatio6, 2);
-
-    var width = _preserveAspectRatio62[0];
-    var height = _preserveAspectRatio62[1];
+    var _preserveAspectRatio9 = this.preserveAspectRatio(dimensions.width, dimensions.height),
+        _preserveAspectRatio10 = _slicedToArray(_preserveAspectRatio9, 2),
+        width = _preserveAspectRatio10[0],
+        height = _preserveAspectRatio10[1];
 
     pos.bottom = this.props.height - pos.top - height;
     pos.left = this.props.width - pos.right - width;
     return pos;
   },
-
   onResize: function onResize(event) {
     var box = this.refs.box.parentElement.parentElement.getBoundingClientRect();
     var coordinates = this.getClientCoordinates(event);
     var position = this[this.state.corner](coordinates, box);
     this.resize(position, coordinates);
   },
-
   controlsResize: function controlsResize(event) {
     var box = this.refs.box.parentElement.parentElement.getBoundingClientRect();
     var width = event.target.name === 'width' ? +event.target.value : +event.target.value * this.props.aspectRatio;
@@ -257,7 +239,6 @@ exports['default'] = _react2['default'].createClass({
 
     this.resize(pos, coordinates);
   },
-
   resize: function resize(position, coordinates) {
     var _this = this;
 
@@ -274,12 +255,12 @@ exports['default'] = _react2['default'].createClass({
     });
   },
 
+
   // Move methods
   startMove: function startMove(evt) {
-    var _getClientCoordinates = this.getClientCoordinates(evt);
-
-    var clientX = _getClientCoordinates.clientX;
-    var clientY = _getClientCoordinates.clientY;
+    var _getClientCoordinates = this.getClientCoordinates(evt),
+        clientX = _getClientCoordinates.clientX,
+        clientY = _getClientCoordinates.clientY;
 
     this.setState({
       moving: true,
@@ -287,33 +268,28 @@ exports['default'] = _react2['default'].createClass({
       clientY: clientY
     });
   },
-
   stopMove: function stopMove(evt) {
     this.setState({
       moving: false
     });
   },
-
   eventMoveBox: function eventMoveBox(evt) {
     evt.preventDefault();
 
-    var _getClientCoordinates2 = this.getClientCoordinates(evt);
-
-    var clientX = _getClientCoordinates2.clientX;
-    var clientY = _getClientCoordinates2.clientY;
+    var _getClientCoordinates2 = this.getClientCoordinates(evt),
+        clientX = _getClientCoordinates2.clientX,
+        clientY = _getClientCoordinates2.clientY;
 
     var movedX = clientX - this.state.clientX;
     var movedY = clientY - this.state.clientY;
 
     this.moveBox(clientX, clientY, movedX, movedY);
   },
-
   controlsMoveBox: function controlsMoveBox(evt) {
     var movedX = evt.target.name === 'x' ? evt.target.value - this.state.left : 0;
     var movedY = evt.target.name === 'y' ? evt.target.value - this.state.top : 0;
     this.moveBox(0, 0, movedX, movedY);
   },
-
   moveBox: function moveBox(clientX, clientY, movedX, movedY) {
     var _this2 = this;
 
@@ -347,7 +323,6 @@ exports['default'] = _react2['default'].createClass({
       }, _this2.calculateDimensions(position));
     });
   },
-
   keyboardResize: function keyboardResize(change) {
     if (this.state.right - change < 0) {
       return;
@@ -356,12 +331,10 @@ exports['default'] = _react2['default'].createClass({
       return;
     }
 
-    var _preserveAspectRatio7 = this.preserveAspectRatio(this.state.width + change, this.state.height + change);
-
-    var _preserveAspectRatio72 = _slicedToArray(_preserveAspectRatio7, 2);
-
-    var width = _preserveAspectRatio72[0];
-    var height = _preserveAspectRatio72[1];
+    var _preserveAspectRatio11 = this.preserveAspectRatio(this.state.width + change, this.state.height + change),
+        _preserveAspectRatio12 = _slicedToArray(_preserveAspectRatio11, 2),
+        width = _preserveAspectRatio12[0],
+        height = _preserveAspectRatio12[1];
 
     var widthChange = width - this.state.width;
     var heightChange = height - this.state.height;
@@ -373,7 +346,6 @@ exports['default'] = _react2['default'].createClass({
       height: height
     });
   },
-
   handleKey: function handleKey(event) {
     if (event.shiftKey) {
       if (event.key === 'ArrowUp') {
@@ -405,7 +377,6 @@ exports['default'] = _react2['default'].createClass({
       }
     }
   },
-
   render: function render() {
     var style = {
       position: 'absolute',
@@ -415,10 +386,9 @@ exports['default'] = _react2['default'].createClass({
       bottom: this.state.bottom
     };
 
-    var _calculateDimensions = this.calculateDimensions(this.state);
-
-    var width = _calculateDimensions.width;
-    var height = _calculateDimensions.height;
+    var _calculateDimensions = this.calculateDimensions(this.state),
+        width = _calculateDimensions.width,
+        height = _calculateDimensions.height;
 
     var topStyle = {
       height: this.state.top
@@ -437,50 +407,50 @@ exports['default'] = _react2['default'].createClass({
       bottom: this.state.bottom
     };
 
-    return _react2['default'].createElement(
+    return _react2.default.createElement(
       'div',
       { ref: 'box', className: 'DraggableResizable' },
-      _react2['default'].createElement(
+      _react2.default.createElement(
         'div',
         { className: 'DraggableResizable-controls' },
-        _react2['default'].createElement(
+        _react2.default.createElement(
           'label',
           null,
           this.props.offsetXLabel,
-          _react2['default'].createElement('input', {
+          _react2.default.createElement('input', {
             name: 'x',
             value: Math.round(this.state.left),
             onChange: this.controlsMoveBox,
             tabIndex: '-1',
             type: 'number' })
         ),
-        _react2['default'].createElement(
+        _react2.default.createElement(
           'label',
           null,
           this.props.offsetYLabel,
-          _react2['default'].createElement('input', {
+          _react2.default.createElement('input', {
             name: 'y',
             value: Math.round(this.state.top),
             onChange: this.controlsMoveBox,
             tabIndex: '-1',
             type: 'number' })
         ),
-        _react2['default'].createElement(
+        _react2.default.createElement(
           'label',
           null,
           this.props.widthLabel,
-          _react2['default'].createElement('input', {
+          _react2.default.createElement('input', {
             name: 'width',
             value: Math.round(width),
             type: 'number',
             tabIndex: '-1',
             onChange: this.controlsResize })
         ),
-        _react2['default'].createElement(
+        _react2.default.createElement(
           'label',
           null,
           this.props.heightLabel,
-          _react2['default'].createElement('input', {
+          _react2.default.createElement('input', {
             value: Math.round(height),
             type: 'number',
             name: 'height',
@@ -488,28 +458,27 @@ exports['default'] = _react2['default'].createClass({
             onChange: this.controlsResize })
         )
       ),
-      _react2['default'].createElement('div', { className: 'DraggableResizable-top', style: topStyle }),
-      _react2['default'].createElement('div', { className: 'DraggableResizable-left', style: leftStyle }),
-      _react2['default'].createElement(
+      _react2.default.createElement('div', { className: 'DraggableResizable-top', style: topStyle }),
+      _react2.default.createElement('div', { className: 'DraggableResizable-left', style: leftStyle }),
+      _react2.default.createElement(
         'div',
         { style: style, onMouseDown: this.startMove, onTouchStart: this.startMove },
         this.props.children,
-        _react2['default'].createElement('div', { className: 'resize-handle resize-handle-se',
+        _react2.default.createElement('div', { className: 'resize-handle resize-handle-se',
           onMouseDown: this.startResize.bind(null, 'se'),
           onTouchStart: this.startResize.bind(null, 'se') }),
-        _react2['default'].createElement('div', { className: 'resize-handle resize-handle-ne',
+        _react2.default.createElement('div', { className: 'resize-handle resize-handle-ne',
           onMouseDown: this.startResize.bind(null, 'ne'),
           onTouchStart: this.startResize.bind(null, 'ne') }),
-        _react2['default'].createElement('div', { className: 'resize-handle resize-handle-sw',
+        _react2.default.createElement('div', { className: 'resize-handle resize-handle-sw',
           onMouseDown: this.startResize.bind(null, 'sw'),
           onTouchStart: this.startResize.bind(null, 'sw') }),
-        _react2['default'].createElement('div', { className: 'resize-handle resize-handle-nw',
+        _react2.default.createElement('div', { className: 'resize-handle resize-handle-nw',
           onMouseDown: this.startResize.bind(null, 'nw'),
           onTouchStart: this.startResize.bind(null, 'nw') })
       ),
-      _react2['default'].createElement('div', { className: 'DraggableResizable-right', style: rightStyle }),
-      _react2['default'].createElement('div', { className: 'DraggableResizable-bottom', style: bottomStyle })
+      _react2.default.createElement('div', { className: 'DraggableResizable-right', style: rightStyle }),
+      _react2.default.createElement('div', { className: 'DraggableResizable-bottom', style: bottomStyle })
     );
   }
 });
-module.exports = exports['default'];
