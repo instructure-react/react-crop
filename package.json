@@ -5,12 +5,13 @@
   "repository": "https://github.com/instructure-react/react-crop",
   "main": "index.js",
   "scripts": {
+    "build": "NODE_ENV=production webpack --config webpack.dist.config.js",
     "compile-index": "babel lib/index.src.js --out-file index.js",
     "compile-box": "babel lib/draggable-resizable-box.js --out-file draggable-resizable-box.js",
     "compile-css": "./node_modules/postcss-cli/bin/postcss --use autoprefixer ./lib/cropper.css -d ./ && cp ./cropper.css ./docs/cropper.css",
     "compile": "npm run compile-index && npm run compile-box && npm run compile-css && webpack",
     "docs": "webpack-dev-server --content-base docs/",
-    "prepublish": "npm run compile"
+    "prepublish": "npm run compile && npm run build"
   },
   "keywords": [
     "react",
