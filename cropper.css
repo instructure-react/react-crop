@@ -1,6 +1,8 @@
 .Cropper {
   position: relative;
   display: inline-block;
+  max-width:100%;
+  max-height:100%;
 }
 
 .box {
@@ -30,9 +32,7 @@
   vertical-align: middle;
   max-width: 100%;
   position: relative;
-  -webkit-transform: translate(-50%, -50%);
-      -ms-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
   left: 50%;
 }
 
@@ -49,33 +49,25 @@
   bottom: 0;
   right: 0;
   cursor: nwse-resize;
-  -webkit-transform: translate(50%, 50%);
-      -ms-transform: translate(50%, 50%);
-          transform: translate(50%, 50%);
+  transform: translate(50%, 50%);
 }
 .resize-handle-ne {
   right: 0;
   top: 0;
   cursor: nesw-resize;
-  -webkit-transform: translate(50%, -50%);
-      -ms-transform: translate(50%, -50%);
-          transform: translate(50%, -50%);
+  transform: translate(50%, -50%);
 }
 .resize-handle-sw {
   bottom: 0;
   left: 0;
   cursor: nesw-resize;
-  -webkit-transform: translate(-50%, 50%);
-      -ms-transform: translate(-50%, 50%);
-          transform: translate(-50%, 50%);
+  transform: translate(-50%, 50%);
 }
 .resize-handle-nw {
   top: 0;
   bottom: 0;
   cursor: nwse-resize;
-  -webkit-transform: translate(-50%, -50%);
-      -ms-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 
 .DraggableResizable {
@@ -119,4 +111,3 @@
 .DraggableResizable-right {
   right: 0;
 }
-
