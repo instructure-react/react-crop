@@ -570,31 +570,32 @@ return /******/ (function(modules) { // webpackBootstrap
 	    });
 	  },
 	  handleKey: function handleKey(event) {
+	    // safari doesn't support event.key, so fall back to keyCode
 	    if (event.shiftKey) {
-	      if (event.key === 'ArrowUp') {
+	      if (event.key === 'ArrowUp' || event.keyCode === 38) {
 	        this.keyboardResize(-10);
 	        event.preventDefault();
-	      } else if (event.key === 'ArrowDown') {
+	      } else if (event.key === 'ArrowDown' || event.keyCode === 40) {
 	        this.keyboardResize(10);
 	        event.preventDefault();
-	      } else if (event.key === 'ArrowLeft') {
+	      } else if (event.key === 'ArrowLeft' || event.keyCode === 37) {
 	        this.keyboardResize(-10);
 	        event.preventDefault();
-	      } else if (event.key === 'ArrowRight') {
+	      } else if (event.key === 'ArrowRight' || event.keyCode === 39) {
 	        this.keyboardResize(10);
 	        event.preventDefault();
 	      }
 	    } else {
-	      if (event.key === 'ArrowUp') {
+	      if (event.key === 'ArrowUp' || event.keyCode === 38) {
 	        this.moveBox(this.state.clientX, this.state.clientY, 0, -10);
 	        event.preventDefault();
-	      } else if (event.key === 'ArrowDown') {
+	      } else if (event.key === 'ArrowDown' || event.keyCode === 40) {
 	        this.moveBox(this.state.clientX, this.state.clientY, 0, 10);
 	        event.preventDefault();
-	      } else if (event.key === 'ArrowLeft') {
+	      } else if (event.key === 'ArrowLeft' || event.keyCode === 37) {
 	        this.moveBox(this.state.clientX, this.state.clientY, -10, 0);
 	        event.preventDefault();
-	      } else if (event.key === 'ArrowRight') {
+	      } else if (event.key === 'ArrowRight' || event.keyCode === 39) {
 	        this.moveBox(this.state.clientX, this.state.clientY, 10, 0);
 	        event.preventDefault();
 	      }
@@ -790,7 +791,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	
 	// module
-	exports.push([module.id, ".Cropper{position:relative;display:inline-block}.box,.Cropper-box{position:absolute;top:0;left:0;bottom:0;right:0}.Cropper-box{cursor:move;border:1px solid #fff}.Cropper-canvas{visibility:hidden;position:absolute}.Cropper-image{vertical-align:middle;max-width:100%;position:relative;transform:translate(-50%,-50%);left:50%}.resize-handle{position:absolute;background-color:#eceeef;border:1px solid #8295ab;width:13px;height:13px;z-index:1}.resize-handle-se{bottom:0;right:0;cursor:nwse-resize;transform:translate(50%,50%)}.resize-handle-ne{right:0;top:0;cursor:nesw-resize;transform:translate(50%,-50%)}.resize-handle-sw{bottom:0;left:0;cursor:nesw-resize;transform:translate(-50%,50%)}.resize-handle-nw{top:0;bottom:0;cursor:nwse-resize;transform:translate(-50%,-50%)}.DraggableResizable{position:relative;width:100%;height:100%}.DraggableResizable-controls{border:0;clip:rect(0 0 0 0);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px}.DraggableResizable-bottom,.DraggableResizable-left,.DraggableResizable-right,.DraggableResizable-top{position:absolute;background-color:rgba(0,0,0,.7)}.DraggableResizable-top{top:0;left:0;right:0}.DraggableResizable-bottom{bottom:0;left:0;right:0}.DraggableResizable-left{left:0}.DraggableResizable-right{right:0}", ""]);
+	exports.push([module.id, ".Cropper{position:relative;display:inline-block;max-width:100%;max-height:100%}.box,.Cropper-box{position:absolute;top:0;left:0;bottom:0;right:0}.Cropper-box{cursor:move;border:1px solid #fff}.Cropper-canvas{visibility:hidden;position:absolute}.Cropper-image{vertical-align:middle;max-width:100%;position:relative;transform:translate(-50%,-50%);left:50%}.resize-handle{position:absolute;background-color:#eceeef;border:1px solid #8295ab;width:13px;height:13px;z-index:1}.resize-handle-se{bottom:0;right:0;cursor:nwse-resize;transform:translate(50%,50%)}.resize-handle-ne{right:0;top:0;cursor:nesw-resize;transform:translate(50%,-50%)}.resize-handle-sw{bottom:0;left:0;cursor:nesw-resize;transform:translate(-50%,50%)}.resize-handle-nw{top:0;bottom:0;cursor:nwse-resize;transform:translate(-50%,-50%)}.DraggableResizable{position:relative;width:100%;height:100%}.DraggableResizable-controls{border:0;clip:rect(0 0 0 0);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px}.DraggableResizable-bottom,.DraggableResizable-left,.DraggableResizable-right,.DraggableResizable-top{position:absolute;background-color:rgba(0,0,0,.7)}.DraggableResizable-top{top:0;left:0;right:0}.DraggableResizable-bottom{bottom:0;left:0;right:0}.DraggableResizable-left{left:0}.DraggableResizable-right{right:0}", ""]);
 	
 	// exports
 

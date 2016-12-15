@@ -1,6 +1,8 @@
 .Cropper {
   position: relative;
   display: inline-block;
+  max-width:100%;
+  max-height:100%;
 }
 
 .box {
@@ -109,4 +111,3 @@
 .DraggableResizable-right {
   right: 0;
 }
-
