@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "build": "NODE_ENV=production webpack --config webpack.dist.config.js",
-    "compile-index": "babel lib/index.src.js --out-file index.js",
+    "compile-index": "cp lib/cropper.css . && babel lib/index.src.js --out-file index.js",
     "compile-box": "babel lib/draggable-resizable-box.js --out-file draggable-resizable-box.js",
     "compile": "npm run compile-index && npm run compile-box && webpack",
     "docs": "webpack-dev-server --content-base docs/",
