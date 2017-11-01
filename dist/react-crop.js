@@ -1,13 +1,13 @@
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("react"));
+		module.exports = factory(require("react"), require("prop-types"));
 	else if(typeof define === 'function' && define.amd)
-		define(["react"], factory);
+		define(["react", "prop-types"], factory);
 	else if(typeof exports === 'object')
-		exports["ReactCrop"] = factory(require("react"));
+		exports["ReactCrop"] = factory(require("react"), require("prop-types"));
 	else
-		root["ReactCrop"] = factory(root["react"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_1__) {
+		root["ReactCrop"] = factory(root["react"], root["prop-types"]);
+})(this, function(__WEBPACK_EXTERNAL_MODULE_1__, __WEBPACK_EXTERNAL_MODULE_2__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -70,15 +70,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _draggableResizableBox = __webpack_require__(7);
+	var _draggableResizableBox = __webpack_require__(3);
 	
 	var _draggableResizableBox2 = _interopRequireDefault(_draggableResizableBox);
 	
-	var _dataUriToBlob = __webpack_require__(8);
+	var _dataUriToBlob = __webpack_require__(4);
 	
 	var _dataUriToBlob2 = _interopRequireDefault(_dataUriToBlob);
 	
-	__webpack_require__(9);
+	__webpack_require__(5);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -91,31 +91,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _class = function (_React$Component) {
 	  _inherits(_class, _React$Component);
 	
-	  function _class() {
-	    var _ref;
-	
-	    var _temp, _this, _ret;
-	
-	    _classCallCheck(this, _class);
-	
-	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-	      args[_key] = arguments[_key];
-	    }
-	
-	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = _class.__proto__ || Object.getPrototypeOf(_class)).call.apply(_ref, [this].concat(args))), _this), _this.displayName = 'Cropper', _this.propTypes = {
-	      width: _propTypes2.default.number.isRequired,
-	      height: _propTypes2.default.number.isRequired,
-	      center: _propTypes2.default.bool,
-	      image: _propTypes2.default.any,
-	      widthLabel: _propTypes2.default.string,
-	      heightLabel: _propTypes2.default.string,
-	      offsetXLabel: _propTypes2.default.string,
-	      offsetYLabel: _propTypes2.default.string,
-	      onImageLoaded: _propTypes2.default.func,
-	      minConstraints: _propTypes2.default.arrayOf(_propTypes2.default.number)
-	    }, _temp), _possibleConstructorReturn(_this, _ret);
-	  }
-	
 	  _createClass(_class, [{
 	    key: 'getDefaultProps',
 	    value: function getDefaultProps() {
@@ -127,17 +102,37 @@ return /******/ (function(modules) { // webpackBootstrap
 	        offsetYLabel: 'Offset Y'
 	      };
 	    }
-	  }, {
-	    key: 'getInitialState',
-	    value: function getInitialState() {
-	      return {
-	        imageLoaded: false,
-	        width: this.props.width,
-	        height: this.props.height,
-	        url: window.URL.createObjectURL(this.props.image)
-	      };
-	    }
-	  }, {
+	  }]);
+	
+	  function _class(props) {
+	    _classCallCheck(this, _class);
+	
+	    var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
+	
+	    _this.displayName = 'Cropper';
+	    _this.propTypes = {
+	      width: _propTypes2.default.number.isRequired,
+	      height: _propTypes2.default.number.isRequired,
+	      center: _propTypes2.default.bool,
+	      image: _propTypes2.default.any,
+	      widthLabel: _propTypes2.default.string,
+	      heightLabel: _propTypes2.default.string,
+	      offsetXLabel: _propTypes2.default.string,
+	      offsetYLabel: _propTypes2.default.string,
+	      onImageLoaded: _propTypes2.default.func,
+	      minConstraints: _propTypes2.default.arrayOf(_propTypes2.default.number)
+	    };
+	
+	    _this.state = {
+	      imageLoaded: false,
+	      width: _this.props.width,
+	      height: _this.props.height,
+	      url: window.URL.createObjectURL(_this.props.image)
+	    };
+	    return _this;
+	  }
+	
+	  _createClass(_class, [{
 	    key: 'componentWillReceiveProps',
 	    value: function componentWillReceiveProps(nextProps) {
 	      if (this.props.image !== nextProps.image) {
@@ -264,221 +259,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 2 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
-	/**
-	 * Copyright (c) 2013-present, Facebook, Inc.
-	 *
-	 * This source code is licensed under the MIT license found in the
-	 * LICENSE file in the root directory of this source tree.
-	 */
-	
-	if (false) {
-	  var REACT_ELEMENT_TYPE = (typeof Symbol === 'function' &&
-	    Symbol.for &&
-	    Symbol.for('react.element')) ||
-	    0xeac7;
-	
-	  var isValidElement = function(object) {
-	    return typeof object === 'object' &&
-	      object !== null &&
-	      object.$$typeof === REACT_ELEMENT_TYPE;
-	  };
-	
-	  // By explicitly using `prop-types` you are opting into new development behavior.
-	  // http://fb.me/prop-types-in-prod
-	  var throwOnDirectAccess = true;
-	  module.exports = require('./factoryWithTypeCheckers')(isValidElement, throwOnDirectAccess);
-	} else {
-	  // By explicitly using `prop-types` you are opting into new production behavior.
-	  // http://fb.me/prop-types-in-prod
-	  module.exports = __webpack_require__(3)();
-	}
-
+	module.exports = __WEBPACK_EXTERNAL_MODULE_2__;
 
 /***/ },
 /* 3 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright (c) 2013-present, Facebook, Inc.
-	 *
-	 * This source code is licensed under the MIT license found in the
-	 * LICENSE file in the root directory of this source tree.
-	 */
-	
-	'use strict';
-	
-	var emptyFunction = __webpack_require__(4);
-	var invariant = __webpack_require__(5);
-	var ReactPropTypesSecret = __webpack_require__(6);
-	
-	module.exports = function() {
-	  function shim(props, propName, componentName, location, propFullName, secret) {
-	    if (secret === ReactPropTypesSecret) {
-	      // It is still safe when called from React.
-	      return;
-	    }
-	    invariant(
-	      false,
-	      'Calling PropTypes validators directly is not supported by the `prop-types` package. ' +
-	      'Use PropTypes.checkPropTypes() to call them. ' +
-	      'Read more at http://fb.me/use-check-prop-types'
-	    );
-	  };
-	  shim.isRequired = shim;
-	  function getShim() {
-	    return shim;
-	  };
-	  // Important!
-	  // Keep this list in sync with production version in `./factoryWithTypeCheckers.js`.
-	  var ReactPropTypes = {
-	    array: shim,
-	    bool: shim,
-	    func: shim,
-	    number: shim,
-	    object: shim,
-	    string: shim,
-	    symbol: shim,
-	
-	    any: shim,
-	    arrayOf: getShim,
-	    element: shim,
-	    instanceOf: getShim,
-	    node: shim,
-	    objectOf: getShim,
-	    oneOf: getShim,
-	    oneOfType: getShim,
-	    shape: getShim,
-	    exact: getShim
-	  };
-	
-	  ReactPropTypes.checkPropTypes = emptyFunction;
-	  ReactPropTypes.PropTypes = ReactPropTypes;
-	
-	  return ReactPropTypes;
-	};
-
-
-/***/ },
-/* 4 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	/**
-	 * Copyright (c) 2013-present, Facebook, Inc.
-	 *
-	 * This source code is licensed under the MIT license found in the
-	 * LICENSE file in the root directory of this source tree.
-	 *
-	 * 
-	 */
-	
-	function makeEmptyFunction(arg) {
-	  return function () {
-	    return arg;
-	  };
-	}
-	
-	/**
-	 * This function accepts and discards inputs; it has no side effects. This is
-	 * primarily useful idiomatically for overridable function endpoints which
-	 * always need to be callable, since JS lacks a null-call idiom ala Cocoa.
-	 */
-	var emptyFunction = function emptyFunction() {};
-	
-	emptyFunction.thatReturns = makeEmptyFunction;
-	emptyFunction.thatReturnsFalse = makeEmptyFunction(false);
-	emptyFunction.thatReturnsTrue = makeEmptyFunction(true);
-	emptyFunction.thatReturnsNull = makeEmptyFunction(null);
-	emptyFunction.thatReturnsThis = function () {
-	  return this;
-	};
-	emptyFunction.thatReturnsArgument = function (arg) {
-	  return arg;
-	};
-	
-	module.exports = emptyFunction;
-
-/***/ },
-/* 5 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright (c) 2013-present, Facebook, Inc.
-	 *
-	 * This source code is licensed under the MIT license found in the
-	 * LICENSE file in the root directory of this source tree.
-	 *
-	 */
-	
-	'use strict';
-	
-	/**
-	 * Use invariant() to assert state which your program assumes to be true.
-	 *
-	 * Provide sprintf-style format (only %s is supported) and arguments
-	 * to provide information about what broke and what you were
-	 * expecting.
-	 *
-	 * The invariant message will be stripped in production, but the invariant
-	 * will remain to ensure logic does not differ in production.
-	 */
-	
-	var validateFormat = function validateFormat(format) {};
-	
-	if (false) {
-	  validateFormat = function validateFormat(format) {
-	    if (format === undefined) {
-	      throw new Error('invariant requires an error message argument');
-	    }
-	  };
-	}
-	
-	function invariant(condition, format, a, b, c, d, e, f) {
-	  validateFormat(format);
-	
-	  if (!condition) {
-	    var error;
-	    if (format === undefined) {
-	      error = new Error('Minified exception occurred; use the non-minified dev environment ' + 'for the full error message and additional helpful warnings.');
-	    } else {
-	      var args = [a, b, c, d, e, f];
-	      var argIndex = 0;
-	      error = new Error(format.replace(/%s/g, function () {
-	        return args[argIndex++];
-	      }));
-	      error.name = 'Invariant Violation';
-	    }
-	
-	    error.framesToPop = 1; // we don't care about invariant's own frame
-	    throw error;
-	  }
-	}
-	
-	module.exports = invariant;
-
-/***/ },
-/* 6 */
-/***/ function(module, exports) {
-
-	/**
-	 * Copyright (c) 2013-present, Facebook, Inc.
-	 *
-	 * This source code is licensed under the MIT license found in the
-	 * LICENSE file in the root directory of this source tree.
-	 */
-	
-	'use strict';
-	
-	var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
-	
-	module.exports = ReactPropTypesSecret;
-
-
-/***/ },
-/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -512,31 +298,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _class = function (_React$Component) {
 	  _inherits(_class, _React$Component);
 	
-	  function _class() {
-	    var _ref;
-	
-	    var _temp, _this, _ret;
-	
-	    _classCallCheck(this, _class);
-	
-	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-	      args[_key] = arguments[_key];
-	    }
-	
-	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = _class.__proto__ || Object.getPrototypeOf(_class)).call.apply(_ref, [this].concat(args))), _this), _this.displayName = 'DraggableResizableBox', _this.propTypes = {
-	      width: _propTypes2.default.number.isRequired,
-	      height: _propTypes2.default.number.isRequired,
-	      center: _propTypes2.default.bool,
-	      image: _propTypes2.default.any,
-	      widthLabel: _propTypes2.default.string,
-	      heightLabel: _propTypes2.default.string,
-	      offsetXLabel: _propTypes2.default.string,
-	      offsetYLabel: _propTypes2.default.string,
-	      onImageLoaded: _propTypes2.default.func,
-	      minConstraints: _propTypes2.default.arrayOf(_propTypes2.default.number)
-	    }, _temp), _possibleConstructorReturn(_this, _ret);
-	  }
-	
 	  _createClass(_class, [{
 	    key: 'getDefaultProps',
 	    value: function getDefaultProps() {
@@ -547,26 +308,46 @@ return /******/ (function(modules) { // webpackBootstrap
 	        offsetYLabel: 'Offset Y'
 	      };
 	    }
-	  }, {
-	    key: 'getInitialState',
-	    value: function getInitialState() {
-	      var _preserveAspectRatio = this.preserveAspectRatio(this.props.width, this.props.height),
-	          _preserveAspectRatio2 = _slicedToArray(_preserveAspectRatio, 2),
-	          width = _preserveAspectRatio2[0],
-	          height = _preserveAspectRatio2[1];
+	  }]);
 	
-	      var centerYOffset = (this.props.height - height) / 2;
-	      var centerXOffset = (this.props.width - width) / 2;
-	      return {
-	        top: centerYOffset,
-	        left: centerXOffset,
-	        bottom: centerYOffset,
-	        right: centerXOffset,
-	        width: width,
-	        height: height
-	      };
-	    }
-	  }, {
+	  function _class(props) {
+	    _classCallCheck(this, _class);
+	
+	    var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
+	
+	    _this.displayName = 'DraggableResizableBox';
+	    _this.propTypes = {
+	      width: _propTypes2.default.number.isRequired,
+	      height: _propTypes2.default.number.isRequired,
+	      center: _propTypes2.default.bool,
+	      image: _propTypes2.default.any,
+	      widthLabel: _propTypes2.default.string,
+	      heightLabel: _propTypes2.default.string,
+	      offsetXLabel: _propTypes2.default.string,
+	      offsetYLabel: _propTypes2.default.string,
+	      onImageLoaded: _propTypes2.default.func,
+	      minConstraints: _propTypes2.default.arrayOf(_propTypes2.default.number)
+	    };
+	
+	    var _this$preserveAspectR = _this.preserveAspectRatio(_this.props.width, _this.props.height),
+	        _this$preserveAspectR2 = _slicedToArray(_this$preserveAspectR, 2),
+	        width = _this$preserveAspectR2[0],
+	        height = _this$preserveAspectR2[1];
+	
+	    var centerYOffset = (_this.props.height - height) / 2;
+	    var centerXOffset = (_this.props.width - width) / 2;
+	    _this.state = {
+	      top: centerYOffset,
+	      left: centerXOffset,
+	      bottom: centerYOffset,
+	      right: centerXOffset,
+	      width: width,
+	      height: height
+	    };
+	    return _this;
+	  }
+	
+	  _createClass(_class, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      document.addEventListener('mousemove', this.eventMove);
@@ -593,11 +374,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }, {
 	    key: 'calculateDimensions',
-	    value: function calculateDimensions(_ref2) {
-	      var top = _ref2.top,
-	          left = _ref2.left,
-	          bottom = _ref2.bottom,
-	          right = _ref2.right;
+	    value: function calculateDimensions(_ref) {
+	      var top = _ref.top,
+	          left = _ref.left,
+	          bottom = _ref.bottom,
+	          right = _ref.right;
 	
 	      return { width: this.props.width - left - right, height: this.props.height - top - bottom };
 	    }
@@ -685,10 +466,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      });
 	      var dimensions = this.calculateDimensions(pos);
 	
-	      var _preserveAspectRatio3 = this.preserveAspectRatio(dimensions.width, dimensions.height),
-	          _preserveAspectRatio4 = _slicedToArray(_preserveAspectRatio3, 2),
-	          width = _preserveAspectRatio4[0],
-	          height = _preserveAspectRatio4[1];
+	      var _preserveAspectRatio = this.preserveAspectRatio(dimensions.width, dimensions.height),
+	          _preserveAspectRatio2 = _slicedToArray(_preserveAspectRatio, 2),
+	          width = _preserveAspectRatio2[0],
+	          height = _preserveAspectRatio2[1];
 	
 	      pos.top = this.props.height - pos.bottom - height;
 	      pos.left = this.props.width - pos.right - width;
@@ -703,10 +484,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      });
 	      var dimensions = this.calculateDimensions(pos);
 	
-	      var _preserveAspectRatio5 = this.preserveAspectRatio(dimensions.width, dimensions.height),
-	          _preserveAspectRatio6 = _slicedToArray(_preserveAspectRatio5, 2),
-	          width = _preserveAspectRatio6[0],
-	          height = _preserveAspectRatio6[1];
+	      var _preserveAspectRatio3 = this.preserveAspectRatio(dimensions.width, dimensions.height),
+	          _preserveAspectRatio4 = _slicedToArray(_preserveAspectRatio3, 2),
+	          width = _preserveAspectRatio4[0],
+	          height = _preserveAspectRatio4[1];
 	
 	      pos.top = this.props.height - pos.bottom - height;
 	      pos.right = this.props.width - pos.left - width;
@@ -721,10 +502,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      });
 	      var dimensions = this.calculateDimensions(pos);
 	
-	      var _preserveAspectRatio7 = this.preserveAspectRatio(dimensions.width, dimensions.height),
-	          _preserveAspectRatio8 = _slicedToArray(_preserveAspectRatio7, 2),
-	          width = _preserveAspectRatio8[0],
-	          height = _preserveAspectRatio8[1];
+	      var _preserveAspectRatio5 = this.preserveAspectRatio(dimensions.width, dimensions.height),
+	          _preserveAspectRatio6 = _slicedToArray(_preserveAspectRatio5, 2),
+	          width = _preserveAspectRatio6[0],
+	          height = _preserveAspectRatio6[1];
 	
 	      pos.bottom = this.props.height - pos.top - height;
 	      pos.right = this.props.width - pos.left - width;
@@ -739,10 +520,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      });
 	      var dimensions = this.calculateDimensions(pos);
 	
-	      var _preserveAspectRatio9 = this.preserveAspectRatio(dimensions.width, dimensions.height),
-	          _preserveAspectRatio10 = _slicedToArray(_preserveAspectRatio9, 2),
-	          width = _preserveAspectRatio10[0],
-	          height = _preserveAspectRatio10[1];
+	      var _preserveAspectRatio7 = this.preserveAspectRatio(dimensions.width, dimensions.height),
+	          _preserveAspectRatio8 = _slicedToArray(_preserveAspectRatio7, 2),
+	          width = _preserveAspectRatio8[0],
+	          height = _preserveAspectRatio8[1];
 	
 	      pos.bottom = this.props.height - pos.top - height;
 	      pos.left = this.props.width - pos.right - width;
@@ -887,10 +668,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return;
 	      }
 	
-	      var _preserveAspectRatio11 = this.preserveAspectRatio(this.state.width + change, this.state.height + change),
-	          _preserveAspectRatio12 = _slicedToArray(_preserveAspectRatio11, 2),
-	          width = _preserveAspectRatio12[0],
-	          height = _preserveAspectRatio12[1];
+	      var _preserveAspectRatio9 = this.preserveAspectRatio(this.state.width + change, this.state.height + change),
+	          _preserveAspectRatio10 = _slicedToArray(_preserveAspectRatio9, 2),
+	          width = _preserveAspectRatio10[0],
+	          height = _preserveAspectRatio10[1];
 	
 	      var widthChange = width - this.state.width;
 	      var heightChange = height - this.state.height;
@@ -1050,7 +831,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = _class;
 
 /***/ },
-/* 8 */
+/* 4 */
 /***/ function(module, exports) {
 
 	
@@ -1099,16 +880,16 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 9 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(10);
+	var content = __webpack_require__(6);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(12)(content, {});
+	var update = __webpack_require__(8)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -1125,10 +906,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 10 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(11)();
+	exports = module.exports = __webpack_require__(7)();
 	// imports
 	
 	
@@ -1139,7 +920,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 11 */
+/* 7 */
 /***/ function(module, exports) {
 
 	/*
@@ -1195,7 +976,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 12 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*

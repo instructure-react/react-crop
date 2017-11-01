@@ -29,31 +29,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var _class = function (_React$Component) {
   _inherits(_class, _React$Component);
 
-  function _class() {
-    var _ref;
-
-    var _temp, _this, _ret;
-
-    _classCallCheck(this, _class);
-
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = _class.__proto__ || Object.getPrototypeOf(_class)).call.apply(_ref, [this].concat(args))), _this), _this.displayName = 'DraggableResizableBox', _this.propTypes = {
-      width: _propTypes2.default.number.isRequired,
-      height: _propTypes2.default.number.isRequired,
-      center: _propTypes2.default.bool,
-      image: _propTypes2.default.any,
-      widthLabel: _propTypes2.default.string,
-      heightLabel: _propTypes2.default.string,
-      offsetXLabel: _propTypes2.default.string,
-      offsetYLabel: _propTypes2.default.string,
-      onImageLoaded: _propTypes2.default.func,
-      minConstraints: _propTypes2.default.arrayOf(_propTypes2.default.number)
-    }, _temp), _possibleConstructorReturn(_this, _ret);
-  }
-
   _createClass(_class, [{
     key: 'getDefaultProps',
     value: function getDefaultProps() {
@@ -64,26 +39,46 @@ var _class = function (_React$Component) {
         offsetYLabel: 'Offset Y'
       };
     }
-  }, {
-    key: 'getInitialState',
-    value: function getInitialState() {
-      var _preserveAspectRatio = this.preserveAspectRatio(this.props.width, this.props.height),
-          _preserveAspectRatio2 = _slicedToArray(_preserveAspectRatio, 2),
-          width = _preserveAspectRatio2[0],
-          height = _preserveAspectRatio2[1];
+  }]);
 
-      var centerYOffset = (this.props.height - height) / 2;
-      var centerXOffset = (this.props.width - width) / 2;
-      return {
-        top: centerYOffset,
-        left: centerXOffset,
-        bottom: centerYOffset,
-        right: centerXOffset,
-        width: width,
-        height: height
-      };
-    }
-  }, {
+  function _class(props) {
+    _classCallCheck(this, _class);
+
+    var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
+
+    _this.displayName = 'DraggableResizableBox';
+    _this.propTypes = {
+      width: _propTypes2.default.number.isRequired,
+      height: _propTypes2.default.number.isRequired,
+      center: _propTypes2.default.bool,
+      image: _propTypes2.default.any,
+      widthLabel: _propTypes2.default.string,
+      heightLabel: _propTypes2.default.string,
+      offsetXLabel: _propTypes2.default.string,
+      offsetYLabel: _propTypes2.default.string,
+      onImageLoaded: _propTypes2.default.func,
+      minConstraints: _propTypes2.default.arrayOf(_propTypes2.default.number)
+    };
+
+    var _this$preserveAspectR = _this.preserveAspectRatio(_this.props.width, _this.props.height),
+        _this$preserveAspectR2 = _slicedToArray(_this$preserveAspectR, 2),
+        width = _this$preserveAspectR2[0],
+        height = _this$preserveAspectR2[1];
+
+    var centerYOffset = (_this.props.height - height) / 2;
+    var centerXOffset = (_this.props.width - width) / 2;
+    _this.state = {
+      top: centerYOffset,
+      left: centerXOffset,
+      bottom: centerYOffset,
+      right: centerXOffset,
+      width: width,
+      height: height
+    };
+    return _this;
+  }
+
+  _createClass(_class, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
       document.addEventListener('mousemove', this.eventMove);
@@ -110,11 +105,11 @@ var _class = function (_React$Component) {
     }
   }, {
     key: 'calculateDimensions',
-    value: function calculateDimensions(_ref2) {
-      var top = _ref2.top,
-          left = _ref2.left,
-          bottom = _ref2.bottom,
-          right = _ref2.right;
+    value: function calculateDimensions(_ref) {
+      var top = _ref.top,
+          left = _ref.left,
+          bottom = _ref.bottom,
+          right = _ref.right;
 
       return { width: this.props.width - left - right, height: this.props.height - top - bottom };
     }
@@ -202,10 +197,10 @@ var _class = function (_React$Component) {
       });
       var dimensions = this.calculateDimensions(pos);
 
-      var _preserveAspectRatio3 = this.preserveAspectRatio(dimensions.width, dimensions.height),
-          _preserveAspectRatio4 = _slicedToArray(_preserveAspectRatio3, 2),
-          width = _preserveAspectRatio4[0],
-          height = _preserveAspectRatio4[1];
+      var _preserveAspectRatio = this.preserveAspectRatio(dimensions.width, dimensions.height),
+          _preserveAspectRatio2 = _slicedToArray(_preserveAspectRatio, 2),
+          width = _preserveAspectRatio2[0],
+          height = _preserveAspectRatio2[1];
 
       pos.top = this.props.height - pos.bottom - height;
       pos.left = this.props.width - pos.right - width;
@@ -220,10 +215,10 @@ var _class = function (_React$Component) {
       });
       var dimensions = this.calculateDimensions(pos);
 
-      var _preserveAspectRatio5 = this.preserveAspectRatio(dimensions.width, dimensions.height),
-          _preserveAspectRatio6 = _slicedToArray(_preserveAspectRatio5, 2),
-          width = _preserveAspectRatio6[0],
-          height = _preserveAspectRatio6[1];
+      var _preserveAspectRatio3 = this.preserveAspectRatio(dimensions.width, dimensions.height),
+          _preserveAspectRatio4 = _slicedToArray(_preserveAspectRatio3, 2),
+          width = _preserveAspectRatio4[0],
+          height = _preserveAspectRatio4[1];
 
       pos.top = this.props.height - pos.bottom - height;
       pos.right = this.props.width - pos.left - width;
@@ -238,10 +233,10 @@ var _class = function (_React$Component) {
       });
       var dimensions = this.calculateDimensions(pos);
 
-      var _preserveAspectRatio7 = this.preserveAspectRatio(dimensions.width, dimensions.height),
-          _preserveAspectRatio8 = _slicedToArray(_preserveAspectRatio7, 2),
-          width = _preserveAspectRatio8[0],
-          height = _preserveAspectRatio8[1];
+      var _preserveAspectRatio5 = this.preserveAspectRatio(dimensions.width, dimensions.height),
+          _preserveAspectRatio6 = _slicedToArray(_preserveAspectRatio5, 2),
+          width = _preserveAspectRatio6[0],
+          height = _preserveAspectRatio6[1];
 
       pos.bottom = this.props.height - pos.top - height;
       pos.right = this.props.width - pos.left - width;
@@ -256,10 +251,10 @@ var _class = function (_React$Component) {
       });
       var dimensions = this.calculateDimensions(pos);
 
-      var _preserveAspectRatio9 = this.preserveAspectRatio(dimensions.width, dimensions.height),
-          _preserveAspectRatio10 = _slicedToArray(_preserveAspectRatio9, 2),
-          width = _preserveAspectRatio10[0],
-          height = _preserveAspectRatio10[1];
+      var _preserveAspectRatio7 = this.preserveAspectRatio(dimensions.width, dimensions.height),
+          _preserveAspectRatio8 = _slicedToArray(_preserveAspectRatio7, 2),
+          width = _preserveAspectRatio8[0],
+          height = _preserveAspectRatio8[1];
 
       pos.bottom = this.props.height - pos.top - height;
       pos.left = this.props.width - pos.right - width;
@@ -404,10 +399,10 @@ var _class = function (_React$Component) {
         return;
       }
 
-      var _preserveAspectRatio11 = this.preserveAspectRatio(this.state.width + change, this.state.height + change),
-          _preserveAspectRatio12 = _slicedToArray(_preserveAspectRatio11, 2),
-          width = _preserveAspectRatio12[0],
-          height = _preserveAspectRatio12[1];
+      var _preserveAspectRatio9 = this.preserveAspectRatio(this.state.width + change, this.state.height + change),
+          _preserveAspectRatio10 = _slicedToArray(_preserveAspectRatio9, 2),
+          width = _preserveAspectRatio10[0],
+          height = _preserveAspectRatio10[1];
 
       var widthChange = width - this.state.width;
       var heightChange = height - this.state.height;

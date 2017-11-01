@@ -35,31 +35,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var _class = function (_React$Component) {
   _inherits(_class, _React$Component);
 
-  function _class() {
-    var _ref;
-
-    var _temp, _this, _ret;
-
-    _classCallCheck(this, _class);
-
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = _class.__proto__ || Object.getPrototypeOf(_class)).call.apply(_ref, [this].concat(args))), _this), _this.displayName = 'Cropper', _this.propTypes = {
-      width: _propTypes2.default.number.isRequired,
-      height: _propTypes2.default.number.isRequired,
-      center: _propTypes2.default.bool,
-      image: _propTypes2.default.any,
-      widthLabel: _propTypes2.default.string,
-      heightLabel: _propTypes2.default.string,
-      offsetXLabel: _propTypes2.default.string,
-      offsetYLabel: _propTypes2.default.string,
-      onImageLoaded: _propTypes2.default.func,
-      minConstraints: _propTypes2.default.arrayOf(_propTypes2.default.number)
-    }, _temp), _possibleConstructorReturn(_this, _ret);
-  }
-
   _createClass(_class, [{
     key: 'getDefaultProps',
     value: function getDefaultProps() {
@@ -71,17 +46,37 @@ var _class = function (_React$Component) {
         offsetYLabel: 'Offset Y'
       };
     }
-  }, {
-    key: 'getInitialState',
-    value: function getInitialState() {
-      return {
-        imageLoaded: false,
-        width: this.props.width,
-        height: this.props.height,
-        url: window.URL.createObjectURL(this.props.image)
-      };
-    }
-  }, {
+  }]);
+
+  function _class(props) {
+    _classCallCheck(this, _class);
+
+    var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
+
+    _this.displayName = 'Cropper';
+    _this.propTypes = {
+      width: _propTypes2.default.number.isRequired,
+      height: _propTypes2.default.number.isRequired,
+      center: _propTypes2.default.bool,
+      image: _propTypes2.default.any,
+      widthLabel: _propTypes2.default.string,
+      heightLabel: _propTypes2.default.string,
+      offsetXLabel: _propTypes2.default.string,
+      offsetYLabel: _propTypes2.default.string,
+      onImageLoaded: _propTypes2.default.func,
+      minConstraints: _propTypes2.default.arrayOf(_propTypes2.default.number)
+    };
+
+    _this.state = {
+      imageLoaded: false,
+      width: _this.props.width,
+      height: _this.props.height,
+      url: window.URL.createObjectURL(_this.props.image)
+    };
+    return _this;
+  }
+
+  _createClass(_class, [{
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
       if (this.props.image !== nextProps.image) {

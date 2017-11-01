@@ -8,12 +8,14 @@ const HEIGHT = 147;
 class Wrapper extends React.Component {
   displayName = 'Wrapper'
 
-  getInitialState () {
-    return {
+  constructor(props) {
+    super(props);
+    this.state = {
       image: null,
       previewUrl: null
     }
   }
+
 
   onChange (evt) {
     this.setState({
