@@ -1,13 +1,13 @@
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("react"));
+		module.exports = factory(require("react"), require("prop-types"));
 	else if(typeof define === 'function' && define.amd)
-		define(["react"], factory);
+		define(["react", "prop-types"], factory);
 	else if(typeof exports === 'object')
-		exports["ReactCrop"] = factory(require("react"));
+		exports["ReactCrop"] = factory(require("react"), require("prop-types"));
 	else
-		root["ReactCrop"] = factory(root["react"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_1__) {
+		root["ReactCrop"] = factory(root["react"], root["prop-types"]);
+})(this, function(__WEBPACK_EXTERNAL_MODULE_1__, __WEBPACK_EXTERNAL_MODULE_2__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -60,156 +60,189 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
 	var _react = __webpack_require__(1);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _draggableResizableBox = __webpack_require__(2);
+	var _propTypes = __webpack_require__(2);
+	
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+	
+	var _draggableResizableBox = __webpack_require__(3);
 	
 	var _draggableResizableBox2 = _interopRequireDefault(_draggableResizableBox);
 	
-	var _dataUriToBlob = __webpack_require__(3);
+	var _dataUriToBlob = __webpack_require__(4);
 	
 	var _dataUriToBlob2 = _interopRequireDefault(_dataUriToBlob);
 	
-	__webpack_require__(4);
+	__webpack_require__(5);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	exports.default = _react2.default.createClass({
-	  displayName: 'Cropper',
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	  propTypes: {
-	    width: _react2.default.PropTypes.number.isRequired,
-	    height: _react2.default.PropTypes.number.isRequired,
-	    center: _react2.default.PropTypes.bool,
-	    image: _react2.default.PropTypes.any,
-	    widthLabel: _react2.default.PropTypes.string,
-	    heightLabel: _react2.default.PropTypes.string,
-	    offsetXLabel: _react2.default.PropTypes.string,
-	    offsetYLabel: _react2.default.PropTypes.string,
-	    onImageLoaded: _react2.default.PropTypes.func,
-	    minConstraints: _react2.default.PropTypes.arrayOf(_react2.default.PropTypes.number)
-	  },
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
-	  getDefaultProps: function getDefaultProps() {
-	    return {
-	      center: false,
-	      width: 'Width',
-	      height: 'Height',
-	      offsetXLabel: 'Offset X',
-	      offsetYLabel: 'Offset Y'
-	    };
-	  },
-	  getInitialState: function getInitialState() {
-	    return {
-	      imageLoaded: false,
-	      width: this.props.width,
-	      height: this.props.height,
-	      url: window.URL.createObjectURL(this.props.image)
-	    };
-	  },
-	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-	    if (this.props.image !== nextProps.image) {
-	      this.setState({
-	        url: window.URL.createObjectURL(nextProps.image),
-	        imageLoaded: false
-	      });
-	    }
-	  },
-	  shouldComponentUpdate: function shouldComponentUpdate(nextProps, nextState) {
-	    var image = this.props.image;
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	    return nextProps.image.size !== image.size || nextProps.image.name !== image.name || nextProps.image.type !== image.type || nextState.imageLoaded !== this.state.imageLoaded;
-	  },
-	  onLoad: function onLoad(evt) {
-	    var _this = this;
+	var _class = function (_React$Component) {
+	  _inherits(_class, _React$Component);
 	
-	    var box = this.refs.box.getBoundingClientRect();
-	    this.setState({
-	      imageLoaded: true,
-	      width: box.width,
-	      height: box.height
-	    }, function () {
-	      var img = _this.refs.image;
-	      _this.props.onImageLoaded && _this.props.onImageLoaded(img);
-	    });
-	  },
-	  cropImage: function cropImage() {
-	    var _this2 = this;
-	
-	    return new Promise(function (resolve, reject) {
-	      var img = new Image();
-	      img.onload = function () {
-	        var canvas = _this2.refs.canvas;
-	        var img = _this2.refs.image;
-	        var ctx = canvas.getContext('2d');
-	        var xScale = img.naturalWidth / _this2.state.width,
-	            yScale = img.naturalHeight / _this2.state.height;
-	
-	
-	        var imageOffsetX = xScale < 1 ? 0 : _this2.state.offset.left * xScale;
-	        var imageOffsetY = yScale < 1 ? 0 : _this2.state.offset.top * yScale;
-	        var imageWidth = xScale < 1 ? img.naturalWidth : _this2.state.dimensions.width * xScale;
-	        var imageHeight = yScale < 1 ? img.naturalHeight : _this2.state.dimensions.height * yScale;
-	
-	        var canvasOffsetX = xScale < 1 ? Math.floor((_this2.state.dimensions.width - img.naturalWidth) / 2) : 0;
-	        var canvasOffsetY = yScale < 1 ? Math.floor((_this2.state.dimensions.height - img.naturalHeight) / 2) : 0;
-	        var canvasWidth = xScale < 1 ? img.naturalWidth : _this2.props.width;
-	        var canvasHeight = yScale < 1 ? img.naturalHeight : _this2.props.height;
-	
-	        ctx.clearRect(0, 0, _this2.props.width, _this2.props.height);
-	        ctx.drawImage(img, imageOffsetX, imageOffsetY, imageWidth, imageHeight, canvasOffsetX, canvasOffsetY, canvasWidth, canvasHeight);
-	        resolve((0, _dataUriToBlob2.default)(canvas.toDataURL()));
+	  _createClass(_class, [{
+	    key: 'getDefaultProps',
+	    value: function getDefaultProps() {
+	      return {
+	        center: false,
+	        width: 'Width',
+	        height: 'Height',
+	        offsetXLabel: 'Offset X',
+	        offsetYLabel: 'Offset Y'
 	      };
-	      img.src = window.URL.createObjectURL(_this2.props.image);
-	    });
-	  },
-	  onChange: function onChange(offset, dimensions) {
-	    this.setState({ offset: offset, dimensions: dimensions });
-	  },
-	  render: function render() {
-	    return _react2.default.createElement(
-	      'div',
-	      {
-	        ref: 'box',
-	        className: 'Cropper',
-	        style: {
-	          minWidth: this.props.width,
-	          minHeight: this.props.height
-	        } },
-	      _react2.default.createElement('canvas', {
-	        className: 'Cropper-canvas',
-	        ref: 'canvas',
-	        width: this.props.width,
-	        height: this.props.height }),
-	      _react2.default.createElement('img', {
-	        ref: 'image',
-	        src: this.state.url,
-	        className: 'Cropper-image',
-	        onLoad: this.onLoad,
-	        style: { top: this.state.height / 2 } }),
-	      this.state.imageLoaded && _react2.default.createElement(
-	        'div',
-	        { className: 'box' },
-	        _react2.default.createElement(
-	          _draggableResizableBox2.default,
-	          {
-	            aspectRatio: this.props.width / this.props.height,
-	            width: this.state.width,
-	            height: this.state.height,
-	            minConstraints: this.props.minConstraints,
-	            onChange: this.onChange,
-	            widthLabel: this.props.widthLabel,
-	            heightLabel: this.props.heightLabel,
-	            offsetXLabel: this.props.offsetXLabel,
-	            offsetYLabel: this.props.offsetYLabel },
-	          _react2.default.createElement('div', { className: 'Cropper-box' })
-	        )
-	      )
-	    );
+	    }
+	  }]);
+	
+	  function _class(props) {
+	    _classCallCheck(this, _class);
+	
+	    var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
+	
+	    _this.displayName = 'Cropper';
+	    _this.propTypes = {
+	      width: _propTypes2.default.number.isRequired,
+	      height: _propTypes2.default.number.isRequired,
+	      center: _propTypes2.default.bool,
+	      image: _propTypes2.default.any,
+	      widthLabel: _propTypes2.default.string,
+	      heightLabel: _propTypes2.default.string,
+	      offsetXLabel: _propTypes2.default.string,
+	      offsetYLabel: _propTypes2.default.string,
+	      onImageLoaded: _propTypes2.default.func,
+	      minConstraints: _propTypes2.default.arrayOf(_propTypes2.default.number)
+	    };
+	
+	    _this.onLoad = function (evt) {
+	      var box = _this.refs.box.getBoundingClientRect();
+	      _this.setState({
+	        imageLoaded: true,
+	        width: box.width,
+	        height: box.height
+	      }, function () {
+	        var img = _this.refs.image;
+	        _this.props.onImageLoaded && _this.props.onImageLoaded(img);
+	      });
+	    };
+	
+	    _this.cropImage = function () {
+	      return new Promise(function (resolve, reject) {
+	        var img = new Image();
+	        img.onload = function () {
+	          var canvas = _this.refs.canvas;
+	          var img = _this.refs.image;
+	          var ctx = canvas.getContext('2d');
+	          var xScale = img.naturalWidth / _this.state.width,
+	              yScale = img.naturalHeight / _this.state.height;
+	
+	
+	          var imageOffsetX = xScale < 1 ? 0 : _this.state.offset.left * xScale;
+	          var imageOffsetY = yScale < 1 ? 0 : _this.state.offset.top * yScale;
+	          var imageWidth = xScale < 1 ? img.naturalWidth : _this.state.dimensions.width * xScale;
+	          var imageHeight = yScale < 1 ? img.naturalHeight : _this.state.dimensions.height * yScale;
+	
+	          var canvasOffsetX = xScale < 1 ? Math.floor((_this.state.dimensions.width - img.naturalWidth) / 2) : 0;
+	          var canvasOffsetY = yScale < 1 ? Math.floor((_this.state.dimensions.height - img.naturalHeight) / 2) : 0;
+	          var canvasWidth = xScale < 1 ? img.naturalWidth : _this.props.width;
+	          var canvasHeight = yScale < 1 ? img.naturalHeight : _this.props.height;
+	
+	          ctx.clearRect(0, 0, _this.props.width, _this.props.height);
+	          ctx.drawImage(img, imageOffsetX, imageOffsetY, imageWidth, imageHeight, canvasOffsetX, canvasOffsetY, canvasWidth, canvasHeight);
+	          resolve((0, _dataUriToBlob2.default)(canvas.toDataURL()));
+	        };
+	        img.src = window.URL.createObjectURL(_this.props.image);
+	      });
+	    };
+	
+	    _this.onChange = function (offset, dimensions) {
+	      _this.setState({ offset: offset, dimensions: dimensions });
+	    };
+	
+	    _this.state = {
+	      imageLoaded: false,
+	      width: _this.props.width,
+	      height: _this.props.height,
+	      url: window.URL.createObjectURL(_this.props.image)
+	    };
+	    return _this;
 	  }
-	});
+	
+	  _createClass(_class, [{
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(nextProps) {
+	      if (this.props.image !== nextProps.image) {
+	        this.setState({
+	          url: window.URL.createObjectURL(nextProps.image),
+	          imageLoaded: false
+	        });
+	      }
+	    }
+	  }, {
+	    key: 'shouldComponentUpdate',
+	    value: function shouldComponentUpdate(nextProps, nextState) {
+	      var image = this.props.image;
+	
+	      return nextProps.image.size !== image.size || nextProps.image.name !== image.name || nextProps.image.type !== image.type || nextState.imageLoaded !== this.state.imageLoaded;
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        {
+	          ref: 'box',
+	          className: 'Cropper',
+	          style: {
+	            minWidth: this.props.width,
+	            minHeight: this.props.height
+	          } },
+	        _react2.default.createElement('canvas', {
+	          className: 'Cropper-canvas',
+	          ref: 'canvas',
+	          width: this.props.width,
+	          height: this.props.height }),
+	        _react2.default.createElement('img', {
+	          ref: 'image',
+	          src: this.state.url,
+	          className: 'Cropper-image',
+	          onLoad: this.onLoad,
+	          style: { top: this.state.height / 2 } }),
+	        this.state.imageLoaded && _react2.default.createElement(
+	          'div',
+	          { className: 'box' },
+	          _react2.default.createElement(
+	            _draggableResizableBox2.default,
+	            {
+	              aspectRatio: this.props.width / this.props.height,
+	              width: this.state.width,
+	              height: this.state.height,
+	              minConstraints: this.props.minConstraints,
+	              onChange: this.onChange,
+	              widthLabel: this.props.widthLabel,
+	              heightLabel: this.props.heightLabel,
+	              offsetXLabel: this.props.offsetXLabel,
+	              offsetYLabel: this.props.offsetYLabel },
+	            _react2.default.createElement('div', { className: 'Cropper-box' })
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return _class;
+	}(_react2.default.Component);
+	
+	exports.default = _class;
 
 /***/ },
 /* 1 */
@@ -219,6 +252,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 2 */
+/***/ function(module, exports) {
+
+	module.exports = __WEBPACK_EXTERNAL_MODULE_2__;
+
+/***/ },
+/* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -231,46 +270,54 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
 	var _react = __webpack_require__(1);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _propTypes = __webpack_require__(2);
+	
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	exports.default = _react2.default.createClass({
-	  displayName: 'DraggableResizableBox',
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	  propTypes: {
-	    aspectRatio: _react2.default.PropTypes.number.isRequired,
-	    width: _react2.default.PropTypes.number.isRequired,
-	    height: _react2.default.PropTypes.number.isRequired,
-	    onChange: _react2.default.PropTypes.func,
-	    offset: _react2.default.PropTypes.array,
-	    minConstraints: _react2.default.PropTypes.array,
-	    children: _react2.default.PropTypes.node,
-	    widthLabel: _react2.default.PropTypes.string,
-	    heightLabel: _react2.default.PropTypes.string,
-	    offsetXLabel: _react2.default.PropTypes.string,
-	    offsetYLabel: _react2.default.PropTypes.string
-	  },
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
-	  getDefaultProps: function getDefaultProps() {
-	    return {
-	      widthLabel: 'Width',
-	      heightLabel: 'Height',
-	      offsetXLabel: 'Offset X',
-	      offsetYLabel: 'Offset Y'
-	    };
-	  },
-	  getInitialState: function getInitialState() {
-	    var _preserveAspectRatio = this.preserveAspectRatio(this.props.width, this.props.height),
-	        _preserveAspectRatio2 = _slicedToArray(_preserveAspectRatio, 2),
-	        width = _preserveAspectRatio2[0],
-	        height = _preserveAspectRatio2[1];
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	    var centerYOffset = (this.props.height - height) / 2;
-	    var centerXOffset = (this.props.width - width) / 2;
-	    return {
+	var _class = function (_React$Component) {
+	  _inherits(_class, _React$Component);
+	
+	  _createClass(_class, [{
+	    key: 'getDefaultProps',
+	    value: function getDefaultProps() {
+	      return {
+	        widthLabel: 'Width',
+	        heightLabel: 'Height',
+	        offsetXLabel: 'Offset X',
+	        offsetYLabel: 'Offset Y'
+	      };
+	    }
+	  }]);
+	
+	  function _class(props) {
+	    _classCallCheck(this, _class);
+	
+	    var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
+	
+	    _initialiseProps.call(_this);
+	
+	    var _this$preserveAspectR = _this.preserveAspectRatio(_this.props.width, _this.props.height),
+	        _this$preserveAspectR2 = _slicedToArray(_this$preserveAspectR, 2),
+	        width = _this$preserveAspectR2[0],
+	        height = _this$preserveAspectR2[1];
+	
+	    var centerYOffset = (_this.props.height - height) / 2;
+	    var centerXOffset = (_this.props.width - width) / 2;
+	    _this.state = {
 	      top: centerYOffset,
 	      left: centerXOffset,
 	      bottom: centerYOffset,
@@ -278,265 +325,416 @@ return /******/ (function(modules) { // webpackBootstrap
 	      width: width,
 	      height: height
 	    };
-	  },
-	  componentDidMount: function componentDidMount() {
-	    document.addEventListener('mousemove', this.eventMove);
-	    document.addEventListener('mouseup', this.eventEnd);
-	    document.addEventListener('touchmove', this.eventMove);
-	    document.addEventListener('touchend', this.eventEnd);
-	    document.addEventListener('keydown', this.handleKey);
-	    this.props.onChange({
-	      top: this.state.top,
-	      left: this.state.left
-	    }, {
-	      width: this.state.width,
-	      height: this.state.height
-	    });
-	  },
-	  componentWillUnmount: function componentWillUnmount() {
-	    document.removeEventListener('mousemove', this.eventMove);
-	    document.removeEventListener('mouseup', this.eventEnd);
-	    document.removeEventListener('touchmove', this.eventMove);
-	    document.removeEventListener('touchend', this.eventEnd);
-	    document.removeEventListener('keydown', this.handleKey);
-	  },
-	  calculateDimensions: function calculateDimensions(_ref) {
+	    return _this;
+	  }
+	
+	  _createClass(_class, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      document.addEventListener('mousemove', this.eventMove);
+	      document.addEventListener('mouseup', this.eventEnd);
+	      document.addEventListener('touchmove', this.eventMove);
+	      document.addEventListener('touchend', this.eventEnd);
+	      document.addEventListener('keydown', this.handleKey);
+	      this.props.onChange({
+	        top: this.state.top,
+	        left: this.state.left
+	      }, {
+	        width: this.state.width,
+	        height: this.state.height
+	      });
+	    }
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      document.removeEventListener('mousemove', this.eventMove);
+	      document.removeEventListener('mouseup', this.eventEnd);
+	      document.removeEventListener('touchmove', this.eventMove);
+	      document.removeEventListener('touchend', this.eventEnd);
+	      document.removeEventListener('keydown', this.handleKey);
+	    }
+	
+	    // If you do this, be careful of constraints
+	
+	  }, {
+	    key: 'constrainBoundary',
+	    value: function constrainBoundary(side) {
+	      return side < 0 ? 0 : side;
+	    }
+	  }, {
+	    key: 'getClientCoordinates',
+	    value: function getClientCoordinates(evt) {
+	      return evt.touches ? {
+	        clientX: evt.touches[0].clientX,
+	        clientY: evt.touches[0].clientY
+	      } : {
+	        clientX: evt.clientX,
+	        clientY: evt.clientY
+	      };
+	    }
+	
+	    // Resize methods
+	
+	
+	    // resize strategies
+	
+	
+	    // Move methods
+	
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var style = {
+	        position: 'absolute',
+	        top: this.state.top,
+	        left: this.state.left,
+	        right: this.state.right,
+	        bottom: this.state.bottom
+	      };
+	
+	      var _calculateDimensions = this.calculateDimensions(this.state),
+	          width = _calculateDimensions.width,
+	          height = _calculateDimensions.height;
+	
+	      var topStyle = {
+	        height: this.state.top
+	      };
+	      var bottomStyle = {
+	        height: this.state.bottom
+	      };
+	      var leftStyle = {
+	        top: this.state.top,
+	        right: width + this.state.right,
+	        bottom: this.state.bottom
+	      };
+	      var rightStyle = {
+	        top: this.state.top,
+	        left: width + this.state.left,
+	        bottom: this.state.bottom
+	      };
+	
+	      return _react2.default.createElement(
+	        'div',
+	        { ref: 'box', className: 'DraggableResizable' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'DraggableResizable-controls' },
+	          _react2.default.createElement(
+	            'label',
+	            null,
+	            this.props.offsetXLabel,
+	            _react2.default.createElement('input', {
+	              name: 'x',
+	              value: Math.round(this.state.left),
+	              onChange: this.controlsMoveBox,
+	              tabIndex: '-1',
+	              type: 'number' })
+	          ),
+	          _react2.default.createElement(
+	            'label',
+	            null,
+	            this.props.offsetYLabel,
+	            _react2.default.createElement('input', {
+	              name: 'y',
+	              value: Math.round(this.state.top),
+	              onChange: this.controlsMoveBox,
+	              tabIndex: '-1',
+	              type: 'number' })
+	          ),
+	          _react2.default.createElement(
+	            'label',
+	            null,
+	            this.props.widthLabel,
+	            _react2.default.createElement('input', {
+	              name: 'width',
+	              value: Math.round(width),
+	              type: 'number',
+	              tabIndex: '-1',
+	              onChange: this.controlsResize })
+	          ),
+	          _react2.default.createElement(
+	            'label',
+	            null,
+	            this.props.heightLabel,
+	            _react2.default.createElement('input', {
+	              value: Math.round(height),
+	              type: 'number',
+	              name: 'height',
+	              tabIndex: '-1',
+	              onChange: this.controlsResize })
+	          )
+	        ),
+	        _react2.default.createElement('div', { className: 'DraggableResizable-top', style: topStyle }),
+	        _react2.default.createElement('div', { className: 'DraggableResizable-left', style: leftStyle }),
+	        _react2.default.createElement(
+	          'div',
+	          { style: style, onMouseDown: this.startMove, onTouchStart: this.startMove },
+	          this.props.children,
+	          _react2.default.createElement('div', { className: 'resize-handle resize-handle-se',
+	            onMouseDown: this.startResize.bind(null, 'se'),
+	            onTouchStart: this.startResize.bind(null, 'se') }),
+	          _react2.default.createElement('div', { className: 'resize-handle resize-handle-ne',
+	            onMouseDown: this.startResize.bind(null, 'ne'),
+	            onTouchStart: this.startResize.bind(null, 'ne') }),
+	          _react2.default.createElement('div', { className: 'resize-handle resize-handle-sw',
+	            onMouseDown: this.startResize.bind(null, 'sw'),
+	            onTouchStart: this.startResize.bind(null, 'sw') }),
+	          _react2.default.createElement('div', { className: 'resize-handle resize-handle-nw',
+	            onMouseDown: this.startResize.bind(null, 'nw'),
+	            onTouchStart: this.startResize.bind(null, 'nw') })
+	        ),
+	        _react2.default.createElement('div', { className: 'DraggableResizable-right', style: rightStyle }),
+	        _react2.default.createElement('div', { className: 'DraggableResizable-bottom', style: bottomStyle })
+	      );
+	    }
+	  }]);
+	
+	  return _class;
+	}(_react2.default.Component);
+	
+	var _initialiseProps = function _initialiseProps() {
+	  var _this2 = this;
+	
+	  this.displayName = 'DraggableResizableBox';
+	  this.propTypes = {
+	    width: _propTypes2.default.number.isRequired,
+	    height: _propTypes2.default.number.isRequired,
+	    center: _propTypes2.default.bool,
+	    image: _propTypes2.default.any,
+	    widthLabel: _propTypes2.default.string,
+	    heightLabel: _propTypes2.default.string,
+	    offsetXLabel: _propTypes2.default.string,
+	    offsetYLabel: _propTypes2.default.string,
+	    onImageLoaded: _propTypes2.default.func,
+	    minConstraints: _propTypes2.default.arrayOf(_propTypes2.default.number)
+	  };
+	
+	  this.calculateDimensions = function (_ref) {
 	    var top = _ref.top,
 	        left = _ref.left,
 	        bottom = _ref.bottom,
 	        right = _ref.right;
 	
-	    return { width: this.props.width - left - right, height: this.props.height - top - bottom };
-	  },
+	    return { width: _this2.props.width - left - right, height: _this2.props.height - top - bottom };
+	  };
 	
-	
-	  // If you do this, be careful of constraints
-	  preserveAspectRatio: function preserveAspectRatio(width, height) {
-	    if (this.props.minConstraints) {
-	      width = Math.max(width, this.props.minConstraints[0]);
-	      height = Math.max(height, this.props.minConstraints[1]);
+	  this.preserveAspectRatio = function (width, height) {
+	    if (_this2.props.minConstraints) {
+	      width = Math.max(width, _this2.props.minConstraints[0]);
+	      height = Math.max(height, _this2.props.minConstraints[1]);
 	    }
 	    var currentAspectRatio = width / height;
 	
-	    if (currentAspectRatio < this.props.aspectRatio) {
-	      return [width, width / this.props.aspectRatio];
-	    } else if (currentAspectRatio > this.props.aspectRatio) {
-	      return [height * this.props.aspectRatio, height];
+	    if (currentAspectRatio < _this2.props.aspectRatio) {
+	      return [width, width / _this2.props.aspectRatio];
+	    } else if (currentAspectRatio > _this2.props.aspectRatio) {
+	      return [height * _this2.props.aspectRatio, height];
 	    } else {
 	      return [width, height];
 	    }
-	  },
-	  constrainBoundary: function constrainBoundary(side) {
-	    return side < 0 ? 0 : side;
-	  },
-	  getClientCoordinates: function getClientCoordinates(evt) {
-	    return evt.touches ? {
-	      clientX: evt.touches[0].clientX,
-	      clientY: evt.touches[0].clientY
-	    } : {
-	      clientX: evt.clientX,
-	      clientY: evt.clientY
-	    };
-	  },
-	  eventMove: function eventMove(evt) {
-	    if (this.state.resizing) {
-	      this.onResize(evt);
-	    } else if (this.state.moving) {
-	      this.eventMoveBox(evt);
-	    }
-	  },
-	  eventEnd: function eventEnd(evt) {
-	    if (this.state.resizing) {
-	      this.stopResize(evt);
-	    } else if (this.state.moving) {
-	      this.stopMove(evt);
-	    }
-	  },
+	  };
 	
+	  this.eventMove = function (evt) {
+	    if (_this2.state.resizing) {
+	      _this2.onResize(evt);
+	    } else if (_this2.state.moving) {
+	      _this2.eventMoveBox(evt);
+	    }
+	  };
 	
-	  // Resize methods
-	  startResize: function startResize(corner, event) {
+	  this.eventEnd = function (evt) {
+	    if (_this2.state.resizing) {
+	      _this2.stopResize(evt);
+	    } else if (_this2.state.moving) {
+	      _this2.stopMove(evt);
+	    }
+	  };
+	
+	  this.startResize = function (corner, event) {
 	    event.stopPropagation();
 	    event.preventDefault();
-	    this.setState({
+	    _this2.setState({
 	      resizing: true,
 	      corner: corner
 	    });
-	  },
-	  stopResize: function stopResize() {
-	    this.setState({ resizing: false });
-	  },
+	  };
 	
+	  this.stopResize = function () {
+	    _this2.setState({ resizing: false });
+	  };
 	
-	  // resize strategies
-	  nw: function nw(mousePos, boxPos) {
-	    var pos = _extends({}, this.state, {
-	      top: this.constrainBoundary(mousePos.clientY - boxPos.top),
-	      left: this.constrainBoundary(mousePos.clientX - boxPos.left)
+	  this.nw = function (mousePos, boxPos) {
+	    var pos = _extends({}, _this2.state, {
+	      top: _this2.constrainBoundary(mousePos.clientY - boxPos.top),
+	      left: _this2.constrainBoundary(mousePos.clientX - boxPos.left)
 	    });
-	    var dimensions = this.calculateDimensions(pos);
+	    var dimensions = _this2.calculateDimensions(pos);
 	
-	    var _preserveAspectRatio3 = this.preserveAspectRatio(dimensions.width, dimensions.height),
+	    var _preserveAspectRatio = _this2.preserveAspectRatio(dimensions.width, dimensions.height),
+	        _preserveAspectRatio2 = _slicedToArray(_preserveAspectRatio, 2),
+	        width = _preserveAspectRatio2[0],
+	        height = _preserveAspectRatio2[1];
+	
+	    pos.top = _this2.props.height - pos.bottom - height;
+	    pos.left = _this2.props.width - pos.right - width;
+	    return pos;
+	  };
+	
+	  this.ne = function (mousePos, boxPos) {
+	    var pos = _extends({}, _this2.state, {
+	      top: _this2.constrainBoundary(mousePos.clientY - boxPos.top),
+	      right: _this2.constrainBoundary(boxPos.right - mousePos.clientX)
+	    });
+	    var dimensions = _this2.calculateDimensions(pos);
+	
+	    var _preserveAspectRatio3 = _this2.preserveAspectRatio(dimensions.width, dimensions.height),
 	        _preserveAspectRatio4 = _slicedToArray(_preserveAspectRatio3, 2),
 	        width = _preserveAspectRatio4[0],
 	        height = _preserveAspectRatio4[1];
 	
-	    pos.top = this.props.height - pos.bottom - height;
-	    pos.left = this.props.width - pos.right - width;
+	    pos.top = _this2.props.height - pos.bottom - height;
+	    pos.right = _this2.props.width - pos.left - width;
 	    return pos;
-	  },
-	  ne: function ne(mousePos, boxPos) {
-	    var pos = _extends({}, this.state, {
-	      top: this.constrainBoundary(mousePos.clientY - boxPos.top),
-	      right: this.constrainBoundary(boxPos.right - mousePos.clientX)
-	    });
-	    var dimensions = this.calculateDimensions(pos);
+	  };
 	
-	    var _preserveAspectRatio5 = this.preserveAspectRatio(dimensions.width, dimensions.height),
+	  this.se = function (mousePos, boxPos) {
+	    var pos = _extends({}, _this2.state, {
+	      bottom: _this2.constrainBoundary(boxPos.bottom - mousePos.clientY),
+	      right: _this2.constrainBoundary(boxPos.right - mousePos.clientX)
+	    });
+	    var dimensions = _this2.calculateDimensions(pos);
+	
+	    var _preserveAspectRatio5 = _this2.preserveAspectRatio(dimensions.width, dimensions.height),
 	        _preserveAspectRatio6 = _slicedToArray(_preserveAspectRatio5, 2),
 	        width = _preserveAspectRatio6[0],
 	        height = _preserveAspectRatio6[1];
 	
-	    pos.top = this.props.height - pos.bottom - height;
-	    pos.right = this.props.width - pos.left - width;
+	    pos.bottom = _this2.props.height - pos.top - height;
+	    pos.right = _this2.props.width - pos.left - width;
 	    return pos;
-	  },
-	  se: function se(mousePos, boxPos) {
-	    var pos = _extends({}, this.state, {
-	      bottom: this.constrainBoundary(boxPos.bottom - mousePos.clientY),
-	      right: this.constrainBoundary(boxPos.right - mousePos.clientX)
-	    });
-	    var dimensions = this.calculateDimensions(pos);
+	  };
 	
-	    var _preserveAspectRatio7 = this.preserveAspectRatio(dimensions.width, dimensions.height),
+	  this.sw = function (mousePos, boxPos) {
+	    var pos = _extends({}, _this2.state, {
+	      bottom: _this2.constrainBoundary(boxPos.bottom - mousePos.clientY),
+	      left: _this2.constrainBoundary(mousePos.clientX - boxPos.left)
+	    });
+	    var dimensions = _this2.calculateDimensions(pos);
+	
+	    var _preserveAspectRatio7 = _this2.preserveAspectRatio(dimensions.width, dimensions.height),
 	        _preserveAspectRatio8 = _slicedToArray(_preserveAspectRatio7, 2),
 	        width = _preserveAspectRatio8[0],
 	        height = _preserveAspectRatio8[1];
 	
-	    pos.bottom = this.props.height - pos.top - height;
-	    pos.right = this.props.width - pos.left - width;
+	    pos.bottom = _this2.props.height - pos.top - height;
+	    pos.left = _this2.props.width - pos.right - width;
 	    return pos;
-	  },
-	  sw: function sw(mousePos, boxPos) {
-	    var pos = _extends({}, this.state, {
-	      bottom: this.constrainBoundary(boxPos.bottom - mousePos.clientY),
-	      left: this.constrainBoundary(mousePos.clientX - boxPos.left)
-	    });
-	    var dimensions = this.calculateDimensions(pos);
+	  };
 	
-	    var _preserveAspectRatio9 = this.preserveAspectRatio(dimensions.width, dimensions.height),
-	        _preserveAspectRatio10 = _slicedToArray(_preserveAspectRatio9, 2),
-	        width = _preserveAspectRatio10[0],
-	        height = _preserveAspectRatio10[1];
+	  this.onResize = function (event) {
+	    var box = _this2.refs.box.parentElement.parentElement.getBoundingClientRect();
+	    var coordinates = _this2.getClientCoordinates(event);
+	    var position = _this2[_this2.state.corner](coordinates, box);
+	    _this2.resize(position, coordinates);
+	  };
 	
-	    pos.bottom = this.props.height - pos.top - height;
-	    pos.left = this.props.width - pos.right - width;
-	    return pos;
-	  },
-	  onResize: function onResize(event) {
-	    var box = this.refs.box.parentElement.parentElement.getBoundingClientRect();
-	    var coordinates = this.getClientCoordinates(event);
-	    var position = this[this.state.corner](coordinates, box);
-	    this.resize(position, coordinates);
-	  },
-	  controlsResize: function controlsResize(event) {
-	    var box = this.refs.box.parentElement.parentElement.getBoundingClientRect();
-	    var width = event.target.name === 'width' ? +event.target.value : +event.target.value * this.props.aspectRatio;
-	    var height = event.target.name === 'height' ? +event.target.value : +event.target.value / this.props.aspectRatio;
-	    var dimensions = this.preserveAspectRatio(width, height);
+	  this.controlsResize = function (event) {
+	    var box = _this2.refs.box.parentElement.parentElement.getBoundingClientRect();
+	    var width = event.target.name === 'width' ? +event.target.value : +event.target.value * _this2.props.aspectRatio;
+	    var height = event.target.name === 'height' ? +event.target.value : +event.target.value / _this2.props.aspectRatio;
+	    var dimensions = _this2.preserveAspectRatio(width, height);
 	    width = dimensions[0];
 	    height = dimensions[1];
 	
-	    if (width > box.width - this.state.left || height > box.height - this.state.top) return;
+	    if (width > box.width - _this2.state.left || height > box.height - _this2.state.top) return;
 	
-	    var widthDifference = this.state.width - width;
-	    var heightDifference = this.state.height - height;
-	    var pos = _extends({}, this.state, {
-	      right: this.state.right + widthDifference,
-	      bottom: this.state.bottom + heightDifference
+	    var widthDifference = _this2.state.width - width;
+	    var heightDifference = _this2.state.height - height;
+	    var pos = _extends({}, _this2.state, {
+	      right: _this2.state.right + widthDifference,
+	      bottom: _this2.state.bottom + heightDifference
 	    });
 	    var coordinates = {
 	      clientX: box.right - pos.right,
 	      clientY: box.bottom - pos.bottom
 	    };
 	
-	    this.resize(pos, coordinates);
-	  },
-	  resize: function resize(position, coordinates) {
-	    var _this = this;
+	    _this2.resize(pos, coordinates);
+	  };
 	
-	    var dimensions = this.calculateDimensions(position);
-	    var widthChanged = dimensions.width !== this.state.width,
-	        heightChanged = dimensions.height !== this.state.height;
+	  this.resize = function (position, coordinates) {
+	    var dimensions = _this2.calculateDimensions(position);
+	    var widthChanged = dimensions.width !== _this2.state.width,
+	        heightChanged = dimensions.height !== _this2.state.height;
 	    if (!widthChanged && !heightChanged) return;
 	
-	    this.setState(_extends({}, coordinates, position, dimensions), function () {
-	      _this.props.onChange({
+	    _this2.setState(_extends({}, coordinates, position, dimensions), function () {
+	      _this2.props.onChange({
 	        top: position.top,
 	        left: position.left
 	      }, dimensions);
 	    });
-	  },
+	  };
 	
-	
-	  // Move methods
-	  startMove: function startMove(evt) {
-	    var _getClientCoordinates = this.getClientCoordinates(evt),
+	  this.startMove = function (evt) {
+	    var _getClientCoordinates = _this2.getClientCoordinates(evt),
 	        clientX = _getClientCoordinates.clientX,
 	        clientY = _getClientCoordinates.clientY;
 	
-	    this.setState({
+	    _this2.setState({
 	      moving: true,
 	      clientX: clientX,
 	      clientY: clientY
 	    });
-	  },
-	  stopMove: function stopMove(evt) {
-	    this.setState({
+	  };
+	
+	  this.stopMove = function (evt) {
+	    _this2.setState({
 	      moving: false
 	    });
-	  },
-	  eventMoveBox: function eventMoveBox(evt) {
+	  };
+	
+	  this.eventMoveBox = function (evt) {
 	    evt.preventDefault();
 	
-	    var _getClientCoordinates2 = this.getClientCoordinates(evt),
+	    var _getClientCoordinates2 = _this2.getClientCoordinates(evt),
 	        clientX = _getClientCoordinates2.clientX,
 	        clientY = _getClientCoordinates2.clientY;
 	
-	    var movedX = clientX - this.state.clientX;
-	    var movedY = clientY - this.state.clientY;
+	    var movedX = clientX - _this2.state.clientX;
+	    var movedY = clientY - _this2.state.clientY;
 	
-	    this.moveBox(clientX, clientY, movedX, movedY);
-	  },
-	  controlsMoveBox: function controlsMoveBox(evt) {
-	    var movedX = evt.target.name === 'x' ? evt.target.value - this.state.left : 0;
-	    var movedY = evt.target.name === 'y' ? evt.target.value - this.state.top : 0;
-	    this.moveBox(0, 0, movedX, movedY);
-	  },
-	  moveBox: function moveBox(clientX, clientY, movedX, movedY) {
-	    var _this2 = this;
+	    _this2.moveBox(clientX, clientY, movedX, movedY);
+	  };
 	
+	  this.controlsMoveBox = function (evt) {
+	    var movedX = evt.target.name === 'x' ? evt.target.value - _this2.state.left : 0;
+	    var movedY = evt.target.name === 'y' ? evt.target.value - _this2.state.top : 0;
+	    _this2.moveBox(0, 0, movedX, movedY);
+	  };
+	
+	  this.moveBox = function (clientX, clientY, movedX, movedY) {
 	    var position = {
-	      top: this.constrainBoundary(this.state.top + movedY),
-	      left: this.constrainBoundary(this.state.left + movedX),
-	      bottom: this.constrainBoundary(this.state.bottom - movedY),
-	      right: this.constrainBoundary(this.state.right - movedX)
+	      top: _this2.constrainBoundary(_this2.state.top + movedY),
+	      left: _this2.constrainBoundary(_this2.state.left + movedX),
+	      bottom: _this2.constrainBoundary(_this2.state.bottom - movedY),
+	      right: _this2.constrainBoundary(_this2.state.right - movedX)
 	    };
 	
 	    if (!position.top) {
-	      position.bottom = this.props.height - this.state.height;
+	      position.bottom = _this2.props.height - _this2.state.height;
 	    }
 	    if (!position.bottom) {
-	      position.top = this.props.height - this.state.height;
+	      position.top = _this2.props.height - _this2.state.height;
 	    }
 	    if (!position.left) {
-	      position.right = this.props.width - this.state.width;
+	      position.right = _this2.props.width - _this2.state.width;
 	    }
 	    if (!position.right) {
-	      position.left = this.props.width - this.state.width;
+	      position.left = _this2.props.width - _this2.state.width;
 	    }
 	
-	    this.setState(_extends({}, {
+	    _this2.setState(_extends({}, {
 	      clientX: clientX,
 	      clientY: clientY
 	    }, position), function () {
@@ -545,170 +743,70 @@ return /******/ (function(modules) { // webpackBootstrap
 	        left: position.left
 	      }, _this2.calculateDimensions(position));
 	    });
-	  },
-	  keyboardResize: function keyboardResize(change) {
-	    if (this.state.right - change < 0) {
+	  };
+	
+	  this.keyboardResize = function (change) {
+	    if (_this2.state.right - change < 0) {
 	      return;
 	    }
-	    if (this.state.bottom - change < 0) {
+	    if (_this2.state.bottom - change < 0) {
 	      return;
 	    }
 	
-	    var _preserveAspectRatio11 = this.preserveAspectRatio(this.state.width + change, this.state.height + change),
-	        _preserveAspectRatio12 = _slicedToArray(_preserveAspectRatio11, 2),
-	        width = _preserveAspectRatio12[0],
-	        height = _preserveAspectRatio12[1];
+	    var _preserveAspectRatio9 = _this2.preserveAspectRatio(_this2.state.width + change, _this2.state.height + change),
+	        _preserveAspectRatio10 = _slicedToArray(_preserveAspectRatio9, 2),
+	        width = _preserveAspectRatio10[0],
+	        height = _preserveAspectRatio10[1];
 	
-	    var widthChange = width - this.state.width;
-	    var heightChange = height - this.state.height;
+	    var widthChange = width - _this2.state.width;
+	    var heightChange = height - _this2.state.height;
 	
-	    this.setState({
-	      bottom: this.state.bottom - heightChange,
-	      right: this.state.right - widthChange,
+	    _this2.setState({
+	      bottom: _this2.state.bottom - heightChange,
+	      right: _this2.state.right - widthChange,
 	      width: width,
 	      height: height
 	    });
-	  },
-	  handleKey: function handleKey(event) {
+	  };
+	
+	  this.handleKey = function (event) {
 	    // safari doesn't support event.key, so fall back to keyCode
 	    if (event.shiftKey) {
 	      if (event.key === 'ArrowUp' || event.keyCode === 38) {
-	        this.keyboardResize(-10);
+	        _this2.keyboardResize(-10);
 	        event.preventDefault();
 	      } else if (event.key === 'ArrowDown' || event.keyCode === 40) {
-	        this.keyboardResize(10);
+	        _this2.keyboardResize(10);
 	        event.preventDefault();
 	      } else if (event.key === 'ArrowLeft' || event.keyCode === 37) {
-	        this.keyboardResize(-10);
+	        _this2.keyboardResize(-10);
 	        event.preventDefault();
 	      } else if (event.key === 'ArrowRight' || event.keyCode === 39) {
-	        this.keyboardResize(10);
+	        _this2.keyboardResize(10);
 	        event.preventDefault();
 	      }
 	    } else {
 	      if (event.key === 'ArrowUp' || event.keyCode === 38) {
-	        this.moveBox(this.state.clientX, this.state.clientY, 0, -10);
+	        _this2.moveBox(_this2.state.clientX, _this2.state.clientY, 0, -10);
 	        event.preventDefault();
 	      } else if (event.key === 'ArrowDown' || event.keyCode === 40) {
-	        this.moveBox(this.state.clientX, this.state.clientY, 0, 10);
+	        _this2.moveBox(_this2.state.clientX, _this2.state.clientY, 0, 10);
 	        event.preventDefault();
 	      } else if (event.key === 'ArrowLeft' || event.keyCode === 37) {
-	        this.moveBox(this.state.clientX, this.state.clientY, -10, 0);
+	        _this2.moveBox(_this2.state.clientX, _this2.state.clientY, -10, 0);
 	        event.preventDefault();
 	      } else if (event.key === 'ArrowRight' || event.keyCode === 39) {
-	        this.moveBox(this.state.clientX, this.state.clientY, 10, 0);
+	        _this2.moveBox(_this2.state.clientX, _this2.state.clientY, 10, 0);
 	        event.preventDefault();
 	      }
 	    }
-	  },
-	  render: function render() {
-	    var style = {
-	      position: 'absolute',
-	      top: this.state.top,
-	      left: this.state.left,
-	      right: this.state.right,
-	      bottom: this.state.bottom
-	    };
-	
-	    var _calculateDimensions = this.calculateDimensions(this.state),
-	        width = _calculateDimensions.width,
-	        height = _calculateDimensions.height;
-	
-	    var topStyle = {
-	      height: this.state.top
-	    };
-	    var bottomStyle = {
-	      height: this.state.bottom
-	    };
-	    var leftStyle = {
-	      top: this.state.top,
-	      right: width + this.state.right,
-	      bottom: this.state.bottom
-	    };
-	    var rightStyle = {
-	      top: this.state.top,
-	      left: width + this.state.left,
-	      bottom: this.state.bottom
-	    };
-	
-	    return _react2.default.createElement(
-	      'div',
-	      { ref: 'box', className: 'DraggableResizable' },
-	      _react2.default.createElement(
-	        'div',
-	        { className: 'DraggableResizable-controls' },
-	        _react2.default.createElement(
-	          'label',
-	          null,
-	          this.props.offsetXLabel,
-	          _react2.default.createElement('input', {
-	            name: 'x',
-	            value: Math.round(this.state.left),
-	            onChange: this.controlsMoveBox,
-	            tabIndex: '-1',
-	            type: 'number' })
-	        ),
-	        _react2.default.createElement(
-	          'label',
-	          null,
-	          this.props.offsetYLabel,
-	          _react2.default.createElement('input', {
-	            name: 'y',
-	            value: Math.round(this.state.top),
-	            onChange: this.controlsMoveBox,
-	            tabIndex: '-1',
-	            type: 'number' })
-	        ),
-	        _react2.default.createElement(
-	          'label',
-	          null,
-	          this.props.widthLabel,
-	          _react2.default.createElement('input', {
-	            name: 'width',
-	            value: Math.round(width),
-	            type: 'number',
-	            tabIndex: '-1',
-	            onChange: this.controlsResize })
-	        ),
-	        _react2.default.createElement(
-	          'label',
-	          null,
-	          this.props.heightLabel,
-	          _react2.default.createElement('input', {
-	            value: Math.round(height),
-	            type: 'number',
-	            name: 'height',
-	            tabIndex: '-1',
-	            onChange: this.controlsResize })
-	        )
-	      ),
-	      _react2.default.createElement('div', { className: 'DraggableResizable-top', style: topStyle }),
-	      _react2.default.createElement('div', { className: 'DraggableResizable-left', style: leftStyle }),
-	      _react2.default.createElement(
-	        'div',
-	        { style: style, onMouseDown: this.startMove, onTouchStart: this.startMove },
-	        this.props.children,
-	        _react2.default.createElement('div', { className: 'resize-handle resize-handle-se',
-	          onMouseDown: this.startResize.bind(null, 'se'),
-	          onTouchStart: this.startResize.bind(null, 'se') }),
-	        _react2.default.createElement('div', { className: 'resize-handle resize-handle-ne',
-	          onMouseDown: this.startResize.bind(null, 'ne'),
-	          onTouchStart: this.startResize.bind(null, 'ne') }),
-	        _react2.default.createElement('div', { className: 'resize-handle resize-handle-sw',
-	          onMouseDown: this.startResize.bind(null, 'sw'),
-	          onTouchStart: this.startResize.bind(null, 'sw') }),
-	        _react2.default.createElement('div', { className: 'resize-handle resize-handle-nw',
-	          onMouseDown: this.startResize.bind(null, 'nw'),
-	          onTouchStart: this.startResize.bind(null, 'nw') })
-	      ),
-	      _react2.default.createElement('div', { className: 'DraggableResizable-right', style: rightStyle }),
-	      _react2.default.createElement('div', { className: 'DraggableResizable-bottom', style: bottomStyle })
-	    );
-	  }
-	});
+	  };
+	};
+
+	exports.default = _class;
 
 /***/ },
-/* 3 */
+/* 4 */
 /***/ function(module, exports) {
 
 	
@@ -757,23 +855,23 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 4 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(5);
+	var content = __webpack_require__(6);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(7)(content, {});
+	var update = __webpack_require__(8)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../node_modules/css-loader/index.js!./cropper.css", function() {
-				var newContent = require("!!./../node_modules/css-loader/index.js!./cropper.css");
+			module.hot.accept("!!../node_modules/css-loader/index.js!./cropper.css", function() {
+				var newContent = require("!!../node_modules/css-loader/index.js!./cropper.css");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -783,10 +881,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 5 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(6)();
+	exports = module.exports = __webpack_require__(7)();
 	// imports
 	
 	
@@ -797,7 +895,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 6 */
+/* 7 */
 /***/ function(module, exports) {
 
 	/*
@@ -853,7 +951,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 7 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -869,7 +967,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			};
 		},
 		isOldIE = memoize(function() {
-			return /msie [6-9]\b/.test(window.navigator.userAgent.toLowerCase());
+			return /msie [6-9]\b/.test(self.navigator.userAgent.toLowerCase());
 		}),
 		getHeadElement = memoize(function () {
 			return document.head || document.getElementsByTagName("head")[0];

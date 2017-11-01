@@ -5,44 +5,46 @@ import Cropper from '../lib/index.src.js'
 const WIDTH = 262;
 const HEIGHT = 147;
 
-let Wrapper = React.createClass({
-  displayName: 'Wrapper',
+class Wrapper extends React.Component {
+  displayName = 'Wrapper'
 
-  getInitialState () {
-    return {
+  constructor(props) {
+    super(props);
+    this.state = {
       image: null,
       previewUrl: null
     }
-  },
+  }
 
-  onChange (evt) {
+
+  onChange = (evt) => {
     this.setState({
       image: evt.target.files[0]
     })
-  },
+  }
 
-  crop () {
+  crop = () => {
     this.refs.crop.cropImage().then((image) => {
       this.setState({
         previewUrl: window.URL.createObjectURL(image)
       })
     })
-  },
+  }
 
-  clear () {
+  clear = () => {
     this.refs.file.value = null
     this.setState({
       previewUrl: null,
       image: null
     })
-  },
+  }
 
-  imageLoaded (img) {
+  imageLoaded = (img) => {
     if (img.naturalWidth && img.naturalWidth < WIDTH &&
         img.naturalHeight && img.naturalHeight < HEIGHT) {
       this.crop()
     }
-  },
+  }
 
   render () {
     return (
@@ -68,6 +70,6 @@ let Wrapper = React.createClass({
       </div>
     )
   }
-})
+}
 
 ReactDOM.render(<Wrapper />, document.querySelector('#view'))
