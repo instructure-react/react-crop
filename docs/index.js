@@ -17,13 +17,13 @@ class Wrapper extends React.Component {
   }
 
 
-  onChange (evt) {
+  onChange = (evt) => {
     this.setState({
       image: evt.target.files[0]
     })
   }
 
-  crop () {
+  crop = () => {
     this.refs.crop.cropImage().then((image) => {
       this.setState({
         previewUrl: window.URL.createObjectURL(image)
@@ -31,7 +31,7 @@ class Wrapper extends React.Component {
     })
   }
 
-  clear () {
+  clear = () => {
     this.refs.file.value = null
     this.setState({
       previewUrl: null,
@@ -39,7 +39,7 @@ class Wrapper extends React.Component {
     })
   }
 
-  imageLoaded (img) {
+  imageLoaded = (img) => {
     if (img.naturalWidth && img.naturalWidth < WIDTH &&
         img.naturalHeight && img.naturalHeight < HEIGHT) {
       this.crop()

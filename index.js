@@ -67,6 +67,51 @@ var _class = function (_React$Component) {
       minConstraints: _propTypes2.default.arrayOf(_propTypes2.default.number)
     };
 
+    _this.onLoad = function (evt) {
+      var box = _this.refs.box.getBoundingClientRect();
+      _this.setState({
+        imageLoaded: true,
+        width: box.width,
+        height: box.height
+      }, function () {
+        var img = _this.refs.image;
+        _this.props.onImageLoaded && _this.props.onImageLoaded(img);
+      });
+    };
+
+    _this.cropImage = function () {
+      return new Promise(function (resolve, reject) {
+        var img = new Image();
+        img.onload = function () {
+          var canvas = _this.refs.canvas;
+          var img = _this.refs.image;
+          var ctx = canvas.getContext('2d');
+          var xScale = img.naturalWidth / _this.state.width,
+              yScale = img.naturalHeight / _this.state.height;
+
+
+          var imageOffsetX = xScale < 1 ? 0 : _this.state.offset.left * xScale;
+          var imageOffsetY = yScale < 1 ? 0 : _this.state.offset.top * yScale;
+          var imageWidth = xScale < 1 ? img.naturalWidth : _this.state.dimensions.width * xScale;
+          var imageHeight = yScale < 1 ? img.naturalHeight : _this.state.dimensions.height * yScale;
+
+          var canvasOffsetX = xScale < 1 ? Math.floor((_this.state.dimensions.width - img.naturalWidth) / 2) : 0;
+          var canvasOffsetY = yScale < 1 ? Math.floor((_this.state.dimensions.height - img.naturalHeight) / 2) : 0;
+          var canvasWidth = xScale < 1 ? img.naturalWidth : _this.props.width;
+          var canvasHeight = yScale < 1 ? img.naturalHeight : _this.props.height;
+
+          ctx.clearRect(0, 0, _this.props.width, _this.props.height);
+          ctx.drawImage(img, imageOffsetX, imageOffsetY, imageWidth, imageHeight, canvasOffsetX, canvasOffsetY, canvasWidth, canvasHeight);
+          resolve((0, _dataUriToBlob2.default)(canvas.toDataURL()));
+        };
+        img.src = window.URL.createObjectURL(_this.props.image);
+      });
+    };
+
+    _this.onChange = function (offset, dimensions) {
+      _this.setState({ offset: offset, dimensions: dimensions });
+    };
+
     _this.state = {
       imageLoaded: false,
       width: _this.props.width,
@@ -92,58 +137,6 @@ var _class = function (_React$Component) {
       var image = this.props.image;
 
       return nextProps.image.size !== image.size || nextProps.image.name !== image.name || nextProps.image.type !== image.type || nextState.imageLoaded !== this.state.imageLoaded;
-    }
-  }, {
-    key: 'onLoad',
-    value: function onLoad(evt) {
-      var _this2 = this;
-
-      var box = this.refs.box.getBoundingClientRect();
-      this.setState({
-        imageLoaded: true,
-        width: box.width,
-        height: box.height
-      }, function () {
-        var img = _this2.refs.image;
-        _this2.props.onImageLoaded && _this2.props.onImageLoaded(img);
-      });
-    }
-  }, {
-    key: 'cropImage',
-    value: function cropImage() {
-      var _this3 = this;
-
-      return new Promise(function (resolve, reject) {
-        var img = new Image();
-        img.onload = function () {
-          var canvas = _this3.refs.canvas;
-          var img = _this3.refs.image;
-          var ctx = canvas.getContext('2d');
-          var xScale = img.naturalWidth / _this3.state.width,
-              yScale = img.naturalHeight / _this3.state.height;
-
-
-          var imageOffsetX = xScale < 1 ? 0 : _this3.state.offset.left * xScale;
-          var imageOffsetY = yScale < 1 ? 0 : _this3.state.offset.top * yScale;
-          var imageWidth = xScale < 1 ? img.naturalWidth : _this3.state.dimensions.width * xScale;
-          var imageHeight = yScale < 1 ? img.naturalHeight : _this3.state.dimensions.height * yScale;
-
-          var canvasOffsetX = xScale < 1 ? Math.floor((_this3.state.dimensions.width - img.naturalWidth) / 2) : 0;
-          var canvasOffsetY = yScale < 1 ? Math.floor((_this3.state.dimensions.height - img.naturalHeight) / 2) : 0;
-          var canvasWidth = xScale < 1 ? img.naturalWidth : _this3.props.width;
-          var canvasHeight = yScale < 1 ? img.naturalHeight : _this3.props.height;
-
-          ctx.clearRect(0, 0, _this3.props.width, _this3.props.height);
-          ctx.drawImage(img, imageOffsetX, imageOffsetY, imageWidth, imageHeight, canvasOffsetX, canvasOffsetY, canvasWidth, canvasHeight);
-          resolve((0, _dataUriToBlob2.default)(canvas.toDataURL()));
-        };
-        img.src = window.URL.createObjectURL(_this3.props.image);
-      });
-    }
-  }, {
-    key: 'onChange',
-    value: function onChange(offset, dimensions) {
-      this.setState({ offset: offset, dimensions: dimensions });
     }
   }, {
     key: 'render',

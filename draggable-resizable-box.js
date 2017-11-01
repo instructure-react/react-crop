@@ -46,19 +46,7 @@ var _class = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
 
-    _this.displayName = 'DraggableResizableBox';
-    _this.propTypes = {
-      width: _propTypes2.default.number.isRequired,
-      height: _propTypes2.default.number.isRequired,
-      center: _propTypes2.default.bool,
-      image: _propTypes2.default.any,
-      widthLabel: _propTypes2.default.string,
-      heightLabel: _propTypes2.default.string,
-      offsetXLabel: _propTypes2.default.string,
-      offsetYLabel: _propTypes2.default.string,
-      onImageLoaded: _propTypes2.default.func,
-      minConstraints: _propTypes2.default.arrayOf(_propTypes2.default.number)
-    };
+    _initialiseProps.call(_this);
 
     var _this$preserveAspectR = _this.preserveAspectRatio(_this.props.width, _this.props.height),
         _this$preserveAspectR2 = _slicedToArray(_this$preserveAspectR, 2),
@@ -103,36 +91,9 @@ var _class = function (_React$Component) {
       document.removeEventListener('touchend', this.eventEnd);
       document.removeEventListener('keydown', this.handleKey);
     }
-  }, {
-    key: 'calculateDimensions',
-    value: function calculateDimensions(_ref) {
-      var top = _ref.top,
-          left = _ref.left,
-          bottom = _ref.bottom,
-          right = _ref.right;
-
-      return { width: this.props.width - left - right, height: this.props.height - top - bottom };
-    }
 
     // If you do this, be careful of constraints
 
-  }, {
-    key: 'preserveAspectRatio',
-    value: function preserveAspectRatio(width, height) {
-      if (this.props.minConstraints) {
-        width = Math.max(width, this.props.minConstraints[0]);
-        height = Math.max(height, this.props.minConstraints[1]);
-      }
-      var currentAspectRatio = width / height;
-
-      if (currentAspectRatio < this.props.aspectRatio) {
-        return [width, width / this.props.aspectRatio];
-      } else if (currentAspectRatio > this.props.aspectRatio) {
-        return [height * this.props.aspectRatio, height];
-      } else {
-        return [width, height];
-      }
-    }
   }, {
     key: 'constrainBoundary',
     value: function constrainBoundary(side) {
@@ -149,305 +110,15 @@ var _class = function (_React$Component) {
         clientY: evt.clientY
       };
     }
-  }, {
-    key: 'eventMove',
-    value: function eventMove(evt) {
-      if (this.state.resizing) {
-        this.onResize(evt);
-      } else if (this.state.moving) {
-        this.eventMoveBox(evt);
-      }
-    }
-  }, {
-    key: 'eventEnd',
-    value: function eventEnd(evt) {
-      if (this.state.resizing) {
-        this.stopResize(evt);
-      } else if (this.state.moving) {
-        this.stopMove(evt);
-      }
-    }
 
     // Resize methods
 
-  }, {
-    key: 'startResize',
-    value: function startResize(corner, event) {
-      event.stopPropagation();
-      event.preventDefault();
-      this.setState({
-        resizing: true,
-        corner: corner
-      });
-    }
-  }, {
-    key: 'stopResize',
-    value: function stopResize() {
-      this.setState({ resizing: false });
-    }
 
     // resize strategies
 
-  }, {
-    key: 'nw',
-    value: function nw(mousePos, boxPos) {
-      var pos = _extends({}, this.state, {
-        top: this.constrainBoundary(mousePos.clientY - boxPos.top),
-        left: this.constrainBoundary(mousePos.clientX - boxPos.left)
-      });
-      var dimensions = this.calculateDimensions(pos);
-
-      var _preserveAspectRatio = this.preserveAspectRatio(dimensions.width, dimensions.height),
-          _preserveAspectRatio2 = _slicedToArray(_preserveAspectRatio, 2),
-          width = _preserveAspectRatio2[0],
-          height = _preserveAspectRatio2[1];
-
-      pos.top = this.props.height - pos.bottom - height;
-      pos.left = this.props.width - pos.right - width;
-      return pos;
-    }
-  }, {
-    key: 'ne',
-    value: function ne(mousePos, boxPos) {
-      var pos = _extends({}, this.state, {
-        top: this.constrainBoundary(mousePos.clientY - boxPos.top),
-        right: this.constrainBoundary(boxPos.right - mousePos.clientX)
-      });
-      var dimensions = this.calculateDimensions(pos);
-
-      var _preserveAspectRatio3 = this.preserveAspectRatio(dimensions.width, dimensions.height),
-          _preserveAspectRatio4 = _slicedToArray(_preserveAspectRatio3, 2),
-          width = _preserveAspectRatio4[0],
-          height = _preserveAspectRatio4[1];
-
-      pos.top = this.props.height - pos.bottom - height;
-      pos.right = this.props.width - pos.left - width;
-      return pos;
-    }
-  }, {
-    key: 'se',
-    value: function se(mousePos, boxPos) {
-      var pos = _extends({}, this.state, {
-        bottom: this.constrainBoundary(boxPos.bottom - mousePos.clientY),
-        right: this.constrainBoundary(boxPos.right - mousePos.clientX)
-      });
-      var dimensions = this.calculateDimensions(pos);
-
-      var _preserveAspectRatio5 = this.preserveAspectRatio(dimensions.width, dimensions.height),
-          _preserveAspectRatio6 = _slicedToArray(_preserveAspectRatio5, 2),
-          width = _preserveAspectRatio6[0],
-          height = _preserveAspectRatio6[1];
-
-      pos.bottom = this.props.height - pos.top - height;
-      pos.right = this.props.width - pos.left - width;
-      return pos;
-    }
-  }, {
-    key: 'sw',
-    value: function sw(mousePos, boxPos) {
-      var pos = _extends({}, this.state, {
-        bottom: this.constrainBoundary(boxPos.bottom - mousePos.clientY),
-        left: this.constrainBoundary(mousePos.clientX - boxPos.left)
-      });
-      var dimensions = this.calculateDimensions(pos);
-
-      var _preserveAspectRatio7 = this.preserveAspectRatio(dimensions.width, dimensions.height),
-          _preserveAspectRatio8 = _slicedToArray(_preserveAspectRatio7, 2),
-          width = _preserveAspectRatio8[0],
-          height = _preserveAspectRatio8[1];
-
-      pos.bottom = this.props.height - pos.top - height;
-      pos.left = this.props.width - pos.right - width;
-      return pos;
-    }
-  }, {
-    key: 'onResize',
-    value: function onResize(event) {
-      var box = this.refs.box.parentElement.parentElement.getBoundingClientRect();
-      var coordinates = this.getClientCoordinates(event);
-      var position = this[this.state.corner](coordinates, box);
-      this.resize(position, coordinates);
-    }
-  }, {
-    key: 'controlsResize',
-    value: function controlsResize(event) {
-      var box = this.refs.box.parentElement.parentElement.getBoundingClientRect();
-      var width = event.target.name === 'width' ? +event.target.value : +event.target.value * this.props.aspectRatio;
-      var height = event.target.name === 'height' ? +event.target.value : +event.target.value / this.props.aspectRatio;
-      var dimensions = this.preserveAspectRatio(width, height);
-      width = dimensions[0];
-      height = dimensions[1];
-
-      if (width > box.width - this.state.left || height > box.height - this.state.top) return;
-
-      var widthDifference = this.state.width - width;
-      var heightDifference = this.state.height - height;
-      var pos = _extends({}, this.state, {
-        right: this.state.right + widthDifference,
-        bottom: this.state.bottom + heightDifference
-      });
-      var coordinates = {
-        clientX: box.right - pos.right,
-        clientY: box.bottom - pos.bottom
-      };
-
-      this.resize(pos, coordinates);
-    }
-  }, {
-    key: 'resize',
-    value: function resize(position, coordinates) {
-      var _this2 = this;
-
-      var dimensions = this.calculateDimensions(position);
-      var widthChanged = dimensions.width !== this.state.width,
-          heightChanged = dimensions.height !== this.state.height;
-      if (!widthChanged && !heightChanged) return;
-
-      this.setState(_extends({}, coordinates, position, dimensions), function () {
-        _this2.props.onChange({
-          top: position.top,
-          left: position.left
-        }, dimensions);
-      });
-    }
 
     // Move methods
 
-  }, {
-    key: 'startMove',
-    value: function startMove(evt) {
-      var _getClientCoordinates = this.getClientCoordinates(evt),
-          clientX = _getClientCoordinates.clientX,
-          clientY = _getClientCoordinates.clientY;
-
-      this.setState({
-        moving: true,
-        clientX: clientX,
-        clientY: clientY
-      });
-    }
-  }, {
-    key: 'stopMove',
-    value: function stopMove(evt) {
-      this.setState({
-        moving: false
-      });
-    }
-  }, {
-    key: 'eventMoveBox',
-    value: function eventMoveBox(evt) {
-      evt.preventDefault();
-
-      var _getClientCoordinates2 = this.getClientCoordinates(evt),
-          clientX = _getClientCoordinates2.clientX,
-          clientY = _getClientCoordinates2.clientY;
-
-      var movedX = clientX - this.state.clientX;
-      var movedY = clientY - this.state.clientY;
-
-      this.moveBox(clientX, clientY, movedX, movedY);
-    }
-  }, {
-    key: 'controlsMoveBox',
-    value: function controlsMoveBox(evt) {
-      var movedX = evt.target.name === 'x' ? evt.target.value - this.state.left : 0;
-      var movedY = evt.target.name === 'y' ? evt.target.value - this.state.top : 0;
-      this.moveBox(0, 0, movedX, movedY);
-    }
-  }, {
-    key: 'moveBox',
-    value: function moveBox(clientX, clientY, movedX, movedY) {
-      var _this3 = this;
-
-      var position = {
-        top: this.constrainBoundary(this.state.top + movedY),
-        left: this.constrainBoundary(this.state.left + movedX),
-        bottom: this.constrainBoundary(this.state.bottom - movedY),
-        right: this.constrainBoundary(this.state.right - movedX)
-      };
-
-      if (!position.top) {
-        position.bottom = this.props.height - this.state.height;
-      }
-      if (!position.bottom) {
-        position.top = this.props.height - this.state.height;
-      }
-      if (!position.left) {
-        position.right = this.props.width - this.state.width;
-      }
-      if (!position.right) {
-        position.left = this.props.width - this.state.width;
-      }
-
-      this.setState(_extends({}, {
-        clientX: clientX,
-        clientY: clientY
-      }, position), function () {
-        _this3.props.onChange({
-          top: position.top,
-          left: position.left
-        }, _this3.calculateDimensions(position));
-      });
-    }
-  }, {
-    key: 'keyboardResize',
-    value: function keyboardResize(change) {
-      if (this.state.right - change < 0) {
-        return;
-      }
-      if (this.state.bottom - change < 0) {
-        return;
-      }
-
-      var _preserveAspectRatio9 = this.preserveAspectRatio(this.state.width + change, this.state.height + change),
-          _preserveAspectRatio10 = _slicedToArray(_preserveAspectRatio9, 2),
-          width = _preserveAspectRatio10[0],
-          height = _preserveAspectRatio10[1];
-
-      var widthChange = width - this.state.width;
-      var heightChange = height - this.state.height;
-
-      this.setState({
-        bottom: this.state.bottom - heightChange,
-        right: this.state.right - widthChange,
-        width: width,
-        height: height
-      });
-    }
-  }, {
-    key: 'handleKey',
-    value: function handleKey(event) {
-      // safari doesn't support event.key, so fall back to keyCode
-      if (event.shiftKey) {
-        if (event.key === 'ArrowUp' || event.keyCode === 38) {
-          this.keyboardResize(-10);
-          event.preventDefault();
-        } else if (event.key === 'ArrowDown' || event.keyCode === 40) {
-          this.keyboardResize(10);
-          event.preventDefault();
-        } else if (event.key === 'ArrowLeft' || event.keyCode === 37) {
-          this.keyboardResize(-10);
-          event.preventDefault();
-        } else if (event.key === 'ArrowRight' || event.keyCode === 39) {
-          this.keyboardResize(10);
-          event.preventDefault();
-        }
-      } else {
-        if (event.key === 'ArrowUp' || event.keyCode === 38) {
-          this.moveBox(this.state.clientX, this.state.clientY, 0, -10);
-          event.preventDefault();
-        } else if (event.key === 'ArrowDown' || event.keyCode === 40) {
-          this.moveBox(this.state.clientX, this.state.clientY, 0, 10);
-          event.preventDefault();
-        } else if (event.key === 'ArrowLeft' || event.keyCode === 37) {
-          this.moveBox(this.state.clientX, this.state.clientY, -10, 0);
-          event.preventDefault();
-        } else if (event.key === 'ArrowRight' || event.keyCode === 39) {
-          this.moveBox(this.state.clientX, this.state.clientY, 10, 0);
-          event.preventDefault();
-        }
-      }
-    }
   }, {
     key: 'render',
     value: function render() {
@@ -558,5 +229,316 @@ var _class = function (_React$Component) {
 
   return _class;
 }(_react2.default.Component);
+
+var _initialiseProps = function _initialiseProps() {
+  var _this2 = this;
+
+  this.displayName = 'DraggableResizableBox';
+  this.propTypes = {
+    width: _propTypes2.default.number.isRequired,
+    height: _propTypes2.default.number.isRequired,
+    center: _propTypes2.default.bool,
+    image: _propTypes2.default.any,
+    widthLabel: _propTypes2.default.string,
+    heightLabel: _propTypes2.default.string,
+    offsetXLabel: _propTypes2.default.string,
+    offsetYLabel: _propTypes2.default.string,
+    onImageLoaded: _propTypes2.default.func,
+    minConstraints: _propTypes2.default.arrayOf(_propTypes2.default.number)
+  };
+
+  this.calculateDimensions = function (_ref) {
+    var top = _ref.top,
+        left = _ref.left,
+        bottom = _ref.bottom,
+        right = _ref.right;
+
+    return { width: _this2.props.width - left - right, height: _this2.props.height - top - bottom };
+  };
+
+  this.preserveAspectRatio = function (width, height) {
+    if (_this2.props.minConstraints) {
+      width = Math.max(width, _this2.props.minConstraints[0]);
+      height = Math.max(height, _this2.props.minConstraints[1]);
+    }
+    var currentAspectRatio = width / height;
+
+    if (currentAspectRatio < _this2.props.aspectRatio) {
+      return [width, width / _this2.props.aspectRatio];
+    } else if (currentAspectRatio > _this2.props.aspectRatio) {
+      return [height * _this2.props.aspectRatio, height];
+    } else {
+      return [width, height];
+    }
+  };
+
+  this.eventMove = function (evt) {
+    if (_this2.state.resizing) {
+      _this2.onResize(evt);
+    } else if (_this2.state.moving) {
+      _this2.eventMoveBox(evt);
+    }
+  };
+
+  this.eventEnd = function (evt) {
+    if (_this2.state.resizing) {
+      _this2.stopResize(evt);
+    } else if (_this2.state.moving) {
+      _this2.stopMove(evt);
+    }
+  };
+
+  this.startResize = function (corner, event) {
+    event.stopPropagation();
+    event.preventDefault();
+    _this2.setState({
+      resizing: true,
+      corner: corner
+    });
+  };
+
+  this.stopResize = function () {
+    _this2.setState({ resizing: false });
+  };
+
+  this.nw = function (mousePos, boxPos) {
+    var pos = _extends({}, _this2.state, {
+      top: _this2.constrainBoundary(mousePos.clientY - boxPos.top),
+      left: _this2.constrainBoundary(mousePos.clientX - boxPos.left)
+    });
+    var dimensions = _this2.calculateDimensions(pos);
+
+    var _preserveAspectRatio = _this2.preserveAspectRatio(dimensions.width, dimensions.height),
+        _preserveAspectRatio2 = _slicedToArray(_preserveAspectRatio, 2),
+        width = _preserveAspectRatio2[0],
+        height = _preserveAspectRatio2[1];
+
+    pos.top = _this2.props.height - pos.bottom - height;
+    pos.left = _this2.props.width - pos.right - width;
+    return pos;
+  };
+
+  this.ne = function (mousePos, boxPos) {
+    var pos = _extends({}, _this2.state, {
+      top: _this2.constrainBoundary(mousePos.clientY - boxPos.top),
+      right: _this2.constrainBoundary(boxPos.right - mousePos.clientX)
+    });
+    var dimensions = _this2.calculateDimensions(pos);
+
+    var _preserveAspectRatio3 = _this2.preserveAspectRatio(dimensions.width, dimensions.height),
+        _preserveAspectRatio4 = _slicedToArray(_preserveAspectRatio3, 2),
+        width = _preserveAspectRatio4[0],
+        height = _preserveAspectRatio4[1];
+
+    pos.top = _this2.props.height - pos.bottom - height;
+    pos.right = _this2.props.width - pos.left - width;
+    return pos;
+  };
+
+  this.se = function (mousePos, boxPos) {
+    var pos = _extends({}, _this2.state, {
+      bottom: _this2.constrainBoundary(boxPos.bottom - mousePos.clientY),
+      right: _this2.constrainBoundary(boxPos.right - mousePos.clientX)
+    });
+    var dimensions = _this2.calculateDimensions(pos);
+
+    var _preserveAspectRatio5 = _this2.preserveAspectRatio(dimensions.width, dimensions.height),
+        _preserveAspectRatio6 = _slicedToArray(_preserveAspectRatio5, 2),
+        width = _preserveAspectRatio6[0],
+        height = _preserveAspectRatio6[1];
+
+    pos.bottom = _this2.props.height - pos.top - height;
+    pos.right = _this2.props.width - pos.left - width;
+    return pos;
+  };
+
+  this.sw = function (mousePos, boxPos) {
+    var pos = _extends({}, _this2.state, {
+      bottom: _this2.constrainBoundary(boxPos.bottom - mousePos.clientY),
+      left: _this2.constrainBoundary(mousePos.clientX - boxPos.left)
+    });
+    var dimensions = _this2.calculateDimensions(pos);
+
+    var _preserveAspectRatio7 = _this2.preserveAspectRatio(dimensions.width, dimensions.height),
+        _preserveAspectRatio8 = _slicedToArray(_preserveAspectRatio7, 2),
+        width = _preserveAspectRatio8[0],
+        height = _preserveAspectRatio8[1];
+
+    pos.bottom = _this2.props.height - pos.top - height;
+    pos.left = _this2.props.width - pos.right - width;
+    return pos;
+  };
+
+  this.onResize = function (event) {
+    var box = _this2.refs.box.parentElement.parentElement.getBoundingClientRect();
+    var coordinates = _this2.getClientCoordinates(event);
+    var position = _this2[_this2.state.corner](coordinates, box);
+    _this2.resize(position, coordinates);
+  };
+
+  this.controlsResize = function (event) {
+    var box = _this2.refs.box.parentElement.parentElement.getBoundingClientRect();
+    var width = event.target.name === 'width' ? +event.target.value : +event.target.value * _this2.props.aspectRatio;
+    var height = event.target.name === 'height' ? +event.target.value : +event.target.value / _this2.props.aspectRatio;
+    var dimensions = _this2.preserveAspectRatio(width, height);
+    width = dimensions[0];
+    height = dimensions[1];
+
+    if (width > box.width - _this2.state.left || height > box.height - _this2.state.top) return;
+
+    var widthDifference = _this2.state.width - width;
+    var heightDifference = _this2.state.height - height;
+    var pos = _extends({}, _this2.state, {
+      right: _this2.state.right + widthDifference,
+      bottom: _this2.state.bottom + heightDifference
+    });
+    var coordinates = {
+      clientX: box.right - pos.right,
+      clientY: box.bottom - pos.bottom
+    };
+
+    _this2.resize(pos, coordinates);
+  };
+
+  this.resize = function (position, coordinates) {
+    var dimensions = _this2.calculateDimensions(position);
+    var widthChanged = dimensions.width !== _this2.state.width,
+        heightChanged = dimensions.height !== _this2.state.height;
+    if (!widthChanged && !heightChanged) return;
+
+    _this2.setState(_extends({}, coordinates, position, dimensions), function () {
+      _this2.props.onChange({
+        top: position.top,
+        left: position.left
+      }, dimensions);
+    });
+  };
+
+  this.startMove = function (evt) {
+    var _getClientCoordinates = _this2.getClientCoordinates(evt),
+        clientX = _getClientCoordinates.clientX,
+        clientY = _getClientCoordinates.clientY;
+
+    _this2.setState({
+      moving: true,
+      clientX: clientX,
+      clientY: clientY
+    });
+  };
+
+  this.stopMove = function (evt) {
+    _this2.setState({
+      moving: false
+    });
+  };
+
+  this.eventMoveBox = function (evt) {
+    evt.preventDefault();
+
+    var _getClientCoordinates2 = _this2.getClientCoordinates(evt),
+        clientX = _getClientCoordinates2.clientX,
+        clientY = _getClientCoordinates2.clientY;
+
+    var movedX = clientX - _this2.state.clientX;
+    var movedY = clientY - _this2.state.clientY;
+
+    _this2.moveBox(clientX, clientY, movedX, movedY);
+  };
+
+  this.controlsMoveBox = function (evt) {
+    var movedX = evt.target.name === 'x' ? evt.target.value - _this2.state.left : 0;
+    var movedY = evt.target.name === 'y' ? evt.target.value - _this2.state.top : 0;
+    _this2.moveBox(0, 0, movedX, movedY);
+  };
+
+  this.moveBox = function (clientX, clientY, movedX, movedY) {
+    var position = {
+      top: _this2.constrainBoundary(_this2.state.top + movedY),
+      left: _this2.constrainBoundary(_this2.state.left + movedX),
+      bottom: _this2.constrainBoundary(_this2.state.bottom - movedY),
+      right: _this2.constrainBoundary(_this2.state.right - movedX)
+    };
+
+    if (!position.top) {
+      position.bottom = _this2.props.height - _this2.state.height;
+    }
+    if (!position.bottom) {
+      position.top = _this2.props.height - _this2.state.height;
+    }
+    if (!position.left) {
+      position.right = _this2.props.width - _this2.state.width;
+    }
+    if (!position.right) {
+      position.left = _this2.props.width - _this2.state.width;
+    }
+
+    _this2.setState(_extends({}, {
+      clientX: clientX,
+      clientY: clientY
+    }, position), function () {
+      _this2.props.onChange({
+        top: position.top,
+        left: position.left
+      }, _this2.calculateDimensions(position));
+    });
+  };
+
+  this.keyboardResize = function (change) {
+    if (_this2.state.right - change < 0) {
+      return;
+    }
+    if (_this2.state.bottom - change < 0) {
+      return;
+    }
+
+    var _preserveAspectRatio9 = _this2.preserveAspectRatio(_this2.state.width + change, _this2.state.height + change),
+        _preserveAspectRatio10 = _slicedToArray(_preserveAspectRatio9, 2),
+        width = _preserveAspectRatio10[0],
+        height = _preserveAspectRatio10[1];
+
+    var widthChange = width - _this2.state.width;
+    var heightChange = height - _this2.state.height;
+
+    _this2.setState({
+      bottom: _this2.state.bottom - heightChange,
+      right: _this2.state.right - widthChange,
+      width: width,
+      height: height
+    });
+  };
+
+  this.handleKey = function (event) {
+    // safari doesn't support event.key, so fall back to keyCode
+    if (event.shiftKey) {
+      if (event.key === 'ArrowUp' || event.keyCode === 38) {
+        _this2.keyboardResize(-10);
+        event.preventDefault();
+      } else if (event.key === 'ArrowDown' || event.keyCode === 40) {
+        _this2.keyboardResize(10);
+        event.preventDefault();
+      } else if (event.key === 'ArrowLeft' || event.keyCode === 37) {
+        _this2.keyboardResize(-10);
+        event.preventDefault();
+      } else if (event.key === 'ArrowRight' || event.keyCode === 39) {
+        _this2.keyboardResize(10);
+        event.preventDefault();
+      }
+    } else {
+      if (event.key === 'ArrowUp' || event.keyCode === 38) {
+        _this2.moveBox(_this2.state.clientX, _this2.state.clientY, 0, -10);
+        event.preventDefault();
+      } else if (event.key === 'ArrowDown' || event.keyCode === 40) {
+        _this2.moveBox(_this2.state.clientX, _this2.state.clientY, 0, 10);
+        event.preventDefault();
+      } else if (event.key === 'ArrowLeft' || event.keyCode === 37) {
+        _this2.moveBox(_this2.state.clientX, _this2.state.clientY, -10, 0);
+        event.preventDefault();
+      } else if (event.key === 'ArrowRight' || event.keyCode === 39) {
+        _this2.moveBox(_this2.state.clientX, _this2.state.clientY, 10, 0);
+        event.preventDefault();
+      }
+    }
+  };
+};
 
 exports.default = _class;
