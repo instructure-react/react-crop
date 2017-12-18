@@ -30,6 +30,8 @@
     "babel-preset-react": "^6.5.0",
     "babel-preset-stage-1": "^6.5.0",
     "css-loader": "^0.26.1",
+    "eslint": "^4.13.1",
+    "eslint-config-tipsi": "^2.0.2",
     "node-libs-browser": "0.5.2",
     "react": "^15.4.1",
     "react-dom": "15.4.1",
@@ -40,9 +42,13 @@
   "dependencies": {
     "autoprefixer": "5.2.0",
     "data-uri-to-blob": "0.0.4",
-    "postcss-cli": "2.0.0"
+    "postcss-cli": "2.0.0",
+    "prop-types": "^15.6.0"
   },
   "peerDependencies": {
     "react": ">=0.14.0"
+  },
+  "eslintConfig": {
+    "extends": "tipsi"
   }
 }
